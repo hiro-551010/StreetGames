@@ -23,6 +23,7 @@
 <header>
     <div class="navbar navbar-dark bg-dark shadow-sm p-3">
         <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="{{ route('competition') }}">ホーム</a>
             <div class="dropdown">
                 <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                     {{ Auth::user()->name }}
@@ -45,9 +46,9 @@
 <div>
     @yield('header')
     {{-- {{ request()->path() }} --}}
-    @if ( request()->is('competition' ))
+    {{-- @if ( request()->is('competition' ))
         @yield('content')
-    @endif
+    @endif --}}
 </div>
 </body>
 </html>
