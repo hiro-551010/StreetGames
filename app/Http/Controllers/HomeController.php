@@ -7,6 +7,8 @@ use App\Models\User;
 use App\Models\Host;
 use App\Models\Title;
 use App\Models\Tournament;
+use App\Models\Tournament_content;
+use App\Models\Entry;
 use DB;
 
 class HomeController extends Controller
@@ -42,7 +44,40 @@ class HomeController extends Controller
         $user = User::select('users.*')
             ->where('id', '=', \Auth::id() )
             ->get();
-        return view('users.dashboard', compact('user'));
+
+        // userがhostの場合
+        $hosts = Host::select('hosts.*')
+            ->where('user_id', '=', $user[0]['id'])
+            ->get();
+        
+        $tournaments = User::select('users.*')
+            ->leftjoin('hosts', 'users.id', '=', 'hosts.user_id')
+            ->leftjoin('tournaments', 'tournaments.hold_id', '=', 'hosts.hold_id')
+            ->get();
+
+        $query = Tournament::select('tournaments.*')
+            ->leftjoin('tournaments', 'tournaments.hold_id', '=', 'hosts.hold_id')
+            ->get();
+
+        dd($query);
+        $t_ex = [];
+        foreach($tournaments as $t)
+            array_push($t_ex, $t['explanation']);
+
+        
+
+
+        $tournament_contents = Tournament_content::select('tournament_contents.*')
+            ->where('hold_id', '=', $hosts[0]['hold_id'])
+            ->get();
+        
+        $query = Host::select('hosts.*')
+            ->join('tournaments', 'tournaments.hold_id', '=', 'hosts.hold_id')
+            ->get();
+        
+        
+
+        return view('users.dashboard', compact('user', 'hosts', 'tournaments', 'tournament_contents', 't_ex'));
     }
 
     // 大会一覧
@@ -51,7 +86,13 @@ class HomeController extends Controller
             ->get();
         $title_name = Title::select('titles.title_name')
             ->get();
-        return view('users.competition', compact('tournaments', 'title_name'));
+        $tournament_contents = Tournament_content::select('tournament_contents.*')
+            ->get();
+        
+        $rounds = $tournament_contents[0]['people'];
+        
+
+        return view('users.competition', compact('tournaments', 'title_name', 'tournament_contents', 'rounds'));
     }
 
     // 大会開催
@@ -65,6 +106,7 @@ class HomeController extends Controller
         return view('users.hold', compact('user', 'titles'));
     }
     
+    // holdからpostで送られてきたrequestを処理
     public function hold_post(Request $request){
         $posts = $request->all();
         DB::transaction(function () use($posts) {
@@ -78,8 +120,34 @@ class HomeController extends Controller
                 'explanation' => $posts['explanation'],
                 'prize' => $posts['prize']
             ]);
+            $tournaments_content = Tournament_content::insert([
+                'hold_id' => $host,
+                'people' => $posts['people'],
+                'rule' => $posts['rule'],
+                'schedule' => $posts['schedule']
+            ]);
         });
         return redirect(route('dashboard'));
+    }
+
+    //大会応募
+    public function entry(Request $request){
+        $posts = $request->all();
+        DB::transaction(function () use($posts) {
+            $entries = Entry::insert([
+                'user_id' => $posts['user_id'],
+                'hold_id' => $posts['hold_id'],
+                'join' => "2",
+            ]);
+        });
+        return redirect(route('competition'));
+    }
+
+    // 大会詳細
+    public function competition_detail(){
+        $tournament_contents = Tournament_content::select('tournament_contents.*')
+            ->get();
+        return view('users.competition_detail', compact('tournament_contents'));
     }
 
     // 大会に参加するuser

@@ -30,7 +30,9 @@ Route::get('/home', [HomeController::class, 'home'])->name('home');
 Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
 Route::get('/hold', [HomeController::class, 'hold'])->name('hold');
 Route::post('/hold_post', [HomeController::class, 'hold_post'])->name('hold_post');
+Route::get('competition_detail', [HomeController::class, 'competition_detail'])->name('competition_detail');
 Route::get('/competition', [HomeController::class, 'competition'])->name('competition');
+Route::post('/entry', [HomeController::class, 'entry'])->name('entry');
 Route::get('/players', [HomeController::class, 'players'])->name('players');
 Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
 

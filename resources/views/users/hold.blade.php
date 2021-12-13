@@ -15,7 +15,11 @@
         </select>
         大会の題名<input type="text" name="explanation">
         賞金等<input type="text" name="prize">
-
+        
+        {{-- tournaments_content --}}
+        参加人数<input type="text" name="people">
+        開催開始日<input type="text" name="schedule">
+        ルール<textarea name="rule" cols="30" rows="10"></textarea>
         <button class="btn btn-primary" type="submit">送信</button>
     </form>
 </div>
