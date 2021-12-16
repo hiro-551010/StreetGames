@@ -34,5 +34,8 @@ Route::get('competition_detail', [HomeController::class, 'competition_detail'])-
 Route::get('/competition', [HomeController::class, 'competition'])->name('competition');
 Route::post('/entry', [HomeController::class, 'entry'])->name('entry');
 Route::get('/players', [HomeController::class, 'players'])->name('players');
+Route::post('/players_post', [HomeController::class, 'players_post'])->name('players_post');
+Route::get('/chat/{name}', [HomeController::class, 'chat'])->name('chat');
+Route::post('/chat_post/{name}', [HomeController::class, 'chat_post'])->name('chat_post');
 Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
 

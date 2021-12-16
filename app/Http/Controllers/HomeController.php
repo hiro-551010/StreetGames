@@ -9,7 +9,10 @@ use App\Models\Title;
 use App\Models\Tournament;
 use App\Models\Tournament_content;
 use App\Models\Entry;
+use App\Models\Chat;
 use DB;
+
+use function PHPSTORM_META\type;
 
 class HomeController extends Controller
 {
@@ -50,34 +53,35 @@ class HomeController extends Controller
             ->where('user_id', '=', $user[0]['id'])
             ->get();
         
-        $tournaments = User::select('users.*')
-            ->leftjoin('hosts', 'users.id', '=', 'hosts.user_id')
-            ->leftjoin('tournaments', 'tournaments.hold_id', '=', 'hosts.hold_id')
+        $tournaments = Tournament::select('tournaments.*')
+            ->where('hold_id', '=', $hosts[1]['hold_id'])
             ->get();
 
-        $query = Tournament::select('tournaments.*')
-            ->leftjoin('tournaments', 'tournaments.hold_id', '=', 'hosts.hold_id')
-            ->get();
-
-        dd($query);
         $t_ex = [];
-        foreach($tournaments as $t)
-            array_push($t_ex, $t['explanation']);
-
-        
-
+        $t_id = [];
+        foreach($hosts as $h){
+            // array_push($h_arr, $h['hold_id']);
+            $tournaments = Tournament::select('tournaments.*')
+                ->where('hold_id', '=', $h['hold_id'])
+                ->get();
+            array_push($t_ex, $tournaments[0]['explanation']);
+            array_push($t_id, $tournaments[0]['hold_id']);
+        }
 
         $tournament_contents = Tournament_content::select('tournament_contents.*')
             ->where('hold_id', '=', $hosts[0]['hold_id'])
             ->get();
-        
-        $query = Host::select('hosts.*')
-            ->join('tournaments', 'tournaments.hold_id', '=', 'hosts.hold_id')
+
+        // chat
+        $receive = Chat::select('chats.*')
+            ->where('receive_id', '=', $user[0]['id'])
             ->get();
         
+        $send = Chat::select('chats.*')
+            ->where('send_id', '=', $user[0]['id'])
+            ->get();
         
-
-        return view('users.dashboard', compact('user', 'hosts', 'tournaments', 'tournament_contents', 't_ex'));
+        return view('users.dashboard', compact('user', 'hosts', 'tournaments', 'tournament_contents', 'send', 'receive'));
     }
 
     // 大会一覧
@@ -152,11 +156,64 @@ class HomeController extends Controller
 
     // 大会に参加するuser
     public function players(){
-        return view('players');
+        
+        $players = User::select('users.*')
+            ->get();
+
+        return view('users.players', compact('players'));
+    }
+
+    // player一覧の検索機能
+    public function players_post(Request $request){
+        $posts = $request->all();
+
+        $db_names = [];
+        $db_name = User::select('users.*')
+            ->get();   
+        foreach($db_name as $d){
+            array_push($db_names, $d['name']);
+        }
+        $name = $posts['name'];
+        $valid_name = null;
+        foreach($db_names as $d){
+            if($name === $d){
+                $valid_name = $d;
+            }
+        }
+
+        return view('users.players', compact('valid_name'));
     }
 
     // 質問
     public function contact(){
         return view('contact');
+    }
+
+    // チャット機能
+    public function chat($name){
+        $user_id = \Auth::id();
+        $receive = User::select('users.*')->where('name', '=', $name)->get();
+        $send = User::select('users.*')->where('id', '=', $user_id)->get();
+        // 今ログインしているuserが受け取ったメッセージ
+        $received_message = Chat::select('chats.*')->where('receive_id', '=', $user_id)->get();
+        // 送ったメッセージ
+        $send_message = Chat::select('chats.*')->where('send_id', '=', $user_id)->get();
+        return view('users.chat', compact('receive', 'send', 'received_message', 'send_message'));
+    }
+
+    public function chat_post($name, Request $request){
+        $posts = $request->all();
+
+        DB::transaction(function () use($posts) {
+            $db_chat = DB::table('chats')
+                ->insert([
+                    'send_id' => $posts['send_id'],
+                    'sender' => $posts['sender'],
+                    'receive_id' => $posts['receive_id'], 
+                    'receiver' => $posts['receiver'],
+                    'message' => $posts['message']
+                ]);
+        });
+        return redirect("chat/$name");
     }
 }
