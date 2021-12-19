@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Host extends Model
 {
     use HasFactory;
-    public function entries(){
-        return $this->hasMany('App\entry');
+    
+    public function user(){
+        return $this->belongsTo(User::class);
     }
 }

@@ -38,4 +38,5 @@ Route::post('/players_post', [HomeController::class, 'players_post'])->name('pla
 Route::get('/chat/{name}', [HomeController::class, 'chat'])->name('chat');
 Route::post('/chat_post/{name}', [HomeController::class, 'chat_post'])->name('chat_post');
 Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
-
+Route::get('/admin', [HomeController::class, 'admin'])->name('admin');
+Route::post('/admin_post', [HomeController::class, 'admin_post'])->name('admin_post');
