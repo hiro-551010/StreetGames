@@ -10,14 +10,9 @@ use App\Models\Tournament;
 use App\Models\Tournament_content;
 use App\Models\Entry;
 use App\Models\Chat;
-use App\Models\Player;
 use DB;
-use ErrorException;
-use Mockery\Generator\StringManipulation\Pass\Pass;
-use Mockery\Undefined;
 
 use function PHPSTORM_META\type;
-use function PHPUnit\Framework\isEmpty;
 
 class HomeController extends Controller
 {
@@ -37,84 +32,56 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
+    // public function index()
+    // {
+    //     return view('welcome');
+    // }
 
     // ログイン後
     public function home(){
-        $user_id = \Auth::id();
-        // 外部キーで取得
-
-        $host_user = Host::with('user')->where('user_id', $user_id)->get();
-        
-        $ts = [];
-        foreach($host_user as $host){
-            // $tournaments = $host['user_id'];
-            $tournaments = Tournament::select('Tournaments.*')
-                ->where('hold_id', $host['hold_id'])
-                ->with('contents')
-                ->get();
-            array_push($ts, $tournaments);
-        }
-        // $contents = Tournament::with('contents')->get();
-        // dd($contents);
-
-        return view('home', compact('tournaments', 'ts'));
+        return view('home');
     }
 
     // ダッシュボード
     public function dashboard(){
-        $user_id = \Auth::id();
         $user = User::select('users.*')
-            ->where('id', '=', $user_id)
+            ->where('id', '=', \Auth::id() )
             ->get();
 
         // userがhostの場合
-        $host = Host::select('hosts.*')
-            ->where('user_id', '=', $user_id)
-            ->exists();
+        $hosts = Host::select('hosts.*')
+            ->where('user_id', '=', $user[0]['id'])
+            ->get();
+        
+        $tournaments = Tournament::select('tournaments.*')
+            ->where('hold_id', '=', $hosts[0]['hold_id'])
+            ->get();
 
         $t_ex = [];
         $t_id = [];
-        if($host){
-            $hosts = Host::select('hosts.*')->where('user_id', '=', $user_id)->get();
-            $tournaments = Tournament::select('tournaments.*')->where('hold_id', '=', $hosts[0]['hold_id'])->get();
-            foreach($hosts as $h){
-                // array_push($h_arr, $h['hold_id']);
-                $tournaments = Tournament::select('tournaments.*')
-                    ->where('hold_id', '=', $h['hold_id'])
-                    ->get();
-                array_push($t_ex, $tournaments[0]['explanation']);
-                array_push($t_id, $tournaments[0]['hold_id']);
-            }
-            $tournament_contents = Tournament_content::select('tournament_contents.*')
-                ->where('hold_id', '=', $hosts[0]['hold_id'])
+        foreach($hosts as $h){
+            // array_push($h_arr, $h['hold_id']);
+            $tournaments = Tournament::select('tournaments.*')
+                ->where('hold_id', '=', $h['hold_id'])
                 ->get();
-        }else{
-            $hosts = ['開催している大会はありません'];
-            $tournaments = ['開催している大会はありません'];   
-            $tournament_contents = ['開催している大会はありません'];   
+            array_push($t_ex, $tournaments[0]['explanation']);
+            array_push($t_id, $tournaments[0]['hold_id']);
         }
 
-        // chat機能
-        $receive = Chat::select('chats.*')->where('receive_id', '=', $user[0]['id'])->get();
-        $send = Chat::select('chats.*')->where('send_id', '=', $user[0]['id'])->get();
+        $tournament_contents = Tournament_content::select('tournament_contents.*')
+            ->where('hold_id', '=', $hosts[0]['hold_id'])
+            ->get();
 
-        // userが大会に応募している場合
-        $entry = Entry::select('entries.*')->where('user_id', '=', $user_id)->exists();
-        if($entry){
-            $entries = Entry::select('entries.*')->where('user_id', '=', $user_id)->get();
-        }else{
-            $entries = ['応募している大会はありません'];
-        }
-
-        // userが大会に参加している場合
-        $player = Player::select('players.*')->where('user_id', '=', $user_id)->exists();
-        if($player){
-            $players = Player::select('players.*')->where('user_id', '=', $user_id)->get();
-        }else{
-            $players = ['参加している大会はありません'];
-        }
+        // chat
+        $receive = Chat::select('chats.*')
+            ->where('receive_id', '=', $user[0]['id'])
+            ->get();
         
-        return view('users.dashboard', compact('user', 'hosts', 'tournaments', 'tournament_contents', 'send', 'receive', 'entries', 'players'));
+        $send = Chat::select('chats.*')
+            ->where('send_id', '=', $user[0]['id'])
+            ->get();
+        
+        return view('users.dashboard', compact('user', 'hosts', 'tournaments', 'tournament_contents', 'send', 'receive'));
     }
 
     // 大会一覧
@@ -174,7 +141,7 @@ class HomeController extends Controller
             $entries = Entry::insert([
                 'user_id' => $posts['user_id'],
                 'hold_id' => $posts['hold_id'],
-                'join' => "1",
+                'join' => "2",
             ]);
         });
         return redirect(route('competition'));

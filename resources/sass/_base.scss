@@ -1,0 +1,203 @@
+@charset "utf-8";
+
+
+// カラー設定
+$color-bg: #1D212C;
+$color-red: #A23676;
+$color-blue: #3695A2;
+$color-yellow: #A28336;
+
+
+
+
+// メディアクエリ
+@mixin pc {
+  @media (min-width: 1024px) {
+    @content;
+  }
+}
+@mixin pcTab {
+  @media (min-width: 768px) {
+    @content;
+  }
+}
+@mixin tab {
+  @media (max-width: 1023px) {
+    @content;
+  }
+}
+@mixin sp {
+  @media (max-width: 767px) {
+    @content;
+  }
+}
+
+
+// コンテンツの幅設定
+@mixin innerWidth($maxWidth: 920px) {
+  width: 100%;
+  max-width: $maxWidth;
+  margin: 0 auto;
+  padding: 0 10px;
+}
+
+// セクションタイトル
+@mixin sectionTitle($marginBottom: 60px) {
+  margin-bottom: $marginBottom;
+  background: linear-gradient(to bottom, rgba(210, 191, 91, 1), rgba(44, 39, 15, 1));
+  background-clip: text;
+  -webkit-background-clip: text;
+  text-align: center;
+  color: transparent;
+  font-weight: bold;
+}
+
+// ホバーアクション
+@mixin hoverAction($opacity: .6, $duration: .1s) {
+  opacity: $opacity;
+  transition: opacity $duration;
+}
+
+// リンクボタン
+@mixin linkButton($color: #fff) {
+  display: block;
+  text-align: center;
+  color: $color;
+  font-weight: bold;
+
+  &.join {
+    background-color: $color-red;
+  }
+  &.login {
+    background-color: $color-blue;
+  }
+  &.contact {
+    background-color: $color-yellow;
+  }
+  
+  @include pcTab {
+    width: 235px;
+    height: 48px;
+    border-radius: 24px;
+    line-height: 48px;
+  }
+  @include sp {
+    width: 200px;
+    height: 40px;
+    border-radius: 20px;
+    line-height: 40px;
+    font-size: 12px;
+  }
+
+  &:hover {
+    box-shadow: 1px 1px 8px -2px #fff, -1px -1px 8px -2px #fff;
+    text-shadow: 1px 1px 6px #aaa;
+  }
+}
+
+
+// =============================================
+// リセットcss
+// =============================================
+html,body {
+  background-color: $color-bg;
+  font-family: sans-serif;
+  color: #fff;
+}
+
+*,*::before,*::after {
+  box-sizing: border-box;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+p {
+  @include pcTab {
+    font-size: 1.2rem;
+  }
+}
+
+img {
+  display: block;
+}
+
+ul,ol {
+  padding: 0;
+  list-style-type: none;
+}
+
+button {
+  margin: 0;
+  padding: 0;
+  background-color: transparent;
+  border: none;
+  font-size: inherit;
+  color: inherit;
+  outline: none;
+  appearance: none;
+}
+
+
+// =============================================
+// フッター
+// =============================================
+.footer {
+  width: 100%;
+  padding: 60px 0;
+  background-color: #191715;
+
+  @include sp {
+    display: flex;
+    justify-content: space-around
+  }
+
+  &-linkBtn {
+    
+    @include pcTab {
+      @include innerWidth();
+      display: flex;
+      justify-content: space-around;
+      margin-bottom: 40px;
+    }
+
+    li {
+      @include sp {
+        margin-bottom: 20px;
+
+        &:nth-last-of-type(1) {
+          margin-bottom: 0;
+        }
+      }
+    }
+
+    a {
+      @include linkButton();
+    }
+  }
+
+  &-link {
+    
+    @include pcTab {
+      @include innerWidth();
+      display: flex;
+      justify-content: space-around;
+    }
+
+    li {
+      @include sp {
+        margin-bottom: 20px;
+        font-size: 12px;
+
+        &:nth-of-type(1) {
+          margin-top: 10px;
+        }
+        &:nth-last-of-type(1) {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+}
