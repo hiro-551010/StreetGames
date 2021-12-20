@@ -40,11 +40,4 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-    
-    public function hosts(){
-        return $this->hasMany(Host::class, 'user_id');
-    }
 }
-
-// hasMany(..::class, 相手のカラム, 自分のカラム)
-// 第三引数のdefaultは主キーのidが勝手に入る

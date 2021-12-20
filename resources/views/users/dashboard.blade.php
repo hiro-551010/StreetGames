@@ -16,13 +16,4 @@
 {{-- {{ $tournaments[0]['explanation'] }}
 {{ $tournament_contents[0]['title_name'] }} --}}
 
-
-@if ($entries[0]['join'])
-    参加中の大会
-
-@else
-    応募中の大会
-@endif
-
-{{ $players[0] }}
 @endsection
