@@ -252,10 +252,8 @@ class HomeController extends Controller
 
     public function admin(){
         $entries = Entry::with('tournaments')
-            ->join('tournament_contents', 'tournament_contents.hold_id', 'tournaments.hold_id' )
+            ->join('tournament_contents', 'tournament_contents.hold_id', 'entries.hold_id' )
             ->get();
-        dd($entries);
-
         return view('admin', compact('entries'));
     }
     
@@ -263,8 +261,7 @@ class HomeController extends Controller
         $posts = $request->all();
         $entry_id = $posts['hold_id'];
         $people = $posts['people'];
-        dd($entry_id, $people);
-        $lottery = Entry::inRandomOrder()->take(1)->get();
+        $lottery = Entry::inRandomOrder()->take($people)->get();
         dd($lottery);
         dd($posts['hold_id']);
     }

@@ -47,7 +47,7 @@
                 <form action="{{route('admin_post')}}" method="POST">
                     @csrf
                     <input type="hidden" name="hold_id" value="{{ $entry['hold_id'] }}">
-                    <input type="hidden" name="people" value="{{ $entry['tournaments']['people'] }}">
+                    <input type="hidden" name="people" value="{{ $entry['people'] }}">
                     <button type="submit">抽選</button>
                 </form>
             </div>
