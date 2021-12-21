@@ -17,6 +17,7 @@ class CreateEntriesTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger(('hold_id'));
             $table->integer('join');
+            $table->
 
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('hold_id')->references('hold_id')->on('tournaments');

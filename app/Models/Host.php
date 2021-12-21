@@ -11,4 +11,8 @@ class Host extends Model
     public function entries(){
         return $this->hasMany('App\entry');
     }
+
+    public function user(){
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }
