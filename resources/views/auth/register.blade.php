@@ -1,75 +1,85 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">新規登録</div>
+<div class="container-fluid m-0 p-0">
+    <div class="auth_wrapper">
+        <!-- サイトロゴ -->
+        <div class="auth_siteLogo">
+            <a href="/">Street Games</a>
+        </div>
 
-                <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}">
-                        @csrf
+        <!-- メインコンテンツ -->
+        <div class="auth_content">
+            <div class="auth_title">
+                <h1>新規登録</h1>
+                <p class="auth_termLink">登録を持って<a href="">利用規約</a>に同意したものとみなします。</p>
+            </div>
 
-                        <div class="row mb-3">
-                            <label for="name" class="col-md-4 col-form-label text-md-right">ユーザー名(公開されます)</label>
+            <div class="auth_form">
+                <form method="POST" action="{{ route('register') }}">
+                    @csrf
 
-                            <div class="col-md-6">
-                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+                    <div class="auth_form-item">
+                        <label for="name" class="auth_form-label">ID</label>
 
-                                @error('name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
+                        <div class="auth_form-input">
+                            <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+
+                            @error('name')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
                         </div>
+                    </div>
 
-                        <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">メールアドレス</label>
+                    <div class="auth_form-item">
+                        <label for="email" class="auth_form-label">メールアドレス</label>
 
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
+                        <div class="auth_form-input">
+                            <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
 
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
+                            @error('email')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
                         </div>
+                    </div>
 
-                        <div class="row mb-3">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">パスワード</label>
+                    <div class="auth_form-item">
+                        <label for="password" class="auth_form-label">パスワード</label>
 
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+                        <div class="auth_form-input">
+                            <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
 
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
+                            @error('password')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
                         </div>
+                    </div>
 
-                        <div class="row mb-3">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-right">パスワードの確認</label>
+                    <div class="auth_form-item">
+                        <label for="password-confirm" class="auth_form-label">パスワードの確認</label>
 
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
-                            </div>
+                        <div class="auth_form-input">
+                            <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
                         </div>
+                    </div>
 
-                        <div class="row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Register') }}
-                                </button>
-                            </div>
+                    <div class="auth_form-submit">
+                        <div class="auth_form-btn">
+                            <button type="submit" class="join">
+                                {{ __('Register') }}
+                            </button>
                         </div>
-                    </form>
-                </div>
+                        <div class="auth_form-link">
+                            <a class="login" href="{{ route('login') }}">ログインはこちら</a>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
