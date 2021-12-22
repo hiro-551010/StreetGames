@@ -445,7 +445,7 @@ button {
 
 @media (min-width: 768px) {
   .auth_form-label {
-    width: 26%;
+    width: 28%;
   }
 }
 
@@ -462,7 +462,7 @@ button {
 
 @media (min-width: 768px) {
   .auth_form-input {
-    width: 74%;
+    width: 72%;
   }
 }
 
@@ -473,6 +473,7 @@ button {
 }
 
 .auth_form-input input {
+  width: 100%;
   background-color: transparent;
   border: none;
   color: #fff;
@@ -487,6 +488,41 @@ button {
 .auth_form-input input:focus {
   background-color: #ffffff99;
   box-shadow: initial;
+  color: #000;
+}
+
+@media (min-width: 768px) {
+  .auth_form-textArea {
+    width: 74%;
+  }
+}
+
+@media (max-width: 767px) {
+  .auth_form-textArea {
+    width: 100%;
+  }
+}
+
+.auth_form-textArea textarea {
+  width: 100%;
+  height: 8em;
+  padding: 0.375rem 0.75rem;
+  background-color: transparent;
+  border: none;
+  border-radius: 0.25rem;
+  color: #fff;
+}
+
+@media (min-width: 1024px) {
+  .auth_form-textArea textarea {
+    font-size: 18px;
+  }
+}
+
+.auth_form-textArea textarea:focus {
+  background-color: #ffffff99;
+  box-shadow: initial;
+  outline: none;
   color: #000;
 }
 
