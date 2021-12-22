@@ -44,4 +44,12 @@ class User extends Authenticatable
     public function hosts(){
         return $this->hasMany(Host::class, 'hold_id');
     }
+
+    public function entries(){
+        return $this->hasMany(Entry::class, 'user_id');
+    }
+
+    public function players(){
+        return $this->hasMany(Player::class, 'user_id');
+    }
 }

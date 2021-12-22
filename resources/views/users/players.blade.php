@@ -1,11 +1,13 @@
 @extends('users.header')
 @section('header')
 
-
+@foreach ($players as $player)
+    {{ $player['name'] }}
+@endforeach
     
 <form id="query" action="{{ route('players_post') }}" method="POST">
     @csrf
-    <input type="text" name="name">
+    <input type="text" name="name" placeholder="検索したいユーザー名">
     <button type="submit">検索</button>
 </form>
 

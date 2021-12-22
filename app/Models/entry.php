@@ -13,6 +13,7 @@ class Entry extends Model
         return $this->belongsTo(Tournament::class, 'hold_id', 'hold_id');
     }
 
+    // controllerでupdateをするときにupdated_atを無視するため
     public $timestamps = false;
 }
 
