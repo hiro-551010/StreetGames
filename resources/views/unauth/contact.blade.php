@@ -21,6 +21,14 @@
                     @csrf
 
                     <div class="auth_form-item">
+                        <label for="name" class="auth_form-label">お名前</label>
+
+                        <div class="auth_form-input">
+                            <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required  autofocus>
+                        </div>
+                    </div>
+
+                    <div class="auth_form-item">
                         <label for="email" class="auth_form-label">メールアドレス</label>
 
                         <div class="auth_form-input">
@@ -35,21 +43,7 @@
                     </div>
 
                     <div class="auth_form-item">
-                        <label for="password" class="auth_form-label">パスワード</label>
-
-                        <div class="auth_form-input">
-                            <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
-
-                            @error('password')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
-                    </div>
-
-                    <div class="auth_form-item">
-                        <label for="comment" class="auth_form-label">お問い合わせ内容</label>
+                        <label for="comment" class="auth_form-label textArea-label">お問い合わせ内容</label>
 
                         <div class="auth_form-textArea">
                             <textarea name="comment" id="comment" required></textarea>

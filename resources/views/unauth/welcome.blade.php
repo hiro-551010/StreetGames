@@ -27,7 +27,7 @@
             <a class="navbar-brand d-flex align-items-center" href="{{ route('index') }}">ホーム</a>
             <a class="navbar-brand d-flex align-items-center" href="{{ route('login') }}">ログイン</a>
             <a class="navbar-brand d-flex align-items-center" href="{{ route('register') }}">新規登録</a>
-            <a class="navbar-brand d-flex align-items-center" href="{{ route('competition') }}">大会一覧</a>
+            <a class="navbar-brand d-flex align-items-center" href="{{ route('unauth_competition') }}">大会一覧</a>
             <a class="navbar-brand d-flex align-items-center" href="{{ route('unauth_contact') }}">お問い合わせ</a>
             <a class="navbar-brand d-flex align-items-center" href="">利用規約、プライバシーポリシー</a>
         </div>
@@ -43,10 +43,10 @@
             <h1><span>STREET GAMES</span>で<br>実力を誇示せよ</h1>
             <ul class="top_fv-link">
                 <li>
-                    <a class="join" href="/register">無料会員登録はこちら</a>
+                    <a class="join" href="{{ route('register') }}">無料会員登録はこちら</a>
                 </li>
                 <li>
-                    <a class="login" href="/login">ログインはこちら</a>
+                    <a class="login" href="{{ route('login') }}">ログインはこちら</a>
                 </li>
             </ul>
         </div>
@@ -118,13 +118,13 @@
     <footer class="footer">
         <ul class="footer-linkBtn">
             <li>
-                <a class="join" href="/register">無料会員登録はこちら</a>
+                <a class="join" href="{{ route('register') }}">無料会員登録はこちら</a>
             </li>
             <li>
-                <a class="login" href="/login">ログインはこちら</a>
+                <a class="login" href="{{ route('login') }}">ログインはこちら</a>
             </li>
             <li>
-                <a class="contact" href="/contact">お問い合わせはこちら</a>
+                <a class="contact" href="{{ route('unauth_contact') }}">お問い合わせはこちら</a>
             </li>
         </ul>
         <ul class="footer-link">
@@ -132,7 +132,7 @@
                 <a href="">STREET GAMESとは</a>
             </li>
             <li>
-                <a href="">大会一覧</a>
+                <a href="{{ route('unauth_competition') }}">大会一覧</a>
             </li>
             <li>
                 <a href="">プライバシーポリシー</a>
@@ -142,7 +142,6 @@
             </li>
         </ul>
     </footer>
-    @yield('content')
 </div>
 
 </body>

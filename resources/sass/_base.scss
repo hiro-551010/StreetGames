@@ -6,6 +6,7 @@ $color-bg: #1D212C;
 $color-red: #A23676;
 $color-blue: #3695A2;
 $color-yellow: #A28336;
+$color-black:   #191715;
 $color-hover: #0d6efd;
 
 
@@ -93,6 +94,20 @@ $color-hover: #0d6efd;
   &:hover {
     box-shadow: 1px 1px 8px -2px #fff, -1px -1px 8px -2px #fff;
     text-shadow: 1px 1px 6px #aaa;
+  }
+}
+
+// フォームinput
+@mixin formInput($bgc: transparent, $color: #fff) {
+  width: 100%;
+  background-color: $bgc;
+  border: none;
+  color: $color;
+
+  &:focus {
+    background-color: #ffffff99;
+    box-shadow: initial;
+    color: #000;
   }
 }
 

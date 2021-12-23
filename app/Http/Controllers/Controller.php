@@ -6,6 +6,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
+use App\Models\Tournament;
 
 class Controller extends BaseController
 {
@@ -18,7 +19,8 @@ class Controller extends BaseController
     }
 
     public function competition(){
-        return view('unauth.competition');
+        $tournaments = Tournament::with('contents')->get();
+        return view('unauth.competition', compact('tournaments'));
     }
 
     public function contact(){

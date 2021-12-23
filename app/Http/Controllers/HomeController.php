@@ -192,7 +192,7 @@ class HomeController extends Controller
 
     // 質問
     public function contact(){
-        return view('contact');
+        return view('users.contact');
     }
 
     // チャット機能
