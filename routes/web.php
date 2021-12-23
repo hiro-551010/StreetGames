@@ -26,6 +26,7 @@ Auth::routes();
 
 Route::get('/', [Controller::class, 'index'])->name('index');
 Route::get('/unauth_contact', [Controller::class, 'contact'])->name('unauth_contact');
+Route::get('/unauth_competition', [Controller::class, 'competition'])->name('unauth_competition');
 
 
 // ログイン後のルーティング

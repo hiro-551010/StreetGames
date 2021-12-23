@@ -167,7 +167,7 @@
   // background-color: url(../img/top-player.jpg);
   // background-size: 104%;
   // background-position: center;
-  background-color: #191715;
+  background-color: $color-black;
 
   &-inner {
     @include innerWidth();
@@ -186,7 +186,7 @@
 .auth_wrapper {
   height: auto;
   min-height: 100vh;
-  background-image:linear-gradient(0deg, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url(/../img/auth-bg.jpg);
+  background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url(/../img/auth-bg.jpg);
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -246,12 +246,22 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      flex-wrap: wrap;
     }
 
     &:nth-last-child(1) {
       margin-bottom: 0;
       padding-bottom: 0;
       border-bottom: none;
+    }
+
+    .textArea-label {
+      margin-bottom: 8px;
+
+      @include pcTab {
+        width: 100%;
+        align-self: flex-start;
+      }
     }
   }
 
@@ -281,32 +291,17 @@
     }
 
     input {
-      width: 100%;
-      background-color: transparent;
-      border: none;
-      color: #fff;
+      @include formInput();
 
       @include pc {
         font-size: 18px;
       }  
-
-      &:focus {
-        background-color: #ffffff99;
-        box-shadow: initial;
-        color: #000;
-      }
     }
   }
 
   // テキストエリア
   &-textArea {
-
-    @include pcTab {
-      width: 74%;
-    }
-    @include sp {
-      width: 100%;
-    }
+    width: 100%;
 
     textarea {
       width: 100%;
@@ -406,6 +401,10 @@
     @include innerWidth(1200px);
   }
 
+  h1 {
+    margin-bottom: 40px;
+  }
+
   &_lists {
     display: flex;
     flex-wrap: wrap;
@@ -414,7 +413,7 @@
   }
 
   &_card {
-    background-color: #191715;
+    background-color: $color-black;
 
     @include pc {
       width: calc((100% - 40px) / 3);
@@ -425,6 +424,225 @@
     @include sp {
       width: 100%;
       max-width: 400px;
+      margin: 0 auto;
+    }
+  }
+
+  &_img {
+    width: 100%;
+    margin-bottom: 16px;
+    
+    img {
+      width:100%;
+      aspect-ratio: 2 / 1;
+      object-fit: cover;
+    }
+  }
+
+  &_title {
+    margin-bottom: 16px;
+    line-height: 1.4;
+    font-weight: bold;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  &_text {
+    margin-bottom: 4px;
+
+    &:nth-last-of-type(1) {
+      margin-bottom: 20px;
+    }
+  }
+
+  &_btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 16px;
+    border-top: 2px solid $color-bg;
+  }
+
+  &_detail {
+    margin-right: 40px;
+  }
+}
+
+
+// =============================================
+// 大会作成ページ
+// =============================================
+.main_wrapper {
+  width: 100%;
+  padding-bottom: 80px;
+  background-color: $color-black;
+}
+
+.page_title {
+  margin-bottom: 60px;
+  background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(/../img/auth-bg.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  text-align: center;
+  font-weight: bold;
+  
+  @include pcTab {
+    padding: 80px 0;
+    background-position: center;
+  }
+  @include sp {
+    padding: 60px 0;
+    background-position: top;
+  }
+}
+
+.hold_form {
+  @include innerWidth(720px);
+
+  &-item {
+    width: 100%;
+    margin-bottom: 40px;
+
+    @include pcTab {
+      display: flex;
+      align-items: center;
+    }
+
+    label {
+      
+      @include pcTab {
+        width: 28%;
+        font-size: 22px;
+      }
+      @include sp {
+        margin-bottom: 10px;
+        font-size: 18px;
+      }
+
+      &:hover {
+        color: $color-hover;
+        cursor: pointer;
+      }
+    }
+
+    .textArea-label {
+      @include pcTab {
+        align-self: flex-start;
+      }
+    }
+  }
+
+  &-select {
+
+    @include pcTab {
+      width: 72%;
+    }
+    @include sp {
+      width: 100%;
+    }
+
+    select {
+      @include formInput(#ffffffee, #000);
+
+      @include pcTab {
+        font-size: 22px;
+      }
+      @include sp {
+        font-size: 18px;
+      }
+    }
+  }
+
+  &-input {
+
+    @include pcTab {
+      width: 72%;
+    }
+    @include sp {
+      width: 100%;
+    }
+
+    input {
+      @include formInput();
+      padding: 0.375rem 0.75rem;
+      border-bottom: 1px solid #fff;
+      
+      @include pcTab {
+        font-size: 22px;
+      }
+      @include sp {
+        font-size: 18px;
+      }
+
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+
+  &-basicRule {
+    margin-top: 80px;
+
+    @include pcTab {
+      font-size: 22px;
+    }
+    @include sp {
+      font-size: 18px;
+    }
+
+    dt {
+      font-weight: normal;
+
+      @include pcTab {
+        align-self: flex-start;
+        width: 28%;
+        font-size: 22px;
+      }
+      @include sp {
+        margin-bottom: 10px;
+        font-size: 18px;
+      }
+    }
+
+    dd {
+      @include pcTab {
+        width: 72%;
+        font-size: 18px;
+      }
+      @include sp {
+        width: 100%;
+        font-size: 16px;
+      }  
+    }
+  }
+
+  &-textArea {
+
+    @include pcTab {
+      width: 72%;
+    }
+    @include sp {
+      width: 100%;
+    }
+
+    textarea {
+      @include formInput(#ffffffee, #000);
+      height: 8em;
+      
+      @include pcTab {
+        font-size: 22px;
+      }
+      @include sp {
+        font-size: 18px;
+      }
+    }
+  }
+
+  &-submit {
+    margin-top: 80px;
+
+    button {
+      @include linkButton();
       margin: 0 auto;
     }
   }

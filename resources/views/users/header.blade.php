@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -24,8 +24,17 @@
 <header>
     <div class="navbar navbar-dark bg-dark shadow-sm p-3">
         <div class="container">
-            <a class="navbar-brand d-flex align-items-center" href="{{ route('home') }}">ホーム</a>
-            <a class="navbar-brand d-flex align-items-center" href="{{ route('competition') }}">大会参加</a>
+
+                    <!-- サイトロゴ -->
+        <div class="">
+            <a href="/" class="fs-4">Street Games</a>
+        </div>
+
+            <a class="navbar-brand d-flex align-items-center" href="{{ route('competition') }}">大会一覧</a>
+            <a class="navbar-brand d-flex align-items-center" href="{{ route('players') }}">プレイヤー一覧</a>
+
+            
+
             <div class="dropdown">
                 <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                     {{ Auth::user()->name }}
@@ -40,7 +49,6 @@
                     </li>
                 </ul>
             </div>
-            <a class="navbar-brand d-flex align-items-center" href="{{ route('players') }}">プレイヤー一覧</a>
             <a class="navbar-brand d-flex align-items-center" href="{{ route('contact') }}">お問い合わせ</a>
         </div>
     </div>
