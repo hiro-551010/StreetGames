@@ -24,6 +24,7 @@
 <header>
     <div class="navbar navbar-dark bg-dark shadow-sm p-3">
         <div class="container">
+
                     <!-- サイトロゴ -->
         <div class="">
             <a href="/" class="fs-4">Street Games</a>
@@ -31,6 +32,9 @@
 
             <a class="navbar-brand d-flex align-items-center" href="{{ route('competition') }}">大会一覧</a>
             <a class="navbar-brand d-flex align-items-center" href="{{ route('players') }}">プレイヤー一覧</a>
+
+            
+
             <div class="dropdown">
                 <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                     {{ Auth::user()->name }}

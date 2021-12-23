@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\OfficialController;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,6 +44,8 @@ Route::get('competition_detail/{id}', [HomeController::class, 'competition_detai
 Route::post('/entry', [HomeController::class, 'entry'])->name('entry');
 Route::get('/players', [HomeController::class, 'players'])->name('players');
 Route::post('/players_post', [HomeController::class, 'players_post'])->name('players_post');
+Route::get('/competition_detail/{hold_id}/players/{id}', [OfficialController::class, 'competition_detail_players']);
+Route::get('/competition_detail/{hold_id}/host/{id}', [OfficialController::class, 'competition_detail_host']);
 // チャット
 Route::get('/chat/{name}', [HomeController::class, 'chat'])->name('chat');
 Route::post('/chat_post/{name}', [HomeController::class, 'chat_post'])->name('chat_post');
