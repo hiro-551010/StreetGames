@@ -14,6 +14,7 @@ use App\Models\Player;
 use DB;
 
 
+
 class HomeController extends Controller
 {
     /**
@@ -71,30 +72,27 @@ class HomeController extends Controller
                 ->join('tournament_contents', 'tournament_contents.hold_id', 'tournaments.hold_id')
                 ->get();
         }else{
-            $host_tournaments = ['false' => '開催している大会はありません'];
+            $host_tournaments = ['false' => '自分で開催している大会はありません'];
         }
 
         // chat機能
         $receive = Chat::select('chats.*')->where('receive_id', '=', $user[0]['id'])->get();
         $send = Chat::select('chats.*')->where('send_id', '=', $user[0]['id'])->get();
 
-        // userが大会に応募している場合
-        $entry = Entry::select('entries.*')->where('user_id', '=', $user_id)->exists();
-        if($entry){
-            $entries = User::with('entries')->where('join', '1')->get();
+        // userが大会に応募、抽選落ちしている場合
+        $entry_exists = Entry::select('entries.*')->where('user_id', '=', $user_id)->exists();
+        // $entries = User::with('entries')->where('users.id', $user_id)->get();
+        // dd($entries[0]['entries'][0]['join']);
+        if($entry_exists){
+            $entries = Entry::with('tournaments')
+                ->join('users', 'users.id', 'entries.user_id')
+                ->where('id', $user_id)
+                ->get();
         }else{
             $entries = ['false' => '応募している大会はありません'];
         }
 
-        // userが大会に参加している場合
-        $player = Player::select('players.*')->where('user_id', '=', $user_id)->exists();
-        if($player){
-            $players = Player::with('players')->get();
-        }else{
-            $players = ['false' => '参加している大会はありません'];
-        }
-        
-        return view('users.dashboard', compact('user', 'host_tournaments', 'send', 'receive', 'entries', 'players'));
+        return view('users.dashboard', compact('user', 'host_tournaments', 'send', 'receive', 'entries'));
     }
 
     // 大会一覧
@@ -108,8 +106,10 @@ class HomeController extends Controller
         $tournament_contents = Tournament_content::select('tournament_contents.*')
             ->where('hold_id', $id)
             ->get();
-        return view('users.competition_detail', compact('tournament_contents'));
+        return view('users.competition_detail', compact('id', 'tournament_contents'));
     }
+
+    
 
     // 大会開催
     public function hold(){
@@ -192,7 +192,7 @@ class HomeController extends Controller
 
     // 質問
     public function contact(){
-        return view('contact');
+        return view('users.contact');
     }
 
     // チャット機能
@@ -245,17 +245,30 @@ class HomeController extends Controller
         $people = $posts['people'];
         
 
-        // postされた大会のidの人をpeople分取得し、joinを2にupdate
-        $lottery = Entry::inRandomOrder()
-            ->where('hold_id', $entry_id)
-            ->take($people)
-            ->update(['join'=>2]);
+        DB::transaction(function () use($entry_id, $people) {
+            // postされた大会のidの人をpeople分取得し、joinを2にupdate
+            $lottery = Entry::inRandomOrder()
+                ->where('hold_id', $entry_id)
+                ->take($people)
+                ->update(['join'=>2]);
+
+            // 人数分以上の応募があった場合、選ばれなかったらjoinを1にupdate
+            $lottery_lose = Entry::select('entries.*')
+                ->where('hold_id', $entry_id)
+                ->where('join', 1)
+                ->update(['join'=>0]);
+
+            $entries = Entry::select('entries.*')
+                ->where('hold_id', $entry_id)
+                ->where('join', 2)
+                ->get();
+
+            $player = new Player;
+            $insert = $player->insertPlayer($entries);
+        });
         
-        // 人数分以上の応募があった場合、選ばれなかったらjoinを1にupdate
-        $lottery_lose = Entry::select('entries.*')
-            ->where('hold_id', $entry_id)
-            ->where('join', 1)
-            ->update(['join'=>0]);
-        
+
+
+        return redirect(route('admin'));
     }
 }
