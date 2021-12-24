@@ -256,7 +256,7 @@ class HomeController extends Controller
             $lottery_lose = Entry::select('entries.*')
                 ->where('hold_id', $entry_id)
                 ->where('join', 1)
-                ->update(['join'=>0]);
+                ->update(['join' => 0]);
 
             $entries = Entry::select('entries.*')
                 ->where('hold_id', $entry_id)

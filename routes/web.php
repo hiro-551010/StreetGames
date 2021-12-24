@@ -53,5 +53,5 @@ Route::post('/chat_post/{name}', [HomeController::class, 'chat_post'])->name('ch
 Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
 // admin
 Route::get('/admin', [HomeController::class, 'admin'])->name('admin');
-Route::post('/admin_post', [HomeController::class, 'admin_post'])->name('admin_post');
+Route::post('/host_admin_post/{hold_id}/{id}', [OfficialController::class, 'host_admin_post'])->name('host_admin_post');
 

@@ -25,7 +25,6 @@ class Player extends Model
                 DB::table('players')->insert(['user_id'=>$user_id, 'hold_id'=>$hold_id, 'user_name'=>$username]);
             }
         });
-
     }
 }
 
