@@ -267,8 +267,6 @@ class HomeController extends Controller
             $insert = $player->insertPlayer($entries);
         });
         
-
-
         return redirect(route('admin'));
     }
 }
