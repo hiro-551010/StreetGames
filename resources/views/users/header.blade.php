@@ -19,6 +19,7 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/vue-tournament-bracket@2.1.2/dist/vue-tournament-bracket.umd.min.js"></script>
 </head>
 <body>
 <header>
