@@ -1,0 +1,208 @@
+// =============================================
+// 新規登録・ログインページ
+// =============================================
+.auth_wrapper {
+  height: auto;
+  min-height: 100vh;
+  background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url(/../img/auth-bg.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+// 左上サイトロゴ
+.auth_siteLogo {
+  padding-top: 20px;
+  padding-left: 20px;
+
+  a {
+    @include pcTab {
+      font-size: 1.8rem;
+    }
+    @include sp {
+      font-size: 1.4rem;
+    }
+  }
+}
+
+// フォームタイトル
+.auth_content {
+  @include innerWidth(580px);
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
+.auth_title {
+  margin-bottom: 80px;
+
+  h1 {
+    margin-bottom: 40px;
+    text-align: center;
+  }
+}
+
+.auth_termLink {
+  text-align: center;
+
+  a {
+    padding-bottom: 4px;
+    border-bottom: 1px solid #fff;
+  }
+}
+
+// フォームアイテム
+.auth_form {
+  width: 100%;
+
+  &-item {
+    width: 100%;
+    margin-bottom: 50px;
+    padding: 0 4px 4px;
+    border-bottom: 1px solid #ffffff99;
+    
+    @include pcTab {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    &:nth-last-child(1) {
+      margin-bottom: 0;
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+
+    .textArea-label {
+      margin-bottom: 8px;
+
+      @include pcTab {
+        width: 100%;
+        align-self: flex-start;
+      }
+    }
+  }
+
+  &-label {
+    
+    @include pcTab {
+      width: 28%;
+    }
+
+    @include pc {
+      font-size: 18px;
+    }
+
+    &:hover {
+      color: $color-hover;
+      cursor: pointer;
+    }
+  }
+  
+  &-input {
+    
+    @include pcTab {
+      width: 72%;
+    }
+    @include sp {
+      width: 100%;
+    }
+
+    input {
+      @include formInput();
+
+      @include pc {
+        font-size: 18px;
+      }  
+    }
+  }
+
+  // テキストエリア
+  &-textArea {
+    width: 100%;
+
+    textarea {
+      width: 100%;
+      height: 8em;
+      padding: 0.375rem 0.75rem;
+      background-color: transparent;
+      border: none;
+      border-radius: 0.25rem;
+      color: #fff;
+
+      @include pc {
+        font-size: 18px;
+      }  
+
+      &:focus {
+        background-color: #ffffff99;
+        box-shadow: initial;
+        outline: none;
+        color: #000;
+      }
+    }
+  }
+
+  // チェックボックス
+  &-checkBox {
+    display: flex;
+    width: 100%;
+    margin-bottom: 40px;
+
+    .checkBox-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .checkBox-input {
+      width: 18px;
+      height: 18px;
+    }
+
+    .checkBox-label {
+
+      @include pc {
+        font-size: 18px;
+      }
+
+      &:hover {
+        color: $color-hover;
+        cursor: pointer;
+      }
+    }
+  }
+
+  // 送信ボタンエリア
+  &-submit {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+
+  &-btn {
+
+    button {
+      @include linkButton();
+
+      @include sp {
+        margin: 0 auto;
+      }
+    }
+  }
+
+  &-link {
+    margin-left: 30px;
+
+    &:nth-of-type(1) {
+      margin-top: 50px;
+      margin-left: 0;
+    }
+
+    a {
+      padding-bottom: 4px;
+      border-bottom: 1px solid #fff;
+    }
+  }
+}
