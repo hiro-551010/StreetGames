@@ -1,3 +1,4 @@
+@charset "UTF-8";
 html, body {
   background-color: #1D212C;
   font-family: sans-serif;
@@ -690,11 +691,15 @@ button {
   line-height: 1.4;
   font-weight: bold;
   overflow: hidden;
+  text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 .tournaments_text {
   margin-bottom: 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .tournaments_text:nth-last-of-type(1) {
@@ -716,7 +721,7 @@ button {
 .main_wrapper {
   width: 100%;
   padding-bottom: 80px;
-  background-color: #191715;
+  background-color: #1D212C;
 }
 
 .page_title {
@@ -999,5 +1004,378 @@ button {
 .hold_form-submit button:hover {
   box-shadow: 1px 1px 8px -2px #fff, -1px -1px 8px -2px #fff;
   text-shadow: 1px 1px 6px #aaa;
+}
+
+.dashboard {
+  padding: 80px 0;
+}
+
+.dashboard_inner {
+  width: 100%;
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 0 10px;
+}
+
+.dashboard h1 {
+  margin-bottom: 60px;
+  font-size: 1.6rem;
+  font-weight: bold;
+}
+
+.dashboard_tournaments {
+  width: 100%;
+  margin-bottom: 60px;
+}
+
+.dashboard_tournaments:nth-last-of-type(1) {
+  margin-bottom: 0;
+}
+
+.dashboard_tournaments h2 {
+  width: 100%;
+  height: 2.2em;
+  margin-bottom: 5px;
+  padding-left: 8px;
+  border-radius: 4px;
+  line-height: 2.2em;
+}
+
+@media (min-width: 768px) {
+  .dashboard_tournaments h2 {
+    font-size: 1.4rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .dashboard_tournaments h2 {
+    font-size: 1.0rem;
+  }
+}
+
+.dashboard_tournaments > p {
+  margin-bottom: 80px;
+  padding-top: 20px;
+}
+
+@media (min-width: 768px) {
+  .dashboard_tournaments > p {
+    font-size: 1.4rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .dashboard_tournaments > p {
+    font-size: 1.0rem;
+  }
+}
+
+.dashboard_tournaments ul {
+  width: 100%;
+}
+
+.dashboard_tournaments ul li {
+  width: 100%;
+  margin-bottom: 3px;
+  background-color: #191715;
+  border-radius: 4px;
+}
+
+.dashboard_tournaments ul li:nth-last-of-type(1) {
+  margin-bottom: 0;
+}
+
+.dashboard_tournaments ul li p {
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (min-width: 768px) {
+  .dashboard_tournaments ul li p {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .dashboard_tournaments ul li p {
+    font-size: 0.9rem;
+  }
+}
+
+.dashboard_tournaments ul li a {
+  padding-right: 2px;
+  padding-left: 2px;
+  border-bottom: 1px solid #fff;
+}
+
+.dashboard_tournaments ul li a:hover {
+  border-bottom: 1px solid #0d6efd;
+}
+
+.dashboard_hold h2 {
+  background-color: #3695A2;
+}
+
+.dashboard_hold-lists li {
+  padding: 8px;
+}
+
+.dashboard_hold-detail {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.dashboard_player h2 {
+  background-color: #A23676;
+}
+
+.dashboard_player-lists li {
+  display: flex;
+  justify-content: space-between;
+  padding: 14px 8px;
+  align-items: flex-end;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dashboard_player-lists li span {
+  margin-right: 16px;
+}
+
+.hostOnly {
+  width: 100%;
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 0 10px;
+  padding: 80px 10px;
+}
+
+.hostOnly h1 {
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+@media (min-width: 768px) {
+  .hostOnly h1 {
+    font-size: 1.6rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .hostOnly h1 {
+    font-size: 1.2rem;
+  }
+}
+
+.hostOnly_back-link {
+  display: inline-block;
+  margin-bottom: 60px;
+  padding: 0 4px;
+  border-bottom: 1px solid #fff;
+}
+
+.hostOnly_back-link:hover {
+  border-bottom: 1px solid #0d6efd;
+}
+
+.hostOnly_inner {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.hostOnly_title {
+  margin-bottom: 20px;
+}
+
+@media (min-width: 768px) {
+  .hostOnly_title {
+    font-size: 2.0rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .hostOnly_title {
+    font-size: 1.6rem;
+  }
+}
+
+.hostOnly_date {
+  margin-bottom: 10px;
+}
+
+@media (min-width: 768px) {
+  .hostOnly_date {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .hostOnly_date {
+    font-size: 1.0rem;
+  }
+}
+
+.hostOnly_entry {
+  margin-bottom: 80px;
+}
+
+@media (min-width: 768px) {
+  .hostOnly_entry {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .hostOnly_entry {
+    font-size: 1.0rem;
+  }
+}
+
+.hostOnly_entry span {
+  margin-right: 6px;
+  margin-left: 6px;
+}
+
+@media (min-width: 768px) {
+  .hostOnly_entry span {
+    font-size: 1.6rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .hostOnly_entry span {
+    font-size: 1.4rem;
+  }
+}
+
+.hostOnly_lottery p {
+  margin-bottom: 30px;
+}
+
+@media (min-width: 768px) {
+  .hostOnly_lottery p {
+    font-size: 1.0rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .hostOnly_lottery p {
+    font-size: 0.9rem;
+  }
+}
+
+.hostOnly_lottery p span {
+  display: block;
+  position: relative;
+  padding-left: 1.2em;
+}
+
+.hostOnly_lottery p span::before {
+  content: "＊";
+  position: absolute;
+  left: 0;
+}
+
+.hostOnly_lottery button {
+  display: block;
+  text-align: center;
+  color: #fff;
+  font-weight: bold;
+}
+
+.hostOnly_lottery button.join {
+  background-color: #A23676;
+}
+
+.hostOnly_lottery button.login {
+  background-color: #3695A2;
+}
+
+.hostOnly_lottery button.contact {
+  background-color: #A28336;
+}
+
+@media (min-width: 768px) {
+  .hostOnly_lottery button {
+    width: 235px;
+    height: 48px;
+    border-radius: 24px;
+    line-height: 48px;
+  }
+}
+
+@media (max-width: 767px) {
+  .hostOnly_lottery button {
+    width: 200px;
+    height: 40px;
+    border-radius: 20px;
+    line-height: 40px;
+    font-size: 12px;
+  }
+}
+
+.hostOnly_lottery button:hover {
+  box-shadow: 1px 1px 8px -2px #fff, -1px -1px 8px -2px #fff;
+  text-shadow: 1px 1px 6px #aaa;
+}
+
+.hostOnly_selected {
+  margin-bottom: 60px;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .hostOnly_selected {
+    font-size: 1.6rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .hostOnly_selected {
+    font-size: 1.2rem;
+  }
+}
+
+.hostOnly_info h4 {
+  margin-top: 40px;
+  padding: 20px 0;
+}
+
+@media (min-width: 768px) {
+  .hostOnly_info h4 {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .hostOnly_info h4 {
+    font-size: 1.0rem;
+  }
+}
+
+.hostOnly_players {
+  display: flex;
+  flex-wrap: wrap;
+  row-gap: 30px;
+  column-gap: 20px;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .hostOnly_players li {
+    width: calc((100% - 40px) / 3);
+    font-size: 1.4rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .hostOnly_players li {
+    width: calc((100% - 20px) / 2);
+    font-size: 1.2rem;
+  }
 }
 /*# sourceMappingURL=style.css.map */

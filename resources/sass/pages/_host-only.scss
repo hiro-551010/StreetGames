@@ -1,0 +1,157 @@
+// =============================================
+// 開催者専用ページ
+// =============================================
+.hostOnly {
+  @include innerWidth();
+  padding: 80px 10px;
+
+  h1 {
+    margin-bottom: 10px;
+    font-weight: bold;
+    
+    @include pcTab {
+      font-size: 1.6rem;
+    }
+    @include sp {
+      font-size: 1.2rem;
+    }
+  }
+
+  &_back-link {
+    display: inline-block;
+    margin-bottom: 60px;
+    padding: 0 4px;
+    border-bottom: 1px solid #fff;
+    
+    &:hover {
+      border-bottom: 1px solid $color-hover;
+    }
+  }
+
+  &_inner {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  &_title {
+    margin-bottom: 20px;
+
+    @include pcTab {
+      font-size: 2.0rem;
+    }
+    @include sp {
+      font-size: 1.6rem;
+    }
+  }
+
+  &_date {
+    margin-bottom: 10px;
+
+    @include pcTab {
+      font-size: 1.2rem;
+    }
+    @include sp {
+      font-size: 1.0rem;
+    }
+  }
+
+  &_entry {
+    margin-bottom: 80px;
+
+    @include pcTab {
+      font-size: 1.2rem;
+    }
+    @include sp {
+      font-size: 1.0rem;
+    }
+
+    span {
+      margin-right: 6px;
+      margin-left: 6px;
+
+      @include pcTab {
+        font-size: 1.6rem;
+      }
+      @include sp {
+        font-size: 1.4rem;
+      }  
+    }
+  }
+
+  &_lottery {
+
+    p {
+      margin-bottom: 30px;
+
+      @include pcTab {
+        font-size: 1.0rem;
+      }
+      @include sp {
+        font-size: 0.9rem;
+      }
+
+      span {
+        display: block;
+        position: relative;
+        padding-left: 1.2em;
+
+        &::before {
+          content: "＊";
+          position: absolute;
+          left: 0;
+        }
+      }
+    }
+    
+    button {
+      @include linkButton();
+    }
+  }
+
+  // 抽選済みのスタイル
+  &_selected {
+    margin-bottom: 60px;
+    text-align: center;
+
+    @include pcTab {
+      font-size: 1.6rem;
+    }
+    @include sp {
+      font-size: 1.2rem;
+    }
+  }
+
+  &_info {
+    h4 {
+      margin-top: 40px;
+      padding: 20px 0;
+
+      @include pcTab {
+        font-size: 1.2rem;
+      }
+      @include sp {
+        font-size: 1.0rem;
+      }  
+    }
+  }
+
+  &_players {
+    display: flex;
+    flex-wrap: wrap;
+    row-gap: 30px;
+    column-gap: 20px;
+    width: 100%;
+
+    li {
+      
+      @include pcTab {
+        width: calc((100% - 40px) / 3);
+        font-size: 1.4rem;
+      }
+      @include sp {
+        width: calc((100% - 20px) / 2);
+        font-size: 1.2rem;
+      }
+    }
+  }
+}

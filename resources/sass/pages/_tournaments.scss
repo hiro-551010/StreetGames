@@ -1,0 +1,80 @@
+// =============================================
+// 大会一覧ページ
+// =============================================
+.tournaments {
+  padding: 60px 0;
+
+  &_inner {
+    @include innerWidth(1200px);
+  }
+
+  h1 {
+    margin-bottom: 40px;
+  }
+
+  &_lists {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    width: 100%;
+  }
+
+  &_card {
+    background-color: $color-black;
+
+    @include pc {
+      width: calc((100% - 40px) / 3);
+    }
+    @include tab {
+      width: calc((100% - 20px) / 2);
+    }
+    @include sp {
+      width: 100%;
+      max-width: 400px;
+      margin: 0 auto;
+    }
+  }
+
+  &_img {
+    width: 100%;
+    margin-bottom: 16px;
+    
+    img {
+      width:100%;
+      aspect-ratio: 2 / 1;
+      object-fit: cover;
+    }
+  }
+
+  &_title {
+    margin-bottom: 16px;
+    line-height: 1.4;
+    font-weight: bold;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  
+  &_text {
+    margin-bottom: 4px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    &:nth-last-of-type(1) {
+      margin-bottom: 20px;
+    }
+  }
+
+  &_btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 16px;
+    border-top: 2px solid $color-bg;
+  }
+
+  &_detail {
+    margin-right: 40px;
+  }
+}

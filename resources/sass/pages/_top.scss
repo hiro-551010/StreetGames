@@ -1,0 +1,177 @@
+// =============================================
+// トップページ ファーストビュー
+// =============================================
+.top_fv {
+  position: relative;
+  z-index: 0;
+  width: 100%;
+  height: 48vw;
+  min-height: 360px;
+  max-height: 700px;
+  padding-top: 8vw;
+  background-color: $color-bg;
+  
+  // タイトル
+  &-title {
+    @include innerWidth();
+
+    p {
+      font-weight: bold;
+    }
+
+    h1 {
+      margin-bottom: 8%;
+      font-weight: bold;
+
+      span {
+        font-size: 1.1em;
+      }
+    }
+  }
+  
+  // リンクボタン
+  &-link {
+
+    li {
+      margin-bottom: 35px;
+
+      &:nth-last-of-type(1) {
+        margin-bottom: 0;
+      }
+    }
+
+    a {
+      @include linkButton();
+    }
+  }
+
+  // 背景画像
+  &-img {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: -1;
+    height: 100%;
+    overflow: hidden;
+    
+    img {
+      height: 48vw;
+      min-height: 100%;
+    }
+  }
+
+  // 装飾
+  &::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 30%;
+    aspect-ratio: 3 / 1;
+    background-color: rgba(70, 42, 181, 0.51);
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 0);
+  }
+  &::after {
+    content: "";
+    display: block;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 70%;
+    aspect-ratio: 8.5 / 1;
+    background-color: rgba(70, 42, 181, 0.51);
+    clip-path: polygon(0 100%, 100% 0, 100% 100%, 0 100%);
+  }
+}
+
+// =============================================
+// トップページ street gamesとは
+// =============================================
+.top_about {
+  position: relative;
+  width: 100%;
+  padding: 10% 0;
+  background-image: url(../img/top-about.jpg);
+  background-size: 104%;
+  background-position: center;
+
+  &-inner {
+    @include innerWidth();
+  }
+
+  h2 {
+    @include sectionTitle();
+  }
+
+  p {
+    @include pcTab {
+      font-size: 1.5rem;
+    }
+  }
+
+  &::after {
+    content: "";
+    display: block;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    aspect-ratio: 19 / 1;
+    background: linear-gradient(177.77deg, #CCBD32 1.88%, #63CC32 172.08%);
+    clip-path: polygon(0 100%, 100% 0, 100% 100%, 0 100%);
+  }
+}
+
+// =============================================
+// トップページ 参加手順
+// =============================================
+.top_player {
+  position: relative;
+  width: 100%;
+  padding: 10% 0;
+  background-image: url(../img/top-player.jpg);
+  // background-size: 104%;
+  background-position: center;
+
+  &-inner {
+    @include innerWidth();
+  }
+
+  h2 {
+    @include sectionTitle();
+  }
+
+  &::after {
+    content: "";
+    display: block;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    aspect-ratio: 19 / 1;
+    background: linear-gradient(to bottom, rgba(204, 50, 170, 1) 6.6%, rgba(50, 121, 204, 1) 73.49%);
+    clip-path: polygon(0 0, 100% 100%, 100% 100%, 0 100%);
+  }
+}
+
+// =============================================
+// トップページ 開催手順
+// =============================================
+.top_organizer {
+  position: relative;
+  width: 100%;
+  padding: 10% 0;
+  // background-color: url(../img/top-player.jpg);
+  // background-size: 104%;
+  // background-position: center;
+  background-color: $color-black;
+
+  &-inner {
+    @include innerWidth();
+  }
+
+  h2 {
+    @include sectionTitle();
+  }
+}
