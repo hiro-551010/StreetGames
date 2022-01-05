@@ -57,3 +57,8 @@ Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
 Route::get('/admin', [HomeController::class, 'admin'])->name('admin');
 Route::post('/host_admin_post/{hold_id}/{id}', [OfficialController::class, 'host_admin_post'])->name('host_admin_post');
 
+// チャットページ表示
+Route::get('/competition_chat/{hold_id}/{id}/{player_id}', [OfficialController::class, 'competition_chat'])->name('competition_chat');
+// チャット送信
+Route::post('/chat_add/{hold_id}/{id}', [OfficialController::class, 'chat_add'])->name('chat_add');
+

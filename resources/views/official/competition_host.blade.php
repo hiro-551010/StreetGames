@@ -47,11 +47,20 @@
 
             <div class="hostOnly_info">
                 <span class="hostOnly_date">開催日程： {{$tournament[0]['schedule']}}</span>
+
+                <span class="hostOnly_chat">
+                    <a href="{{ route('competition_chat', ['hold_id' => $tournament[0]['hold_id'], 'id' => \Auth::id(), 'player_id' => $players[0]['user_id']]) }}">チャットルームへ</a>
+                </span>
+
                 <h4>参加プレイヤー一覧</h4>
                 <ul class="hostOnly_players">
                     @foreach ($players as $player)
                     <li>
+
+                       ・ <a href="">{{$player['user_id']}}</a>
+
                        ・ <a href="">{{$player['user_name']}}</a>
+
                     </li>
                     @endforeach
                 </ul>
