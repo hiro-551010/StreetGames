@@ -7,7 +7,6 @@
 <!-- entriesのjoinは0は抽選落ち、1は応募中、2は参加確定 -->
 
 <main class="hostOnly">
-
     <h1>大会管理ページ（開催者）</h1>
     <a href="{{ route('dashboard') }}" class="hostOnly_back-link">ダッシュボードへ戻る</a>
 
@@ -47,11 +46,14 @@
 
             <div class="hostOnly_info">
                 <span class="hostOnly_date">開催日程： {{$tournament[0]['schedule']}}</span>
+                <span class="hostOnly_chat">
+                    <a href="{{ route('competition_chat', ['hold_id' => $tournament[0]['hold_id'], 'id' => \Auth::id(), 'player_id' => $players[0]['user_id']]) }}">チャットルームへ</a>
+                </span>
                 <h4>参加プレイヤー一覧</h4>
                 <ul class="hostOnly_players">
                     @foreach ($players as $player)
                     <li>
-                       ・ <a href="">{{$player['user_name']}}</a>
+                       ・ <a href="">{{$player['user_id']}}</a>
                     </li>
                     @endforeach
                 </ul>
