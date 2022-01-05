@@ -11,6 +11,7 @@ use App\Models\Tournament_content;
 use App\Models\Entry;
 use App\Models\Chat;
 use App\Models\Player;
+use App\Models\Win;
 use DB;
 
 class OfficialController extends Controller
@@ -36,47 +37,46 @@ class OfficialController extends Controller
         $player_exists = Player::where('hold_id', $hold_id)->exists();
         if($player_exists){
             $players = Player::select('players.*')->where('hold_id', $hold_id)->get();
-            // $entried_users = ['false' => ''];
         }else{
-            $players = ['false' => '参加者をまだ抽選していません'];
-            // $entried_users = Entry::select('entries.*')
-            //     ->where('hold_id', $hold_id)
-            //     ->where('join', 1)
-            //     ->get();      
+            $players = ['false' => '参加者をまだ抽選していません'];   
         }
+
+        // トーナメント表の変数
+        // winners1が複数取れてないのを解決する
+        $winner1 = Win::where('round1', 1)->get();
+        foreach ($winner1 as $w1) {
+            $winners1 = Player::select('players.*')->where('hold_id', $w1['hold_id'])->where('user_id', $w1['user_id'])->get();
+        }
+        dd($winners1);
         
-        return view('official.competition_host', compact('entries', 'tournament', 'players'));
+        
+        
+        return view('official.competition_host', compact('entries', 'tournament', 'players', 'winners1'));
     }
 
+    // 抽選決定
     public function host_admin_post(Request $request, $hold_id, $id){
         $posts = $request->all();
         // 大会のidを取得
         $entry_id = $posts['hold_id'];
         // 大会の人数を取得
         $people = $posts['people'];
+        
+        // App/Models/Player.php
+        $player = new Player;
+        $insert = $player->insertPlayer($entry_id, $people);
 
-        DB::transaction(function () use($entry_id, $people) {
-            // postされた大会のidの人をpeople分取得し、joinを2にupdate
-            $lottery = Entry::inRandomOrder()
-                ->where('hold_id', $entry_id)
-                ->take($people)
-                ->update(['join'=>2]);
+        // winsテーブルにdataを追加
+        $win = new Win;
+        $bracket = $win->bracket($hold_id);
+        return redirect(route('dashboard'));
+    }
 
-            // 人数分以上の応募があった場合、選ばれなかったらjoinを1にupdate
-            $lottery_lose = Entry::select('entries.*')
-                ->where('hold_id', $entry_id)
-                ->where('join', 1)
-                ->update(['join' => 0]);
-
-            $entries = Entry::select('entries.*')
-                ->where('hold_id', $entry_id)
-                ->where('join', 2)
-                ->get();
-
-            $player = new Player;
-            $insert = $player->insertPlayer($entries);
-        });
-
+    // トーナメントのブラケット
+    public function host_bracket_post(Request $request, $hold_id, $id){
+        $posts = $request->all();
+        $win = new Win;
+        $insert = $win->insertData($posts);
         return redirect(route('dashboard'));
     }
 

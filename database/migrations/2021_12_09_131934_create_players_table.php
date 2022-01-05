@@ -16,6 +16,7 @@ class CreatePlayersTable extends Migration
         Schema::create('players', function (Blueprint $table) {
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('hold_id');
+            $table->string('user_name');
 
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('hold_id')->references('hold_id')->on('hosts');

@@ -14,8 +14,26 @@ class Player extends Model
         'user_id', 'hold_id', 'user_name'
     ];
 
-    public function insertPlayer($entries){
-        DB::transaction(function () use($entries) {
+    public function insertPlayer($entry_id, $people){
+        DB::transaction(function () use($entry_id, $people) {
+            // postされた大会のidの人をpeople分取得し、joinを2にupdate
+            $lottery = Entry::inRandomOrder()
+                ->where('hold_id', $entry_id)
+                ->take($people)
+                ->update(['join'=>2]);
+
+            // 人数分以上の応募があった場合、選ばれなかったらjoinを0にupdate
+            $lottery_lose = Entry::select('entries.*')
+                ->where('hold_id', $entry_id)
+                ->where('join', 1)
+                ->update(['join' => 0]);
+
+            // joinが2になったuserを変数に格納
+            $entries = Entry::select('entries.*')
+                ->where('hold_id', $entry_id)
+                ->where('join', 2)
+                ->get();
+
             foreach($entries as $entry){
                 $user_id = $entry['user_id'];
                 $hold_id = $entry['hold_id'];

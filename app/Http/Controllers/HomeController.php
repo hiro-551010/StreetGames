@@ -11,6 +11,7 @@ use App\Models\Tournament_content;
 use App\Models\Entry;
 use App\Models\Chat;
 use App\Models\Player;
+use App\Models\Win;
 use DB;
 
 
@@ -37,23 +38,30 @@ class HomeController extends Controller
     // ログイン後
     public function home(){
         $user_id = \Auth::id();
-        // 外部キーで取得
-
-        $host = Host::with('user')->where('user_id', $user_id)->exists();
-        if($host){
-            $host_tournaments= Host::with('user')
-                ->where('hosts.user_id', $user_id)
-                ->join('tournaments', 'tournaments.hold_id', 'hosts.hold_id')
-                ->join('tournament_contents', 'tournament_contents.hold_id', 'tournaments.hold_id')
-                ->get();
-        }else{
-            return redirect(route('dashboard'));
-        }
         
-        // $contents = Tournament::with('contents')->get();
-        // dd($contents);
+        $host_tournament = Tournament::with('contents')->first();
+        $people = $host_tournament['contents'][0]['people'];
+        $players = Player::select('players.*')
+            ->where('hold_id', 2)    
+            ->get();
 
-        return view('home', compact('host_tournaments'));
+        return view('home', compact('people', 'host_tournament', 'players'));
+    }
+    
+    public function winner(){
+        // $players = Player::where('hold_id', 2)->get();
+        // $winner = Win::where('round1', 1)->get();
+        
+        return view('users.win', compact('players', 'winner'));
+    }
+
+    public function winner_post(Request $request){
+        $posts = $request->all();
+        
+        $winner = new Win;
+        $insert = $winner->insertData($posts);
+        
+        return redirect(route('winner'));
     }
 
     // ダッシュボード
