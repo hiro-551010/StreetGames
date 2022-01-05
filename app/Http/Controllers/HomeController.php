@@ -76,8 +76,7 @@ class HomeController extends Controller
         }
 
         // chat機能
-        $receive = Chat::select('chats.*')->where('receive_id', '=', $user[0]['id'])->get();
-        $send = Chat::select('chats.*')->where('send_id', '=', $user[0]['id'])->get();
+        $readStatus = Chat::select('chats.read_status')->where('receive_id', '=', $user[0]['id'])->get();
 
         // userが大会に応募、抽選落ちしている場合
         $entry_exists = Entry::select('entries.*')->where('user_id', '=', $user_id)->exists();
@@ -92,7 +91,7 @@ class HomeController extends Controller
             $entries = ['false' => '応募している大会はありません'];
         }
 
-        return view('users.dashboard', compact('user', 'host_tournaments', 'send', 'receive', 'entries'));
+        return view('users.dashboard', compact('user', 'host_tournaments', 'readStatus', 'entries'));
     }
 
     // 大会一覧
