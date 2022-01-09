@@ -2,39 +2,83 @@
 // 開催者専用ページ
 // =============================================
 .hostOnly {
-  @include innerWidth();
-  padding: 80px 10px;
+  width: 100%;
 
-  h1 {
-    margin-bottom: 10px;
-    font-weight: bold;
+  // ページヘッダー
+  &_header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    height: 28vw;
+    max-height: 335px;
+    background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url(../img/auth-bg.jpg);
+    background-size: cover;
+    background-position: center;
     
     @include pcTab {
-      font-size: 1.6rem;
+      margin-bottom: 120px;
     }
     @include sp {
-      font-size: 1.2rem;
+      margin-bottom: 80px;
     }
+
+    h1 {
+
+      @include pcTab {
+        font-size: 2.0rem;
+      }
+      @include sp {
+        font-size: 1.2rem;
+      }
+    }
+
+    &::after {
+      content: "";
+      display: block;
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      width: 100%;
+      aspect-ratio: 62 / 1;
+      background: linear-gradient(177.77deg, #462AB5 1.88%, #9A6DC8 172.08%);
+      clip-path: polygon(0 100%, 100% 0, 100% 100%, 0 100%);
+    }  
   }
 
   &_back-link {
-    display: inline-block;
-    margin-bottom: 60px;
-    padding: 0 4px;
-    border-bottom: 1px solid #fff;
-    
-    &:hover {
-      border-bottom: 1px solid $color-hover;
+    margin-bottom: 72px;
+    text-align: center;
+
+    a {
+      display: inline-block;
+      padding: 0 4px;
+      border-bottom: 1px solid #fff;
+
+      &:hover {
+        border-bottom: 1px solid $color-hover;
+      }
     }
+    
   }
 
   &_inner {
-    width: 100%;
-    margin-bottom: 20px;
+    @include innerWidth();
+    margin-bottom: 80px;
+    padding: 60px 40px 40px;
+    background-image: url(../img/top-about.jpg);
+    background-size: 110%;
+    background-position: center;
+
+    @include pcTab {
+      border: 2px solid $color-red;
+    }
   }
 
   &_title {
     margin-bottom: 20px;
+    line-height: 1.4;
 
     @include pcTab {
       font-size: 2.0rem;
@@ -45,6 +89,7 @@
   }
 
   &_date {
+    display: block;
     margin-bottom: 10px;
 
     @include pcTab {
@@ -52,6 +97,20 @@
     }
     @include sp {
       font-size: 1.0rem;
+    }
+  }
+
+  &_chat {
+    display: block;
+    margin-bottom: 60px;
+
+    a {
+      padding: 0 4px;
+      border-bottom: 1px solid #fff;
+
+      &:hover {
+        border-bottom: 1px solid $color-hover;
+      }
     }
   }
 
@@ -110,7 +169,7 @@
 
   // 抽選済みのスタイル
   &_selected {
-    margin-bottom: 60px;
+    margin-bottom: 20px;
     text-align: center;
 
     @include pcTab {
@@ -123,7 +182,6 @@
 
   &_info {
     h4 {
-      margin-top: 40px;
       padding: 20px 0;
 
       @include pcTab {
@@ -138,19 +196,20 @@
   &_players {
     display: flex;
     flex-wrap: wrap;
-    row-gap: 30px;
+    row-gap: 20px;
     column-gap: 20px;
     width: 100%;
+    padding-left: 4%;
 
     li {
       
       @include pcTab {
-        width: calc((100% - 40px) / 3);
-        font-size: 1.4rem;
-      }
-      @include sp {
         width: calc((100% - 20px) / 2);
         font-size: 1.2rem;
+      }
+      @include sp {
+        width: 100%;
+        font-size: 1.1rem;
       }
     }
   }

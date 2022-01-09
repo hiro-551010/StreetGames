@@ -2,14 +2,44 @@
 // 大会一覧ページ
 // =============================================
 .tournaments {
-  padding: 60px 0;
+  width: 100%;
+  background-color: $color-black;
+
+  &_header {
+    @include pageHeader();
+    margin-bottom: 40px;
+  
+    background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url(../img/auth-bg.jpg);
+    background-size: cover;
+    background-position: center;
+    
+    &::after {
+      aspect-ratio: 62 / 1;
+      background: linear-gradient(177.77deg, #462AB5 1.88%, #9A6DC8 172.08%);
+      clip-path: polygon(0 100%, 100% 0, 100% 100%, 0 100%);
+    }    
+  }
 
   &_inner {
     @include innerWidth(1200px);
   }
 
-  h1 {
-    margin-bottom: 40px;
+  &_sort {
+    margin-bottom: 80px;
+
+    select {
+      padding: 14px 20px;
+      background-color: #312E2E;
+      border: none;
+      border-radius: 10px;
+      color: #fff;
+    
+      &:focus {
+        background-color: #ffffff99;
+        box-shadow: initial;
+        color: #000;
+      }    
+    }
   }
 
   &_lists {
@@ -20,7 +50,7 @@
   }
 
   &_card {
-    background-color: $color-black;
+    background-color: #312E2E;
 
     @include pc {
       width: calc((100% - 40px) / 3);
@@ -37,17 +67,18 @@
 
   &_img {
     width: 100%;
-    margin-bottom: 16px;
+    margin-bottom: 10px;
     
     img {
       width:100%;
-      aspect-ratio: 2 / 1;
+      aspect-ratio: 2 / 1.2;
       object-fit: cover;
     }
   }
 
   &_title {
-    margin-bottom: 16px;
+    margin-bottom: 24px;
+    font-size: 16px;
     line-height: 1.4;
     font-weight: bold;
     overflow: hidden;
@@ -57,24 +88,78 @@
   
   &_text {
     margin-bottom: 4px;
+    font-size: 16px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 
-    &:nth-last-of-type(1) {
-      margin-bottom: 20px;
+    &:nth-of-type(-n+2) {
+      font-size: 12px;
+    }
+    &:nth-of-type(2) {
+      margin-bottom: 14px;
     }
   }
 
   &_btn {
     display: flex;
-    justify-content: center;
     align-items: center;
-    padding-top: 16px;
-    border-top: 2px solid $color-bg;
+    padding: 20px 6% 0;
+
+    & > div {
+      width: 50%;
+      text-align: center;
+    }
   }
 
   &_detail {
-    margin-right: 40px;
+
+    a {
+      display: inline-block;
+      padding: 10px 16px;
+      background-color: $color-red;
+      border-radius: 7px;
+
+      &::after {
+        content: "";
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        border-top: 1px solid #fff;
+        border-right: 1px solid #fff;
+        transform: rotate(45deg) translateY(-2px);
+      }
+
+      &:hover {
+        color: #fff;
+        box-shadow: 1px 1px 8px -2px #fff, -1px -1px 8px -2px #fff;
+        text-shadow: 1px 1px 6px #aaa;
+      }
+    }
+  }
+  
+  &_submit {
+    
+    button {
+      display: inline-block;
+      padding: 10px 16px;
+      background-color: $color-blue;
+      border-radius: 7px;
+
+      &::after {
+        content: "";
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        border-top: 1px solid #fff;
+        border-right: 1px solid #fff;
+        transform: rotate(45deg) translateY(-2px);
+      }
+
+      &:hover {
+        box-shadow: 1px 1px 8px -2px #fff, -1px -1px 8px -2px #fff;
+        text-shadow: 1px 1px 6px #aaa;    
+      }
+    }
   }
 }

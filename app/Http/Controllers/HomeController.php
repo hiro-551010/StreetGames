@@ -103,9 +103,28 @@ class HomeController extends Controller
     }
 
     // 大会一覧
-    public function competition(){
-        $tournaments = Tournament::with('contents')->get();
-        return view('users.competition', compact('tournaments'));
+    public function competition(Request $request){
+        $posts = $request->all();
+        $order = '';
+
+        // ベースのメソッド
+        $tournaments = Tournament::join('tournament_contents', 'tournaments.hold_id', 'tournament_contents.hold_id')
+            ->join('titles', 'tournaments.title_id', 'titles.title_id');
+
+        // 並べ替え
+        if (empty($posts) || $posts['tournaments_sort'] == 'soon') {
+            // 開催日が早い順
+            $tournaments = $tournaments->orderBy('schedule', 'asc');
+        } else {
+            // 開催日が遅い順
+            $tournaments = $tournaments->orderBy('schedule', 'desc');
+            $order = 'late';
+        }
+
+        // トーナメント情報取得
+        $tournaments = $tournaments->get();
+        
+        return view('users.competition', compact('tournaments', 'order'));
     }
 
     // 大会詳細
@@ -132,7 +151,11 @@ class HomeController extends Controller
     // holdからpostで送られてきたrequestを処理
     public function hold_post(Request $request){
         $posts = $request->all();
-        DB::transaction(function () use($posts) {
+        $schedule = $posts['year']. '/'. $posts['month']. '/'. $posts['day'];
+        if (empty($posts['prize'])) {
+            $posts['prize'] = "なし";
+        }
+        DB::transaction(function () use($posts, $schedule) {
             // $host = Host::insert(['user_id' => $posts['user_id']]);
             // user_idをインサートしてhold_idをとってくる
             $host = DB::table('hosts')->insertGetId(['user_id' => $posts['user_id']], 'hold_id');
@@ -147,7 +170,7 @@ class HomeController extends Controller
                 'hold_id' => $host,
                 'people' => $posts['people'],
                 'rule' => $posts['rule'],
-                'schedule' => $posts['schedule']
+                'schedule' => $schedule
             ]);
         });
         return redirect(route('dashboard'));

@@ -158,4 +158,6 @@
     </div>
 </div>
 </main>
+
+<script src="{{ asset('js/chat.js') }}" defer></script>
 @endsection

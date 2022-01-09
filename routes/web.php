@@ -26,7 +26,7 @@ Auth::routes();
 
 Route::get('/', [Controller::class, 'index'])->name('index');
 Route::get('/unauth_contact', [Controller::class, 'contact'])->name('unauth_contact');
-Route::get('/unauth_competition', [Controller::class, 'competition'])->name('unauth_competition');
+Route::get('/unauth_competition', [Controller::class, 'unauth_competition'])->name('unauth_competition');
 
 
 // ログイン後のルーティング
@@ -39,7 +39,7 @@ Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('dashboard'
 Route::get('/hold', [HomeController::class, 'hold'])->name('hold');
 Route::post('/hold_post', [HomeController::class, 'hold_post'])->name('hold_post');
 // 大会一覧
-Route::get('/competition', [HomeController::class, 'competition'])->name('competition');
+Route::match(['get', 'post'], '/competition', [HomeController::class, 'competition'])->name('competition');
 Route::get('competition_detail/{id}', [HomeController::class, 'competition_detail'])->name('competition_detail');
 // 応募、参加関係
 Route::post('/entry', [HomeController::class, 'entry'])->name('entry');

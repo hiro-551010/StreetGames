@@ -40,7 +40,9 @@ class OfficialController extends Controller
 
         $player_exists = Player::where('hold_id', $hold_id)->exists();
         if($player_exists){
-            $players = Player::select('players.*')->where('hold_id', $hold_id)->get();
+            $players = Player::select('players.*', 'users.name as user_name')->where('hold_id', $hold_id)
+            ->join('users', 'players.user_id', 'users.id')
+            ->get();
         }else{
             $players = ['false' => '参加者をまだ抽選していません'];   
         }

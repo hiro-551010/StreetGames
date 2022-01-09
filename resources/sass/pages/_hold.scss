@@ -4,33 +4,51 @@
 .main_wrapper {
   width: 100%;
   padding-bottom: 80px;
-  background-color: $color-bg;
+  background-color: $color-black;
 }
 
-.page_title {
-  margin-bottom: 60px;
-  background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(/../img/auth-bg.jpg);
-  background-size: cover;
-  background-repeat: no-repeat;
-  text-align: center;
-  font-weight: bold;
-  
+.hold_header {
+  @include pageHeader();
+
   @include pcTab {
-    padding: 80px 0;
-    background-position: center;
+    margin-bottom: 200px;
   }
   @include sp {
-    padding: 60px 0;
-    background-position: top;
+    margin-bottom: 80px;
   }
+
+  background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url(../img/auth-bg.jpg);
+  background-size: cover;
+  background-position: center;
+  
+  &::after {
+    aspect-ratio: 62 / 1;
+    background: linear-gradient(177.77deg, #462AB5 1.88%, #9A6DC8 172.08%);
+    clip-path: polygon(0 100%, 100% 0, 100% 100%, 0 100%);
+  }  
 }
 
 .hold_form {
-  @include innerWidth(720px);
+  @include innerWidth(897px);
+  background-color: #312E2E;
+  
+  @include pcTab {
+    padding: 30px 150px 60px;
+    border-radius: 53px;
+  }
+  @include sp {
+    padding: 30px 14px 40px;
+  }
+
+  &-required {
+    margin-bottom: 50px;
+    font-size: 12px;
+    color: #EF0F0F;
+  }
 
   &-item {
     width: 100%;
-    margin-bottom: 40px;
+    margin-bottom: 48px;
 
     @include pcTab {
       display: flex;
@@ -38,14 +56,23 @@
     }
 
     label {
+      position: relative;
+      padding-left: 1em;
+
+      &.required::before {
+        content: "＊";
+        position: absolute;
+        left: 0;
+        color: #EF0F0F;
+      }
       
       @include pcTab {
-        width: 28%;
-        font-size: 22px;
+        width: 36%;
+        font-size: 16px;
       }
       @include sp {
         margin-bottom: 10px;
-        font-size: 18px;
+        font-size: 14px;
       }
 
       &:hover {
@@ -54,9 +81,10 @@
       }
     }
 
-    .textArea-label {
+    .textArea-label, .schedule-label {
       @include pcTab {
         align-self: flex-start;
+        padding-top: 0.375rem;
       }
     }
   }
@@ -64,7 +92,7 @@
   &-select {
 
     @include pcTab {
-      width: 72%;
+      width: 64%;
     }
     @include sp {
       width: 100%;
@@ -72,20 +100,15 @@
 
     select {
       @include formInput(#ffffffee, #000);
-
-      @include pcTab {
-        font-size: 22px;
-      }
-      @include sp {
-        font-size: 18px;
-      }
+      font-size: 12px;
+      border-radius: 7px;
     }
   }
 
   &-input {
 
     @include pcTab {
-      width: 72%;
+      width: 64%;
     }
     @include sp {
       width: 100%;
@@ -95,57 +118,100 @@
       @include formInput();
       padding: 0.375rem 0.75rem;
       border-bottom: 1px solid #fff;
+      font-size: 16px;
       
-      @include pcTab {
-        font-size: 22px;
-      }
-      @include sp {
-        font-size: 18px;
-      }
-
       &:focus {
         outline: none;
       }
     }
   }
 
-  &-basicRule {
-    margin-top: 80px;
-
+  &-date {
     @include pcTab {
-      font-size: 22px;
+      width: 64%;
     }
     @include sp {
-      font-size: 18px;
-    }
-
-    dt {
-      font-weight: normal;
-
-      @include pcTab {
-        align-self: flex-start;
-        width: 28%;
-        font-size: 22px;
-      }
-      @include sp {
-        margin-bottom: 10px;
-        font-size: 18px;
-      }
-    }
-
-    dd {
-      @include pcTab {
-        width: 72%;
-        font-size: 18px;
-      }
-      @include sp {
-        width: 100%;
-        font-size: 16px;
-      }  
+      width: 100%;
     }
   }
 
+  &-dateInput {
+    margin-bottom: 4px;
+
+    span {
+      vertical-align: bottom;
+    }
+
+    input {
+      @include formInput(#ffffffee, #000);
+      margin-right: 4px;
+      padding: 0.375rem 0.75rem;
+      border-radius: 7px;
+
+      &:focus {
+        outline: none;
+      }
+    }
+
+    input:nth-of-type(1) {
+      width: 6em;
+    }
+    input:nth-of-type(2) {
+      width: 3em;
+      margin-left: 20px;
+    }
+    input:nth-of-type(3) {
+      width: 3em;
+      margin-left: 20px;
+    }
+  }
+
+  &-dateText {
+     span {
+       display: block;
+       font-size: 11px;
+       color: #787878;
+     }
+  }
+
+  // &-basicRule {
+  //   margin-top: 80px;
+
+  //   @include pcTab {
+  //     font-size: 22px;
+  //   }
+  //   @include sp {
+  //     font-size: 18px;
+  //   }
+
+  //   dt {
+  //     font-weight: normal;
+
+  //     @include pcTab {
+  //       align-self: flex-start;
+  //       width: 28%;
+  //       font-size: 22px;
+  //     }
+  //     @include sp {
+  //       margin-bottom: 10px;
+  //       font-size: 18px;
+  //     }
+  //   }
+
+  //   dd {
+  //     @include pcTab {
+  //       width: 72%;
+  //       font-size: 18px;
+  //     }
+  //     @include sp {
+  //       width: 100%;
+  //       font-size: 16px;
+  //     }  
+  //   }
+  // }
+
   &-textArea {
+    margin-bottom: 60px;
 
     @include pcTab {
       width: 72%;
@@ -157,22 +223,57 @@
     textarea {
       @include formInput(#ffffffee, #000);
       height: 8em;
+      margin-bottom: 4px;
+      border-radius: 7px;
+      font-size: 16px;
+    }
+
+    span {
+      display: block;
+      font-size: 11px;
+      color: #787878;
+      line-height: 1.2;
+    }
+  }
+
+  &-term {
+    display: flex;
+    margin-bottom: 48px;
+
+    input {
       
       @include pcTab {
-        font-size: 22px;
+        width: 20px;
+        height: 20px;
+        margin-right: 40px;
       }
       @include sp {
-        font-size: 18px;
+        width: 24px;
+        height: 24px;
+        margin-right: 20px;
       }
+    }
+
+    span {
+      line-height: 1.2;
     }
   }
 
   &-submit {
-    margin-top: 80px;
 
     button {
       @include linkButton();
       margin: 0 auto;
+
+      &:disabled {
+        background-color: $color-black;
+        color: #312E2E;
+
+        &:hover {
+          box-shadow: none;
+          text-shadow: none;
+        }
+      }
     }
   }
 }
