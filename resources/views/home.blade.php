@@ -3,7 +3,7 @@
 
 @section('header')
 <div class="container">
-    <form action="{{ route('winner') }}" method="POST">
+    {{-- <form action="{{ route('winner') }}" method="POST"> --}}
         @csrf
         <div class="row">
             <div class="col-md-4">

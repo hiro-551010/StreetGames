@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use DB;
+use Illuminate\Validation\Rules\Exists;
 
 class Win extends Model
 {
@@ -27,21 +28,19 @@ class Win extends Model
     }
 
     public function insertData($posts){
-
-        $winner_id = $posts['round1'];
+        // round2等で分岐を作成
         $winner = Win::select('wins.*');
-        $winner->where('user_id', $winner_id)->update(['round1'=>1]);
+
+        // round1
+        if(isset($posts['round1'])){  
+            $winner1_id = $posts['round1'];
+            $winner->where('user_id', $winner1_id)->update(['round1'=>1]);
+        }
         
-        // foreach($players as $p){
-        //     $winner = Win::select('wins.*');
-        //     if(isset($rounds)){
-        //         $winner->where('players');
-        //     }
-            
-        //     $winner->insert([
-        //         'hold_id'=>$tournament, 
-        //         'user_id'=>$p['user_id'],
-        //     ]);  
-        // }
+        // round2
+        if(isset($posts['round2'])){  
+            $winner1_id = $posts['round2'];
+            $winner->where('user_id', $winner1_id)->update(['round2'=>1]);
+        }
     }
 }

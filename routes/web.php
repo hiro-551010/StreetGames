@@ -46,7 +46,7 @@ Route::post('/entry', [HomeController::class, 'entry'])->name('entry');
 Route::get('/players', [HomeController::class, 'players'])->name('players');
 Route::post('/players_post', [HomeController::class, 'players_post'])->name('players_post');
 Route::get('/competition_detail/{hold_id}/players/{id}', [OfficialController::class, 'competition_detail_players']);
-Route::get('/competition_detail/{hold_id}/host/{id}', [OfficialController::class, 'competition_detail_host']);
+Route::get('/competition_detail/{hold_id}/host/{id}', [OfficialController::class, 'competition_detail_host'])->name('competition_detail_host');
 Route::post('/host_bracket_post/{hold_id}/{id}', [OfficialController::class, 'host_bracket_post']);
 // チャット
 Route::get('/chat/{name}', [HomeController::class, 'chat'])->name('chat');

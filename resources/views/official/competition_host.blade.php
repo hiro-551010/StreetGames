@@ -71,6 +71,12 @@
 </main>
 
 {{-- トーナメント表 --}}
+
+@isset($players['false'])
+
+@else
+    
+
 <div class="container">
     <h2>トーナメント表</h2>
     
@@ -96,12 +102,25 @@
                     </tr> 
                 </tbody>
             </table>
-            @isset($winners1)
+            @isset($winners1['false'])
+            @else
                 <table>
                     <tr>
                         <td>
                             @foreach($winners1 as $w1)
-                                <p>{{$w1['user_name']}}<input type="radio" name="round2" value="{{$w1['user_id']}}"></p>
+                                <p>{{$w1['name']}}<input type="radio" name="round2" value="{{$w1['user_id']}}"></p>
+                            @endforeach
+                        </td>
+                    </tr>
+                </table>
+            @endisset
+            @isset($winners2['false'])
+            @else
+                <table>
+                    <tr>
+                        <td>
+                            @foreach($winners2 as $w2)
+                                <p>{{$w2['name']}}<input type="radio" name="round2" value="{{$w2['user_id']}}"></p>
                             @endforeach
                         </td>
                     </tr>
@@ -111,4 +130,5 @@
         <button type="submit">送信</button>
     </form>
 </div>
+@endisset
 @endsection
