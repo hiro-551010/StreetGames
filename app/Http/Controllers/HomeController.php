@@ -42,8 +42,9 @@ class HomeController extends Controller
         $host_tournament = Tournament::with('contents')->first();
         $people = $host_tournament['contents'][0]['people'];
         $players = Player::select('players.*')
-            ->where('hold_id', 2)    
+            ->where('hold_id', 1)    
             ->get();
+
 
         return view('home', compact('people', 'host_tournament', 'players'));
     }

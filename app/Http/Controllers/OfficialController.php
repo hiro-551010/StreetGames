@@ -86,7 +86,6 @@ class OfficialController extends Controller
         $player = new Player;
         $insert = $player->insertPlayer($entry_id, $people);
 
-
         // winsテーブルにdataを追加
         $win = new Win;
         $bracket = $win->bracket($hold_id);
