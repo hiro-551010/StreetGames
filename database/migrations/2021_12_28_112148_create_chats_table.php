@@ -14,14 +14,14 @@ class CreateChatsTable extends Migration
     public function up()
     {
         Schema::create('chats', function (Blueprint $table) {
-            //送信者
-            $table->integer('send_id');
-            $table->string('sender');
-            //受信者
-            $table->integer('receive_id');
-            $table->string('receiver');
-            //メッセージ
+            $table->unsignedBigInteger('room_id');
+            $table->unsignedBigInteger('send_id');
+            $table->unsignedBigInteger('receive_id');
             $table->longText('message');
+            $table->string('read_status');
+            $table->timestamp('created_at');
+
+            $table->foreign('room_id')->references('id')->on('chat_rooms');
         });
     }
 

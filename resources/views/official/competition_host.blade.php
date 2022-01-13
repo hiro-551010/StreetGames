@@ -38,7 +38,7 @@
                     </div>
 
                     <div" class="hostOnly_back-link">
-                        <a href="{{ route('dashboard') }}>ダッシュボードへ戻る</a>
+                        <a href="{{ route('dashboard') }}">ダッシュボードへ戻る</a>
                     </div>
                 </div>
             </div>
@@ -74,7 +74,6 @@
 
 </main>
 
-@if (!isset($players['false']))
 {{-- トーナメント表 --}}
 
 @isset($players['false'])
