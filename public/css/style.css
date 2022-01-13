@@ -630,7 +630,49 @@ button {
 }
 
 .tournaments {
-  padding: 60px 0;
+  width: 100%;
+  background-color: #191715;
+}
+
+.tournaments_header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  height: 28vw;
+  max-height: 335px;
+  margin-bottom: 40px;
+  background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url(../img/auth-bg.jpg);
+  background-size: cover;
+  background-position: center;
+}
+
+@media (min-width: 768px) {
+  .tournaments_header h1 {
+    font-size: 2.0rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .tournaments_header h1 {
+    font-size: 1.2rem;
+  }
+}
+
+.tournaments_header::after {
+  content: "";
+  display: block;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+}
+
+.tournaments_header::after {
+  aspect-ratio: 62 / 1;
+  background: linear-gradient(177.77deg, #462AB5 1.88%, #9A6DC8 172.08%);
+  clip-path: polygon(0 100%, 100% 0, 100% 100%, 0 100%);
 }
 
 .tournaments_inner {
@@ -640,8 +682,22 @@ button {
   padding: 0 10px;
 }
 
-.tournaments h1 {
-  margin-bottom: 40px;
+.tournaments_sort {
+  margin-bottom: 80px;
+}
+
+.tournaments_sort select {
+  padding: 14px 20px;
+  background-color: #312E2E;
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+}
+
+.tournaments_sort select:focus {
+  background-color: #ffffff99;
+  box-shadow: initial;
+  color: #000;
 }
 
 .tournaments_lists {
@@ -652,7 +708,7 @@ button {
 }
 
 .tournaments_card {
-  background-color: #191715;
+  background-color: #312E2E;
 }
 
 @media (min-width: 1024px) {
@@ -677,17 +733,18 @@ button {
 
 .tournaments_img {
   width: 100%;
-  margin-bottom: 16px;
+  margin-bottom: 10px;
 }
 
 .tournaments_img img {
   width: 100%;
-  aspect-ratio: 2 / 1;
+  aspect-ratio: 2 / 1.2;
   object-fit: cover;
 }
 
 .tournaments_title {
-  margin-bottom: 16px;
+  margin-bottom: 24px;
+  font-size: 16px;
   line-height: 1.4;
   font-weight: bold;
   overflow: hidden;
@@ -697,66 +754,164 @@ button {
 
 .tournaments_text {
   margin-bottom: 4px;
+  font-size: 16px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.tournaments_text:nth-last-of-type(1) {
-  margin-bottom: 20px;
+.tournaments_text:nth-of-type(-n+2) {
+  font-size: 12px;
+}
+
+.tournaments_text:nth-of-type(2) {
+  margin-bottom: 14px;
 }
 
 .tournaments_btn {
   display: flex;
-  justify-content: center;
   align-items: center;
-  padding-top: 16px;
-  border-top: 2px solid #1D212C;
+  padding: 20px 6% 0;
 }
 
-.tournaments_detail {
-  margin-right: 40px;
+.tournaments_btn > div {
+  width: 50%;
+  text-align: center;
+}
+
+.tournaments_detail a {
+  display: inline-block;
+  padding: 10px 16px;
+  background-color: #A23676;
+  border-radius: 7px;
+}
+
+.tournaments_detail a::after {
+  content: "";
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-top: 1px solid #fff;
+  border-right: 1px solid #fff;
+  transform: rotate(45deg) translateY(-2px);
+}
+
+.tournaments_detail a:hover {
+  color: #fff;
+  box-shadow: 1px 1px 8px -2px #fff, -1px -1px 8px -2px #fff;
+  text-shadow: 1px 1px 6px #aaa;
+}
+
+.tournaments_submit button {
+  display: inline-block;
+  padding: 10px 16px;
+  background-color: #3695A2;
+  border-radius: 7px;
+}
+
+.tournaments_submit button::after {
+  content: "";
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-top: 1px solid #fff;
+  border-right: 1px solid #fff;
+  transform: rotate(45deg) translateY(-2px);
+}
+
+.tournaments_submit button:hover {
+  box-shadow: 1px 1px 8px -2px #fff, -1px -1px 8px -2px #fff;
+  text-shadow: 1px 1px 6px #aaa;
 }
 
 .main_wrapper {
   width: 100%;
   padding-bottom: 80px;
-  background-color: #1D212C;
+  background-color: #191715;
 }
 
-.page_title {
-  margin-bottom: 60px;
-  background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(/../img/auth-bg.jpg);
+.hold_header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  height: 28vw;
+  max-height: 335px;
+  background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url(../img/auth-bg.jpg);
   background-size: cover;
-  background-repeat: no-repeat;
-  text-align: center;
-  font-weight: bold;
+  background-position: center;
 }
 
 @media (min-width: 768px) {
-  .page_title {
-    padding: 80px 0;
-    background-position: center;
+  .hold_header h1 {
+    font-size: 2.0rem;
   }
 }
 
 @media (max-width: 767px) {
-  .page_title {
-    padding: 60px 0;
-    background-position: top;
+  .hold_header h1 {
+    font-size: 1.2rem;
   }
+}
+
+.hold_header::after {
+  content: "";
+  display: block;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .hold_header {
+    margin-bottom: 200px;
+  }
+}
+
+@media (max-width: 767px) {
+  .hold_header {
+    margin-bottom: 80px;
+  }
+}
+
+.hold_header::after {
+  aspect-ratio: 62 / 1;
+  background: linear-gradient(177.77deg, #462AB5 1.88%, #9A6DC8 172.08%);
+  clip-path: polygon(0 100%, 100% 0, 100% 100%, 0 100%);
 }
 
 .hold_form {
   width: 100%;
-  max-width: 720px;
+  max-width: 897px;
   margin: 0 auto;
   padding: 0 10px;
+  background-color: #312E2E;
+}
+
+@media (min-width: 768px) {
+  .hold_form {
+    padding: 30px 150px 60px;
+    border-radius: 53px;
+  }
+}
+
+@media (max-width: 767px) {
+  .hold_form {
+    padding: 30px 14px 40px;
+  }
+}
+
+.hold_form-required {
+  margin-bottom: 50px;
+  font-size: 12px;
+  color: #EF0F0F;
 }
 
 .hold_form-item {
   width: 100%;
-  margin-bottom: 40px;
+  margin-bottom: 48px;
 }
 
 @media (min-width: 768px) {
@@ -766,17 +921,29 @@ button {
   }
 }
 
+.hold_form-item label {
+  position: relative;
+  padding-left: 1em;
+}
+
+.hold_form-item label.required::before {
+  content: "＊";
+  position: absolute;
+  left: 0;
+  color: #EF0F0F;
+}
+
 @media (min-width: 768px) {
   .hold_form-item label {
-    width: 28%;
-    font-size: 22px;
+    width: 36%;
+    font-size: 16px;
   }
 }
 
 @media (max-width: 767px) {
   .hold_form-item label {
     margin-bottom: 10px;
-    font-size: 18px;
+    font-size: 14px;
   }
 }
 
@@ -786,14 +953,15 @@ button {
 }
 
 @media (min-width: 768px) {
-  .hold_form-item .textArea-label {
+  .hold_form-item .textArea-label, .hold_form-item .schedule-label {
     align-self: flex-start;
+    padding-top: 0.375rem;
   }
 }
 
 @media (min-width: 768px) {
   .hold_form-select {
-    width: 72%;
+    width: 64%;
   }
 }
 
@@ -808,6 +976,8 @@ button {
   background-color: #ffffffee;
   border: none;
   color: #000;
+  font-size: 12px;
+  border-radius: 7px;
 }
 
 .hold_form-select select:focus {
@@ -817,20 +987,8 @@ button {
 }
 
 @media (min-width: 768px) {
-  .hold_form-select select {
-    font-size: 22px;
-  }
-}
-
-@media (max-width: 767px) {
-  .hold_form-select select {
-    font-size: 18px;
-  }
-}
-
-@media (min-width: 768px) {
   .hold_form-input {
-    width: 72%;
+    width: 64%;
   }
 }
 
@@ -847,6 +1005,7 @@ button {
   color: #fff;
   padding: 0.375rem 0.75rem;
   border-bottom: 1px solid #fff;
+  font-size: 16px;
 }
 
 .hold_form-input input:focus {
@@ -855,69 +1014,72 @@ button {
   color: #000;
 }
 
-@media (min-width: 768px) {
-  .hold_form-input input {
-    font-size: 22px;
-  }
-}
-
-@media (max-width: 767px) {
-  .hold_form-input input {
-    font-size: 18px;
-  }
-}
-
 .hold_form-input input:focus {
   outline: none;
 }
 
-.hold_form-basicRule {
-  margin-top: 80px;
-}
-
 @media (min-width: 768px) {
-  .hold_form-basicRule {
-    font-size: 22px;
+  .hold_form-date {
+    width: 64%;
   }
 }
 
 @media (max-width: 767px) {
-  .hold_form-basicRule {
-    font-size: 18px;
-  }
-}
-
-.hold_form-basicRule dt {
-  font-weight: normal;
-}
-
-@media (min-width: 768px) {
-  .hold_form-basicRule dt {
-    align-self: flex-start;
-    width: 28%;
-    font-size: 22px;
-  }
-}
-
-@media (max-width: 767px) {
-  .hold_form-basicRule dt {
-    margin-bottom: 10px;
-    font-size: 18px;
-  }
-}
-
-@media (min-width: 768px) {
-  .hold_form-basicRule dd {
-    width: 72%;
-    font-size: 18px;
-  }
-}
-
-@media (max-width: 767px) {
-  .hold_form-basicRule dd {
+  .hold_form-date {
     width: 100%;
-    font-size: 16px;
   }
+}
+
+.hold_form-dateInput {
+  margin-bottom: 4px;
+}
+
+.hold_form-dateInput span {
+  vertical-align: bottom;
+}
+
+.hold_form-dateInput input {
+  width: 100%;
+  background-color: #ffffffee;
+  border: none;
+  color: #000;
+  margin-right: 4px;
+  padding: 0.375rem 0.75rem;
+  border-radius: 7px;
+}
+
+.hold_form-dateInput input:focus {
+  background-color: #ffffff99;
+  box-shadow: initial;
+  color: #000;
+}
+
+.hold_form-dateInput input:focus {
+  outline: none;
+}
+
+.hold_form-dateInput input:nth-of-type(1) {
+  width: 6em;
+}
+
+.hold_form-dateInput input:nth-of-type(2) {
+  width: 3em;
+  margin-left: 20px;
+}
+
+.hold_form-dateInput input:nth-of-type(3) {
+  width: 3em;
+  margin-left: 20px;
+}
+
+.hold_form-dateText span {
+  display: block;
+  font-size: 11px;
+  color: #787878;
+}
+
+.hold_form-textArea {
+  margin-bottom: 60px;
 }
 
 @media (min-width: 768px) {
@@ -938,6 +1100,9 @@ button {
   border: none;
   color: #000;
   height: 8em;
+  margin-bottom: 4px;
+  border-radius: 7px;
+  font-size: 16px;
 }
 
 .hold_form-textArea textarea:focus {
@@ -946,20 +1111,36 @@ button {
   color: #000;
 }
 
+.hold_form-textArea span {
+  display: block;
+  font-size: 11px;
+  color: #787878;
+  line-height: 1.2;
+}
+
+.hold_form-term {
+  display: flex;
+  margin-bottom: 48px;
+}
+
 @media (min-width: 768px) {
-  .hold_form-textArea textarea {
-    font-size: 22px;
+  .hold_form-term input {
+    width: 20px;
+    height: 20px;
+    margin-right: 40px;
   }
 }
 
 @media (max-width: 767px) {
-  .hold_form-textArea textarea {
-    font-size: 18px;
+  .hold_form-term input {
+    width: 24px;
+    height: 24px;
+    margin-right: 20px;
   }
 }
 
-.hold_form-submit {
-  margin-top: 80px;
+.hold_form-term span {
+  line-height: 1.2;
 }
 
 .hold_form-submit button {
@@ -1006,8 +1187,59 @@ button {
   text-shadow: 1px 1px 6px #aaa;
 }
 
+.hold_form-submit button:disabled {
+  background-color: #191715;
+  color: #312E2E;
+}
+
+.hold_form-submit button:disabled:hover {
+  box-shadow: none;
+  text-shadow: none;
+}
+
 .dashboard {
-  padding: 80px 0;
+  padding: 0 0 80px;
+}
+
+.dashboard_header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  height: 28vw;
+  max-height: 335px;
+  margin-bottom: 120px;
+  background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url(../img/auth-bg.jpg);
+  background-size: cover;
+  background-position: center;
+}
+
+@media (min-width: 768px) {
+  .dashboard_header h1 {
+    font-size: 2.0rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .dashboard_header h1 {
+    font-size: 1.2rem;
+  }
+}
+
+.dashboard_header::after {
+  content: "";
+  display: block;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+}
+
+.dashboard_header::after {
+  aspect-ratio: 62 / 1;
+  background: linear-gradient(177.77deg, #462AB5 1.88%, #9A6DC8 172.08%);
+  clip-path: polygon(0 100%, 100% 0, 100% 100%, 0 100%);
 }
 
 .dashboard_inner {
@@ -1032,25 +1264,49 @@ button {
   margin-bottom: 0;
 }
 
-.dashboard_tournaments h2 {
+.dashboard_tournaments-title {
+  position: relative;
   width: 100%;
   height: 2.2em;
   margin-bottom: 5px;
   padding-left: 8px;
   border-radius: 4px;
   line-height: 2.2em;
+  cursor: pointer;
+}
+
+.dashboard_tournaments-title:hover {
+  box-shadow: 1px 1px 8px -2px #fff, -1px -1px 8px -2px #fff;
+  text-shadow: 1px 1px 6px #aaa;
 }
 
 @media (min-width: 768px) {
-  .dashboard_tournaments h2 {
+  .dashboard_tournaments-title {
     font-size: 1.4rem;
   }
 }
 
 @media (max-width: 767px) {
-  .dashboard_tournaments h2 {
+  .dashboard_tournaments-title {
     font-size: 1.0rem;
   }
+}
+
+.dashboard_tournaments-title::after {
+  content: "";
+  display: inline-block;
+  position: absolute;
+  top: 46%;
+  right: 1em;
+  width: .6em;
+  height: .6em;
+  border-top: 2px solid #fff;
+  border-right: 2px solid #fff;
+  transform: translateY(-50%) rotate(135deg);
+}
+
+.dashboard_tournaments-title.active::after {
+  transform: rotate(-45deg);
 }
 
 .dashboard_tournaments > p {
@@ -1071,6 +1327,7 @@ button {
 }
 
 .dashboard_tournaments ul {
+  display: none;
   width: 100%;
 }
 
@@ -1148,47 +1405,93 @@ button {
 
 .hostOnly {
   width: 100%;
-  max-width: 920px;
-  margin: 0 auto;
-  padding: 0 10px;
-  padding: 80px 10px;
 }
 
-.hostOnly h1 {
-  margin-bottom: 10px;
-  font-weight: bold;
+.hostOnly_header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  height: 28vw;
+  max-height: 335px;
+  background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url(../img/auth-bg.jpg);
+  background-size: cover;
+  background-position: center;
 }
 
 @media (min-width: 768px) {
-  .hostOnly h1 {
-    font-size: 1.6rem;
+  .hostOnly_header {
+    margin-bottom: 120px;
   }
 }
 
 @media (max-width: 767px) {
-  .hostOnly h1 {
+  .hostOnly_header {
+    margin-bottom: 80px;
+  }
+}
+
+@media (min-width: 768px) {
+  .hostOnly_header h1 {
+    font-size: 2.0rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .hostOnly_header h1 {
     font-size: 1.2rem;
   }
 }
 
+.hostOnly_header::after {
+  content: "";
+  display: block;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  aspect-ratio: 62 / 1;
+  background: linear-gradient(177.77deg, #462AB5 1.88%, #9A6DC8 172.08%);
+  clip-path: polygon(0 100%, 100% 0, 100% 100%, 0 100%);
+}
+
 .hostOnly_back-link {
+  margin-bottom: 72px;
+  text-align: center;
+}
+
+.hostOnly_back-link a {
   display: inline-block;
-  margin-bottom: 60px;
   padding: 0 4px;
   border-bottom: 1px solid #fff;
 }
 
-.hostOnly_back-link:hover {
+.hostOnly_back-link a:hover {
   border-bottom: 1px solid #0d6efd;
 }
 
 .hostOnly_inner {
   width: 100%;
-  margin-bottom: 20px;
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 0 10px;
+  margin-bottom: 80px;
+  padding: 60px 40px 40px;
+  background-image: url(../img/top-about.jpg);
+  background-size: 110%;
+  background-position: center;
+}
+
+@media (min-width: 768px) {
+  .hostOnly_inner {
+    border: 2px solid #A23676;
+  }
 }
 
 .hostOnly_title {
   margin-bottom: 20px;
+  line-height: 1.4;
 }
 
 @media (min-width: 768px) {
@@ -1204,6 +1507,7 @@ button {
 }
 
 .hostOnly_date {
+  display: block;
   margin-bottom: 10px;
 }
 
@@ -1217,6 +1521,20 @@ button {
   .hostOnly_date {
     font-size: 1.0rem;
   }
+}
+
+.hostOnly_chat {
+  display: block;
+  margin-bottom: 60px;
+}
+
+.hostOnly_chat a {
+  padding: 0 4px;
+  border-bottom: 1px solid #fff;
+}
+
+.hostOnly_chat a:hover {
+  border-bottom: 1px solid #0d6efd;
 }
 
 .hostOnly_entry {
@@ -1324,7 +1642,7 @@ button {
 }
 
 .hostOnly_selected {
-  margin-bottom: 60px;
+  margin-bottom: 20px;
   text-align: center;
 }
 
@@ -1341,7 +1659,6 @@ button {
 }
 
 .hostOnly_info h4 {
-  margin-top: 40px;
   padding: 20px 0;
 }
 
@@ -1360,25 +1677,25 @@ button {
 .hostOnly_players {
   display: flex;
   flex-wrap: wrap;
-  row-gap: 30px;
+  row-gap: 20px;
   column-gap: 20px;
   width: 100%;
+  padding-left: 4%;
 }
 
 @media (min-width: 768px) {
-  .hostOnly_players li {
-    width: calc((100% - 40px) / 3);
-    font-size: 1.4rem;
-  }
-}
-
-@media (max-width: 767px) {
   .hostOnly_players li {
     width: calc((100% - 20px) / 2);
     font-size: 1.2rem;
   }
 }
 
+@media (max-width: 767px) {
+  .hostOnly_players li {
+    width: 100%;
+    font-size: 1.1rem;
+  }
+}
 
 .chat {
   width: 100%;
@@ -1456,6 +1773,7 @@ button {
 
 .chat_content-btn {
   position: sticky;
+  z-index: 1;
 }
 
 .chat_content-btn a {
@@ -1505,6 +1823,8 @@ button {
 }
 
 .chat_list {
+  position: relative;
+  z-index: 0;
   width: 100%;
 }
 
@@ -1778,5 +2098,4 @@ button {
   font-size: 16px;
   color: #C12626;
 }
-
 /*# sourceMappingURL=style.css.map */

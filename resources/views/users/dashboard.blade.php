@@ -4,21 +4,23 @@
 <div class="container-fluid m-0 p-0">
     <!-- ダッシュボードページ -->
     <main class="dashboard">
+        <div class="dashboard_header">
+            <h1>ダッシュボード</h1>
+        </div>
 
         <div class="dashboard_inner">
-            <h1 class="">ダッシュボード</h1>
 
             <!-- 開催している大会 -->
             <section class="dashboard_hold dashboard_tournaments">
-                <h2>開催予定の大会</h2>
                 @isset($host_tournaments['false'])
-    
+                
                 <!-- 開催している大会がない場合 -->
-                <p>{{ $host_tournaments['false'] }}</p>
-    
+                <p>・{{ $host_tournaments['false'] }}</p>
+                
                 @else
-                 <!-- 開催している大会がある場合、一覧表示 -->
-                    <ul class="dashboard_hold-lists">
+                <!-- 開催している大会がある場合、一覧表示 -->
+                    <h2 class="dashboard_tournaments-title">開催予定の大会</h2>
+                    <ul class="dashboard_hold-lists dashboard_tournaments-lists">
 
                         @foreach ($host_tournaments as $h)
                         <li>
@@ -37,15 +39,15 @@
             
             <!-- 応募、参加している大会 -->
             <section class="dashboard_player dashboard_tournaments">
-                <h2>応募中または参加予定の大会</h2>
                 @isset($entries['false'])
-
+                
                 <!-- 参加、応募ない場合 -->
-                <p>{{$entries['false']}}</p>
-
+                <p>・{{$entries['false']}}</p>
+                
                 @else
                 <!-- 参加、応募などある場合 -->
-                    <ul class="dashboard_player-lists">
+                    <h2 class="dashboard_tournaments-title">応募中または参加予定の大会</h2>
+                    <ul class="dashboard_player-lists dashboard_tournaments-lists">
 
                     <!-- 参加する大会 -->
                         @foreach ($entries as $entry)

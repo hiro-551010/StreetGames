@@ -1,30 +1,29 @@
 $(function () {
-
-  // チャットページスクロール
-  var oldBtn = $('.chat_content-top'),
-      latestBtn = $('.chat_content-bottom'),
-      box = $('.chat_content-message'), // スクロール要素
-      boxHeight = box. get(0). scrollHeight, // 要素の高さ
-      boxArea = box. get(0). offsetHeight; // 表示領域
-
-  // 読み込み時に最下部までスクロールしておく
-  box. scrollTop(boxHeight - boxArea);
-  // 最初のメッセージと最後のメッセージにID属性付与
-  $('.chat_list > li:first'). attr('id', 'oldMessage');
-  $('.chat_list > li:last'). attr('id', 'latestMessage');
-
-  box.on('scroll', function () {
-    // 古いボタン表示・非表示
-    if ($(this). scrollTop() > 150) {
-      oldBtn. css('display', 'block');
+  // フォーム同意にチェックが入ったら送信ボタン有効化
+  var formTerm = $('#formTerm'),
+      formSubmit = $('#formSubmit');
+  
+  if (formTerm. prop("checked")) {
+    formSubmit. prop('disabled', false);
+  }
+  
+  formTerm. on('change', function () {
+    if ($(this). prop("checked")) {
+      formSubmit. prop('disabled', false);
     } else {
-      oldBtn. css('display', 'none');
+      formSubmit. prop('disabled', true);
     }
-    // 新しいボタン表示・非表示
-    if (boxHeight - $(this). scrollTop() < boxArea + 150) {
-      latestBtn. css('display', 'none');
+  });
+
+
+  // ダッシュボード大会一覧ドロップダウン
+  $('.dashboard_tournaments-title'). on('click', function () {
+    if ($(this).hasClass('active')) {
+      $(this). removeClass('active');
+      $(this). siblings('.dashboard_tournaments-lists'). slideUp();
     } else {
-      latestBtn. css('display', 'flex');
+      $(this). addClass('active');
+      $(this). siblings('.dashboard_tournaments-lists'). slideDown();
     }
   });
 });

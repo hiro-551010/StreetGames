@@ -18,7 +18,7 @@ class Controller extends BaseController
         return view('unauth.welcome');
     }
 
-    public function competition(){
+    public function unauth_competition(){
         $tournaments = Tournament::with('contents')->get();
         return view('unauth.competition', compact('tournaments'));
     }

@@ -7,9 +7,10 @@
 <!-- entriesのjoinは0は抽選落ち、1は応募中、2は参加確定 -->
 
 <main class="hostOnly">
+    <div class="hostOnly_header">
+        <h1>大会管理ページ（開催者）</h1>
+    </div>
 
-    <h1>大会管理ページ（開催者）</h1>
-    <a href="{{ route('dashboard') }}" class="hostOnly_back-link">ダッシュボードへ戻る</a>
 
     @isset($players['false'])
         <!-- 抽選前の表示 -->
@@ -36,31 +37,34 @@
                         </form>
                     </div>
 
+                    <div" class="hostOnly_back-link">
+                        <a href="{{ route('dashboard') }}>ダッシュボードへ戻る</a>
+                    </div>
                 </div>
             </div>
         @endforeach
     @else
         <!-- 抽選済みの表示 -->
+        <p class="hostOnly_selected text-info">参加応募の抽選は完了しました</p>
+        <div class="hostOnly_back-link">
+            <a href="{{ route('dashboard') }}">ダッシュボードへ戻る</a>
+        </div>
+
         <div class="hostOnly_inner">
-            <p class="hostOnly_selected text-info">参加応募の抽選は完了しました</p>
             <h2 class="hostOnly_title">大会名： {{$tournament[0]['explanation']}}</h2>
 
             <div class="hostOnly_info">
-                <span class="hostOnly_date">開催日程： {{$tournament[0]['schedule']}}</span>
+                <span class="hostOnly_date">開催日程： {{date('Y年m月d日',  strtotime($tournament[0]['schedule']))}}</span>
 
                 <span class="hostOnly_chat">
                     <a href="{{ route('competition_chat', ['hold_id' => $tournament[0]['hold_id'], 'id' => \Auth::id(), 'player_id' => $players[0]['user_id']]) }}">チャットルームへ</a>
                 </span>
 
-                <h4>参加プレイヤー一覧</h4>
+                <h4>プレイヤー一覧</h4>
                 <ul class="hostOnly_players">
                     @foreach ($players as $player)
                     <li>
-
-                       ・ <a href="">{{$player['user_id']}}</a>
-
                        ・ <a href="">{{$player['user_name']}}</a>
-
                     </li>
                     @endforeach
                 </ul>
@@ -70,6 +74,7 @@
 
 </main>
 
+@if (!isset($players['false']))
 {{-- トーナメント表 --}}
 
 @isset($players['false'])
@@ -93,5 +98,7 @@
     
 @endif
 
+
 @endisset
+
 @endsection
