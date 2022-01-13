@@ -42,5 +42,11 @@ class Win extends Model
             $winner1_id = $posts['round2'];
             $winner->where('user_id', $winner1_id)->update(['round2'=>1]);
         }
+
+        //round3
+        if(isset($posts['round3'])){  
+            $winner1_id = $posts['round3'];
+            $winner->where('user_id', $winner1_id)->update(['round3'=>1]);
+        }
     }
 }
