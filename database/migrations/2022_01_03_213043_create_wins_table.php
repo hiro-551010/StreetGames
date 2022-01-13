@@ -20,6 +20,9 @@ class CreateWinsTable extends Migration
             $table->boolean('round2')->nullable();
             $table->boolean('round3')->nullable();
             $table->boolean('round4')->nullable();
+            $table->boolean('round5')->nullable();
+            $table->boolean('round6')->nullable();
+            $table->boolean('round7')->nullable();
 
             $table->foreign('hold_id')->references('hold_id')->on('players');
             $table->foreign('user_id')->references('user_id')->on('players');

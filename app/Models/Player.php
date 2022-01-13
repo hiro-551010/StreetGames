@@ -11,7 +11,7 @@ class Player extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id', 'hold_id'
+        'user_id', 'hold_id', 'user_name'
     ];
 
     public function insertPlayer($entry_id, $people){
@@ -37,8 +37,9 @@ class Player extends Model
             foreach($entries as $entry){
                 $user_id = $entry['user_id'];
                 $hold_id = $entry['hold_id'];
-
-                DB::table('players')->insert(['user_id'=>$user_id, 'hold_id'=>$hold_id]);
+                $user = User::where('id', $user_id)->get();
+                $user_name = $user[0]['name'];
+                DB::table('players')->insert(['user_id'=>$user_id, 'hold_id'=>$hold_id, 'user_name'=>$user_name]);
             }
         });
     }

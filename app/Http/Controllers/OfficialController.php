@@ -48,22 +48,29 @@ class OfficialController extends Controller
         }
 
         // トーナメント表の変数
-        // winners1が複数取れてないのを解決する
-        $winner1 = Win::where('round1', 1)->get();
-        foreach ($winner1 as $w1) {
-            $winners1 = Player::select('players.*')->where('hold_id', $w1['hold_id'])->where('user_id', $w1['user_id'])->get();
+        $winner1_exists = Win::where('round1', 1)->exists();
+        if($winner1_exists){
+            $winners1 = Win::where('round1', 1)
+                ->join('users', 'users.id', 'wins.user_id')
+                ->get();
+        }else{
+            $winners1 = ['false' => 'aaa'];
         }
-        dd($winners1);
-        
-        
-        
-        return view('official.competition_host', compact('entries', 'tournament', 'players', 'winners1'));
+
+        $winner2_exists = Win::where('round2', 1)->exists();
+        if($winner2_exists){
+            $winners2 = Win::where('round2', 1)
+                ->join('users', 'users.id', 'wins.user_id')
+                ->get();
+        }else{
+            $winners2 = ['false' => 'aaa'];
+        }
 
         $chat_room = ChatRoom::where('hold_id', $hold_id)
             ->where('closed_at', null)
             ->get();
         
-        return view('official.competition_host', compact('entries', 'tournament', 'players', 'chat_room'));
+        return view('official.competition_host', compact('entries', 'tournament', 'players', 'chat_room', 'winners1', 'winners2'));
 
     }
 
@@ -79,7 +86,6 @@ class OfficialController extends Controller
         $player = new Player;
         $insert = $player->insertPlayer($entry_id, $people);
 
-
         // winsテーブルにdataを追加
         $win = new Win;
         $bracket = $win->bracket($hold_id);
@@ -92,7 +98,7 @@ class OfficialController extends Controller
         $posts = $request->all();
         $win = new Win;
         $insert = $win->insertData($posts);
-        return redirect(route('dashboard'));
+        return redirect(route('competition_detail_host', ['hold_id' => $hold_id, 'id' => $id]));
     }
 
     // 大会詳細の参加者専用ページ
