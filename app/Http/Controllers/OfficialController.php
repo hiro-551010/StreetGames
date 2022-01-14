@@ -200,6 +200,6 @@ class OfficialController extends Controller
             'read_status' => $read_status,
         ]);
 
-        return redirect(route('competition_chat', ['hold_id' => $hold_id, 'id' => $id]));
+        return redirect(route('competition_chat', ['hold_id' => $hold_id, 'id' => $id, 'player_id' => $posts['player_id']]));
     }
 }
