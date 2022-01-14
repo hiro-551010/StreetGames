@@ -40,6 +40,9 @@ class Player extends Model
                 $user = User::where('id', $user_id)->get();
                 $user_name = $user[0]['name'];
                 DB::table('players')->insert(['user_id'=>$user_id, 'hold_id'=>$hold_id, 'user_name'=>$user_name]);
+                // 参加者分のチャットルーム作成(host除外)
+                if ($user_id != \Auth::id())
+                ChatRoom::insert(['hold_id' => $entry['hold_id'], 'player_id' => $entry['user_id']]);
             }
         });
     }
