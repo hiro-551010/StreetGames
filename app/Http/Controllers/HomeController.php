@@ -274,29 +274,9 @@ class HomeController extends Controller
         $entry_id = $posts['hold_id'];
         // 大会の人数を取得
         $people = $posts['people'];
-        
 
-        DB::transaction(function () use($entry_id, $people) {
-            // postされた大会のidの人をpeople分取得し、joinを2にupdate
-            $lottery = Entry::inRandomOrder()
-                ->where('hold_id', $entry_id)
-                ->take($people)
-                ->update(['join'=>2]);
-
-            // 人数分以上の応募があった場合、選ばれなかったらjoinを1にupdate
-            $lottery_lose = Entry::select('entries.*')
-                ->where('hold_id', $entry_id)
-                ->where('join', 1)
-                ->update(['join' => 0]);
-
-            $entries = Entry::select('entries.*')
-                ->where('hold_id', $entry_id)
-                ->where('join', 2)
-                ->get();
-
-            $player = new Player;
-            $insert = $player->insertPlayer($entries);
-        });
+        $player = new Player;
+        $insert = $player->insertPlayer($entry_id, $people);
         
         return redirect(route('admin'));
     }
