@@ -48,18 +48,18 @@ class OfficialController extends Controller
         }
 
         // トーナメント表の変数
-        $winner1_exists = Win::where('round1', 1)->exists();
+        $winner1_exists = Win::where([['round1', 1], ['hold_id', $hold_id]])->exists();
         if($winner1_exists){
-            $winners1 = Win::where('round1', 1)
+            $winners1 = Win::where([['round1', 1], ['hold_id', $hold_id]])
                 ->join('users', 'users.id', 'wins.user_id')
                 ->get();
         }else{
             $winners1 = ['false' => 'aaa'];
         }
 
-        $winner2_exists = Win::where('round2', 1)->exists();
+        $winner2_exists = Win::where([['round2', 1], ['hold_id', $hold_id]])->exists();
         if($winner2_exists){
-            $winners2 = Win::where('round2', 1)
+            $winners2 = Win::where([['round2', 1], ['hold_id', $hold_id]])
                 ->join('users', 'users.id', 'wins.user_id')
                 ->get();
         }else{

@@ -33,7 +33,7 @@ class Player extends Model
                 ->where('hold_id', $entry_id)
                 ->where('join', 2)
                 ->get();
-
+            $entries = $entries->shuffle();
             foreach($entries as $entry){
                 $user_id = $entry['user_id'];
                 $hold_id = $entry['hold_id'];

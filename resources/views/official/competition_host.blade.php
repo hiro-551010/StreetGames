@@ -36,6 +36,9 @@
                         </form>
                     </div>
 
+                    <div class="hostOnly_back-link">
+                        <a href="{{ route('dashboard') }}">ダッシュボードへ戻る</a>
+                    </div>
                 </div>
             </div>
         @endforeach
