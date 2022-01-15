@@ -22,10 +22,10 @@ $round = $tournament_contents[0]['people'] / 2;
 
         <div class="tournaments_inner">
             <!-- 並べ替え -->
-            <div class="tournaments_sort">
+            <div class="tournaments_sort d-flex">
                 <form action="{{ route('competition')}}" method="post">
                     @csrf
-                    <select name="tournaments_sort" id="tournaments_sort" onchange="submit(this.form)">
+                    <select name="tournaments_sort_date" id="tournaments_sort_date" onchange="submit(this.form)">
                         <option value="soon">開催日が近い順番</option>
                         @if (!empty($order))
                         <option value="late" selected>開催日が遅い順番</option>
@@ -34,8 +34,16 @@ $round = $tournament_contents[0]['people'] / 2;
                         @endif
                     </select>
                 </form>
+                <form action="{{ route('competition') }}" method="post">
+                    @csrf
+                    <select name="tournaments_sort_status" id="tournaments_sort_status" onchange="submit(this.form)">
+                        <option value="before" {{ $status == 0 ? 'selected' : ''}}>大会開催前</option>
+                        <option value="held" {{ $status == 1 ? 'selected' : ''}}>大会開催中</option> 
+                        <option value="end" {{ $status == 2 ? 'selected' : ''}}>大会終了</option>   
+                    </select>
+                </form>
             </div>
-
+            
             <ol class="tournaments_lists">
                 @foreach($tournaments as $t)
                 <li class="tournaments_card">

@@ -17,6 +17,7 @@ use App\Models\Win;
 use App\Models\ChatRoom;
 
 use DB;
+use Mockery\Generator\StringManipulation\Pass\Pass;
 
 class OfficialController extends Controller
 {
@@ -65,12 +66,21 @@ class OfficialController extends Controller
         }else{
             $winners2 = ['false' => 'aaa'];
         }
+        
+        $winner3_exists = Win::where([['round3', 1], ['hold_id', $hold_id]])->exists();
+        if($winner3_exists){
+            $winners3 = Win::where([['round3', 1], ['hold_id', $hold_id]])
+                ->join('users', 'users.id', 'wins.user_id')
+                ->get();
+        }else{
+            $winners3 = ['false' => 'aaa'];
+        }
 
         $chat_room = ChatRoom::where('hold_id', $hold_id)
             ->where('closed_at', null)
             ->get();
         
-        return view('official.competition_host', compact('entries', 'tournament', 'players', 'chat_room', 'winners1', 'winners2'));
+        return view('official.competition_host', compact('entries', 'tournament', 'players', 'chat_room', 'winners1', 'winners2', 'winners3'));
 
     }
 
@@ -98,6 +108,11 @@ class OfficialController extends Controller
         $posts = $request->all();
         $win = new Win;
         $insert = $win->insertData($posts);
+        
+        //　優勝者が決まった場合、その大会をソフトデリート
+        if(isset($posts['end_competition'])){
+            $tournament_delete = Tournament::where('hold_id', $hold_id)->delete();
+        }
         return redirect(route('competition_detail_host', ['hold_id' => $hold_id, 'id' => $id]));
     }
 
@@ -158,8 +173,8 @@ class OfficialController extends Controller
                     ['room_id', $chat_room['id']],
                     ['send_id', $chat_room['player_id']],
                     ['read_status', 'unread']
-                ])
-                ->update(['read_status' => 'read']);
+                    ])
+                    ->update(['read_status' => 'read']);
             } else {
                 // チャットルームの情報が取れなかったらダッシュボードへ返す
                 return redirect(route('dashboard'));
@@ -168,9 +183,8 @@ class OfficialController extends Controller
 
         // チャット履歴テーブル取得
         $chats = Chat::where('room_id', $chat_room['id'])
-        ->orderBy('created_at', 'ASC')
-        ->get();
-
+            ->orderBy('created_at', 'ASC')
+            ->get();
         // チャットページへ送信
         return view('official.competition_chat', compact('tournament', 'chat_room', 'chats', 'chat_members'));
     }
