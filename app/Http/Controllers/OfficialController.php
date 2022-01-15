@@ -136,18 +136,6 @@ class OfficialController extends Controller
                     ->join('chat_rooms', 'chat_rooms.player_id', 'users.id')
                     ->where('chat_rooms.hold_id', $hold_id)
                     ->get();
-                // それぞれのプレーヤーの未読メッセージの有無
-                foreach ($chat_members as $key => $chat_member) {
-                    $read_status = Chat::where([
-                            ['room_id', '=', $chat_member['room_id']],
-                            ['send_id', '=', $chat_member['member_id']],
-                        ])
-                        ->latest()
-                        ->value('read_status');
-
-                    $chat_members[$key]['read_status'] = $read_status;
-                }
-                
                 // そのうちの一人のチャットルームを表示
                 $chat_room = ChatRoom::where([
                     ['hold_id', $hold_id],
@@ -160,6 +148,18 @@ class OfficialController extends Controller
                     ['read_status', 'unread']
                 ])
                 ->update(['read_status' => 'read']);
+                // それぞれのプレーヤーの未読メッセージの有無
+                foreach ($chat_members as $key => $chat_member) {
+                    $read_status = Chat::where([
+                            ['room_id', '=', $chat_member['room_id']],
+                            ['send_id', '=', $chat_member['member_id']],
+                        ])
+                        ->latest()
+                        ->value('read_status');
+
+                    $chat_members[$key]['read_status'] = $read_status;
+                }
+                
             } else {
                 // チャットルームの情報が取れなかったらダッシュボードへ返す
                 return redirect(route('dashboard'));

@@ -47,7 +47,6 @@
           <div class="chat_content-btn chat_content-top">
             <a href="#oldMessage">最初のメッセージへ</a>
           </div>
-    
           @if ($chats->count() > 0)
             <!-- メッセージがあれば一覧表示 -->
             <ol class="chat_list">

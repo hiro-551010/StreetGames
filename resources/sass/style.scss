@@ -1,12 +1,13 @@
 @charset "utf-8";
 
 @import "base";
+@import "component/bracket";
+
 @import "pages/top";
 @import "pages/join-login";
 @import "pages/tournaments";
 @import "pages/hold";
 @import "pages/bashboard";
 @import "pages/host-only";
-
 @import "pages/chat";
 

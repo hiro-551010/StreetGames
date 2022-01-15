@@ -71,7 +71,6 @@
         </div>
     @endisset
 
-</main>
 
 {{-- トーナメント表 --}}
 
@@ -97,4 +96,6 @@
 @endif
 
 @endisset
+
+</main>
 @endsection
