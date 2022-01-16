@@ -13,6 +13,7 @@ use App\Models\Chat;
 use App\Models\Player;
 use App\Models\Win;
 use DB;
+use Carbon\Carbon;
 
 
 
@@ -37,16 +38,8 @@ class HomeController extends Controller
 
     // ログイン後
     public function home(){
-        $user_id = \Auth::id();
-        
-        $host_tournament = Tournament::with('contents')->first();
-        $people = $host_tournament['contents'][0]['people'];
-        $players = Player::select('players.*')
-            ->where('hold_id', 1)    
-            ->get();
 
-
-        return view('home', compact('people', 'host_tournament', 'players'));
+        return view('home');
     }
     
     public function winner(){
@@ -87,8 +80,8 @@ class HomeController extends Controller
         // chat機能
         $readStatus = Chat::select('chats.read_status')->where('receive_id', '=', $user[0]['id'])->get();
 
-        // userが大会に応募、抽選落ちしている場合
-        $entry_exists = Entry::select('entries.*')->where('user_id', '=', $user_id)->exists();
+        // userが大会に応募している場合
+        $entry_exists = Entry::select('entries.*')->where('user_id', $user_id)->exists();
         // $entries = User::with('entries')->where('users.id', $user_id)->get();
         // dd($entries[0]['entries'][0]['join']);
         if($entry_exists){
@@ -96,36 +89,65 @@ class HomeController extends Controller
                 ->join('users', 'users.id', 'entries.user_id')
                 ->where('id', $user_id)
                 ->get();
+            // 抽選落ちしている場合, ここにjoinが0の場合の処理を記入
+            
         }else{
             $entries = ['false' => '応募している大会はありません'];
         }
-
+        
         return view('users.dashboard', compact('user', 'host_tournaments', 'readStatus', 'entries'));
     }
 
+    
     // 大会一覧
     public function competition(Request $request){
         $posts = $request->all();
         $order = '';
-
+        $status = '';
+        // 今日の日付を取得
+        $today = Carbon::today();
+        
         // ベースのメソッド
         $tournaments = Tournament::join('tournament_contents', 'tournaments.hold_id', 'tournament_contents.hold_id')
             ->join('titles', 'tournaments.title_id', 'titles.title_id');
 
-        // 並べ替え
-        if (empty($posts) || $posts['tournaments_sort'] == 'soon') {
-            // 開催日が早い順
-            $tournaments = $tournaments->orderBy('schedule', 'asc');
-        } else {
-            // 開催日が遅い順
-            $tournaments = $tournaments->orderBy('schedule', 'desc');
-            $order = 'late';
+        // sort
+        if (isset($posts['tournaments_sort_date'])){
+            //大会開催日での並び替え
+            if (empty($posts) || $posts['tournaments_sort_date'] == 'soon') {
+                // 開催日が早い順
+                $tournaments = $tournaments->orderBy('schedule', 'asc');
+            } else {
+                // 開催日が遅い順
+                $tournaments = $tournaments->orderBy('schedule', 'desc');
+                $order = 'late';
+            }
+        // 大会開催の状態での並び替え
+        } elseif (isset($posts['tournaments_sort_status'])){
+            // 開催中
+            if ($posts['tournaments_sort_status'] == 'held'){
+                $tournaments->whereDate('schedule', $today);
+                $status = 1;
+            // 開催前
+            } elseif ($posts['tournaments_sort_status'] == 'before'){
+                $tournaments->whereDate('schedule', '>=', $today);
+                $status = 0;
+            // 大会終了
+            } else {
+                $tournaments->onlyTrashed();
+                $status = 2;
+            }
         }
+        
+
+        //大会の状態での並び替え
+        
+        
 
         // トーナメント情報取得
         $tournaments = $tournaments->get();
         
-        return view('users.competition', compact('tournaments', 'order'));
+        return view('users.competition', compact('tournaments', 'order', 'status'));
     }
 
     // 大会詳細
@@ -274,29 +296,9 @@ class HomeController extends Controller
         $entry_id = $posts['hold_id'];
         // 大会の人数を取得
         $people = $posts['people'];
-        
 
-        DB::transaction(function () use($entry_id, $people) {
-            // postされた大会のidの人をpeople分取得し、joinを2にupdate
-            $lottery = Entry::inRandomOrder()
-                ->where('hold_id', $entry_id)
-                ->take($people)
-                ->update(['join'=>2]);
-
-            // 人数分以上の応募があった場合、選ばれなかったらjoinを1にupdate
-            $lottery_lose = Entry::select('entries.*')
-                ->where('hold_id', $entry_id)
-                ->where('join', 1)
-                ->update(['join' => 0]);
-
-            $entries = Entry::select('entries.*')
-                ->where('hold_id', $entry_id)
-                ->where('join', 2)
-                ->get();
-
-            $player = new Player;
-            $insert = $player->insertPlayer($entries);
-        });
+        $player = new Player;
+        $insert = $player->insertPlayer($entry_id, $people);
         
         return redirect(route('admin'));
     }

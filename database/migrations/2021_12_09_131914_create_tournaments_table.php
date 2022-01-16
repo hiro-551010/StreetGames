@@ -19,6 +19,7 @@ class CreateTournamentsTable extends Migration
             $table->string('host_name');
             $table->Text('explanation');
             $table->string('prize');
+            $table->softDeletes();
 
             $table->foreign('title_id')->references('title_id')->on('titles');
             $table->foreign('hold_id')->references('hold_id')->on('hosts');

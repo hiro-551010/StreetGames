@@ -48,6 +48,10 @@
                     </tr>
                 </table>
             @endisset
+            @isset($winners3['false'])
+            @else
+                <button class="btn btn-primary" type="submit" name="end_competition" value="1">優勝決定</button>
+            @endisset
         </div>
         <button type="submit">送信</button>
     </form>
