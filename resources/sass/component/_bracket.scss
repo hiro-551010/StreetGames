@@ -54,6 +54,7 @@
   h3 {
     height: 40px;
     margin-bottom: 10px;
+    padding-left: 4px;
     font-size: 18px;
     font-weight: bold;
   }
@@ -87,16 +88,14 @@
       height: 100%;
       padding-right: 2px;
       padding-left: 2px;
+      background-color: #312E2E;
       font-size: 12px;
-
-      background-color: cadetblue;
     }
 
     &-input {
       width: 20px;
       height: 40px;
-
-      background-color: chartreuse;
+      background-color: $color-blue;
 
       input {
         width: 20px;
@@ -114,7 +113,7 @@
       width: 100%;
       padding-top: 4px;
       padding-bottom: 4px;
-      background-color: chocolate;
+      background-color: $color-red;
       border-radius: 4px;
       font-size: 12px;
     }

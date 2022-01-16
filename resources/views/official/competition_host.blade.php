@@ -90,6 +90,15 @@
     ])
     @endcomponent
 @elseif($tournament[0]['people']===8)
+    @component('components.bracket4',[
+        'entries'=>$entries,
+        'tournament'=>$tournament,
+        'players'=>$players,
+        'winners1'=>$winners1,
+        'winners2'=>$winners2,
+        'winners3'=>$winners3
+    ])
+    @endcomponent
 @elseif($tournament[0]['people']===16)
 @elseif($tournament[0]['people']===32)
 @elseif($tournament[0]['people']===64)

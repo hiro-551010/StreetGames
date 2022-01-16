@@ -39,14 +39,50 @@ class OfficialController extends Controller
             ->join('users', 'id', 'user_id')
             ->get();
 
-        $player_exists = Player::where('hold_id', $hold_id)->exists();
+        $player_exists = Win::where('hold_id', $hold_id)->exists();
         if($player_exists){
-            $players = Player::select('players.*', 'users.name as user_name')->where('hold_id', $hold_id)
-            ->join('users', 'players.user_id', 'users.id')
+            $players = Win::select('wins.*', 'users.name as user_name')->where('hold_id', $hold_id)
+            ->join('users', 'wins.user_id', 'users.id')
             ->get();
         }else{
             $players = ['false' => '参加者をまだ抽選していません'];   
         }
+
+        // トーナメント表について
+        // 参加人数取得
+        $playerNum = Win::where('hold_id', $hold_id)->count();
+
+        if ($playerNum >= 2) { //２人以上で開催
+            $bracketSize = 0;
+            $seedNum = 0;
+            // ブラケットのサイズ、シード数を決める
+            for ($i = 0; $i <= 6; $i++) { // 最大６４人
+                if ((2 ** ($i + 1)) >= $playerNum && $playerNum > (2 ** $i)) {
+                    $bracketSize = 2 ** ($i +1);
+                    $seedNum = $bracketSize - $playerNum;
+                    break;
+                }
+            }
+
+            // プレイヤー数がブラケットサイズに満たない場合シードを挿入
+            if ($seedNum < 1) {
+                for ($i = 0; $i < $seedNum; $i++) {
+                    $place = ($i * 2) + ($i + 2); //挿入したい場所
+                    $seed = ['hold_id' => $hold_id, 'user_id' => NULL, 'user_name' => 'シード'];
+
+                    array_splice($players, $place, 0, [$seed]);
+                }
+            }
+            // dd($playerNum);
+
+        } else {
+            // 参加者が２人以上集まらなかった場合
+        }
+
+
+
+
+
 
         // トーナメント表の変数
         $winner1_exists = Win::where([['round1', 1], ['hold_id', $hold_id]])->exists();
@@ -136,7 +172,7 @@ class OfficialController extends Controller
             ->first();
 
         // ホストの場合の情報取得
-        $chat_members = [];
+        $chat_members = []; // ホスト用（参加者全員を入れる）
         if ($chat_room == null) {
             
             // 大会のホストか調べる(true or false)
@@ -151,7 +187,7 @@ class OfficialController extends Controller
                     ->join('chat_rooms', 'chat_rooms.player_id', 'users.id')
                     ->where('chat_rooms.hold_id', $hold_id)
                     ->get();
-                // そのうちの一人のチャットルームを表示
+                // そのうちの一人のチャットルームを取得
                 $chat_room = ChatRoom::where([
                     ['hold_id', $hold_id],
                     ['player_id', $player_id],
@@ -176,15 +212,16 @@ class OfficialController extends Controller
                 }
                 
             } else {
-                // チャットルームの情報が取れなかったらダッシュボードへ返す
+                // チャットルームの情報が取れなかったらダッシュボードへ返す（ホストじゃなかったら）
                 return redirect(route('dashboard'));
             }
         }
 
-        // チャット履歴テーブル取得
+        // チャット（メッセージ文）履歴テーブル取得
         $chats = Chat::where('room_id', $chat_room['id'])
             ->orderBy('created_at', 'ASC')
             ->get();
+
         // チャットページへ送信
         return view('official.competition_chat', compact('tournament', 'chat_room', 'chats', 'chat_members'));
     }

@@ -193,6 +193,7 @@ button {
 .bracket h3 {
   height: 40px;
   margin-bottom: 10px;
+  padding-left: 4px;
   font-size: 18px;
   font-weight: bold;
 }
@@ -226,14 +227,14 @@ button {
   height: 100%;
   padding-right: 2px;
   padding-left: 2px;
+  background-color: #312E2E;
   font-size: 12px;
-  background-color: cadetblue;
 }
 
 .bracket_player-input {
   width: 20px;
   height: 40px;
-  background-color: chartreuse;
+  background-color: #3695A2;
 }
 
 .bracket_player-input input {
@@ -251,7 +252,7 @@ button {
   width: 100%;
   padding-top: 4px;
   padding-bottom: 4px;
-  background-color: chocolate;
+  background-color: #A23676;
   border-radius: 4px;
   font-size: 12px;
 }
