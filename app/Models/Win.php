@@ -18,13 +18,49 @@ class Win extends Model
     ];
 
     public function bracket($hold_id){
-        $players = Player::where('hold_id', $hold_id)->get();
-        foreach($players as $p){
-            DB::table('wins')->insert([
-                'hold_id'=>$hold_id,
-                'user_id'=>$p['user_id'],
-            ]);
-        }
+
+        DB::transaction(function() use($hold_id) {
+            $players = Player::where('hold_id', $hold_id)->get();
+            foreach($players as $p){
+                DB::table('wins')->insert([
+                    'hold_id'=>$hold_id,
+                    'user_id'=>$p['user_id'],
+                ]);
+            }
+    
+            // シード選手に予め勝ちを入れる
+            $brackets = Win::where('hold_id', $hold_id)->get();
+            $playerNum = $brackets -> count(); // 参加数
+    
+            if ($playerNum >= 2) { //２人以上で開催
+                $bracketSize = 0; // ブラケットのサイズ
+                $seedNum = 0; // シード数
+    
+                // ブラケットのサイズ、シード数を決める
+                for ($i = 0; $i <= 6; $i++) { // 最大６４人
+                    if ((2 ** ($i + 1)) >= $playerNum && $playerNum > (2 ** $i)) {
+                        $bracketSize = 2 ** ($i +1);
+                        $seedNum = $bracketSize - $playerNum;
+                        break;
+                    }
+                }
+                
+                // シード数分の選手にround１の勝ちをつける
+                $num = 0; // シードインデックスの調整用
+                foreach ($brackets as $key => $bracket) {
+                    if (($playerNum - $key) <= $seedNum) {
+                        ++$num;
+                        $match = (int)floor(($key + $num) / 4);
+                        Win::where([
+                            ['hold_id', $bracket['hold_id']],
+                            ['user_id', $bracket['user_id']],
+                        ])->update(['round1' => $match]);
+                    }
+                }
+            } else {
+                // 参加者が２人以上集まらなかった場合
+            }
+        });
     }
 
     public function insertData($posts){

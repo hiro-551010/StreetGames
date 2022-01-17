@@ -48,13 +48,18 @@ class OfficialController extends Controller
             $players = ['false' => '参加者をまだ抽選していません'];   
         }
 
+
+
+
         // トーナメント表について
         // 参加人数取得
         $playerNum = Win::where('hold_id', $hold_id)->count();
 
         if ($playerNum >= 2) { //２人以上で開催
-            $bracketSize = 0;
-            $seedNum = 0;
+            $round1 = $players->toArray(); //コレクションを配列へ
+            $bracketSize = 0; // ブラケットのサイズ
+            $seedNum = 0; // シード数
+
             // ブラケットのサイズ、シード数を決める
             for ($i = 0; $i <= 6; $i++) { // 最大６４人
                 if ((2 ** ($i + 1)) >= $playerNum && $playerNum > (2 ** $i)) {
@@ -65,16 +70,27 @@ class OfficialController extends Controller
             }
 
             // プレイヤー数がブラケットサイズに満たない場合シードを挿入
-            if ($seedNum < 1) {
+            if ($seedNum >= 1) {
                 for ($i = 0; $i < $seedNum; $i++) {
-                    $place = ($i * 2) + ($i + 2); //挿入したい場所
-                    $seed = ['hold_id' => $hold_id, 'user_id' => NULL, 'user_name' => 'シード'];
+                    $place = - ($i * 2); //挿入したい場所
+                    $seed = ['hold_id' => (int)$hold_id, 'user_id' => NULL, 'user_name' => 'シード', 'round1' => 'lose'];
 
-                    array_splice($players, $place, 0, [$seed]);
+                    if ($i === 0) {
+                        array_push($round1, $seed);
+                    } else {
+                        array_splice($round1, $place, 0, [$seed]);
+                    }
                 }
             }
-            // dd($playerNum);
 
+            // 二人ずつセット（対戦相手）にして多次元配列に入れる
+            $matches = [];
+            foreach ($round1 as $key => $r) {
+                $matchNum = (int)floor($key / 2);
+                $position = $key % 2;
+                $matches[$matchNum][$position] = $r;
+            }
+            
         } else {
             // 参加者が２人以上集まらなかった場合
         }
@@ -116,7 +132,7 @@ class OfficialController extends Controller
             ->where('closed_at', null)
             ->get();
         
-        return view('official.competition_host', compact('entries', 'tournament', 'players', 'chat_room', 'winners1', 'winners2', 'winners3'));
+        return view('official.competition_host', compact('entries', 'tournament', 'players', 'chat_room', 'bracketSize', 'matches', 'winners1', 'winners2', 'winners3'));
 
     }
 

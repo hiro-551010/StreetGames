@@ -86,7 +86,9 @@
         'players'=>$players,
         'winners1'=>$winners1,
         'winners2'=>$winners2,
-        'winners3'=>$winners3
+        'winners3'=>$winners3,
+        'bracketSize'=>$bracketSize,
+        'matches'=>$matches
     ])
     @endcomponent
 @elseif($tournament[0]['people']===8)
@@ -96,7 +98,9 @@
         'players'=>$players,
         'winners1'=>$winners1,
         'winners2'=>$winners2,
-        'winners3'=>$winners3
+        'winners3'=>$winners3,
+        'bracketSize'=>$bracketSize,
+        'matches'=>$matches
     ])
     @endcomponent
 @elseif($tournament[0]['people']===16)
