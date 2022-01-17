@@ -1,0 +1,281 @@
+.bracket {
+  @include innerWidth();
+
+  & > h2 {
+    margin-bottom: 40px;
+    text-align: center;
+  }
+
+  &_wrapper {
+    display: flex;
+    width: 100%;
+    height: 90vh;
+    padding: 20px 0 0 20px;
+    background-color: $color-bg;
+    overflow: scroll;
+
+    & > div:nth-of-type(odd) {
+      width: 180px;
+    }
+    & > div:nth-of-type(even) {
+      width: 80px;
+    }
+
+    // スクロールエリアの右の余白用
+    & > div:nth-last-of-type(1) {
+      position: relative;
+
+      &::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 100%;
+        width: 40px;
+        height: 2px;
+      }
+    }
+  }
+
+
+
+  // ラウンド１のラッパー
+  &_firstRound-wrapper {
+
+    // スクロールエリアの下の余白用
+    &::after {
+      content: "";
+      display: block;
+      width: 100%;
+      height: 20px;
+    }
+  }
+
+  // ラウンドタイトル
+  h3 {
+    height: 40px;
+    margin-bottom: 10px;
+    padding-left: 4px;
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  // 対戦カード
+  &_match {
+    margin-bottom: 20px;
+    
+    & > form {
+      display: flex;
+    }
+  }
+  
+  &_player {
+    width: 136px;
+    margin-right: 4px;
+
+    &-item {
+      display: flex;
+      height: 40px;
+        
+      &:nth-of-type(1) {
+        margin-bottom: 8px;
+      }
+    }
+
+    &-name {
+      display: flex;
+      align-items: center;
+      width: 116px;
+      height: 100%;
+      padding-right: 2px;
+      padding-left: 2px;
+      background-color: #312E2E;
+      font-size: 12px;
+    }
+
+    &-input {
+      width: 20px;
+      height: 40px;
+      background-color: $color-blue;
+
+      input {
+        width: 20px;
+        height: 100%;
+      }
+    }
+  }
+
+  &_match-submit {
+    align-self: center;
+    width: 40px;
+    text-align: center;
+
+    button {
+      width: 100%;
+      padding-top: 4px;
+      padding-bottom: 4px;
+      background-color: $color-red;
+      border-radius: 4px;
+      font-size: 12px;
+    }
+  }
+
+
+  // ラウンド２のインナー
+  &_seccondRound-inner {
+    padding-top: 54px;
+
+    .bracket_match {
+      margin-bottom: calc((108px * 1) + 20px);
+
+      &:nth-last-of-type(1) {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+
+  // ラウンド３のインナー
+  &_thirdRound-inner {
+    padding-top: calc((108px * 1) + 54px);
+
+    .bracket_match {
+      margin-bottom: calc((108px * 3) + 20px);
+
+      &:nth-last-of-type(1) {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+
+  // ラウンド４のインナー
+  &_fourthRound-inner {
+    padding-top: calc((108px * 3) + 54px);
+
+    .bracket_match {
+      margin-bottom: calc((108px * 7) + 20px);
+
+      &:nth-last-of-type(1) {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+
+  // ラウンド５のインナー
+  &_fifthRound-inner {
+    padding-top: calc((108px * 7) + 54px);
+
+    .bracket_match {
+      margin-bottom: calc((108px * 15) + 20px);
+
+      &:nth-last-of-type(1) {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+
+  // ラウンド６のインナー
+  &_sixthRound-inner {
+    padding-top:  calc((108px * 15) + 54px);
+
+    .bracket_match {
+      margin-bottom: calc((108px * 31) + 20px);
+
+      &:nth-last-of-type(1) {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+
+  // ラウンドの動きのボーダー
+  &_roundMove-item {
+    display: flex;
+
+    &:nth-last-of-type(1) {
+      margin-bottom: 0;
+    }
+  }
+
+  &_roundMove-left {
+    width: 40px;
+    border-top: 1px solid #fff;
+    border-right: 1px solid #fff;
+    border-bottom: 1px solid #fff;
+  }
+
+  &_roundMove-right {
+    align-self: center;
+    width: 40px;
+    height: 1px;
+    background-color: #fff;
+  }
+
+  // ラウンド１の動き
+  &_firstMove-wrapper {
+    padding-top: calc(50px + 44px);
+  }
+
+  &_firstMove-item {
+    margin-bottom: 108px;
+
+    .bracket_roundMove-left {
+      height: 108px;
+    }
+  }
+
+  
+  // ラウンド２の動き
+  &_seccondMove-wrapper {
+    padding-top: calc(50px + 108px - 10px);
+  }
+
+  &_seccondMove-item {
+    margin-bottom: calc(108px * 2);
+
+    .bracket_roundMove-left {
+      height: calc(108px * 2);
+    }
+  }
+
+  // ラウンド３の動き
+  &_thirdMove-wrapper {
+    padding-top: calc(50px + (108px * 2) - 10px);
+  }
+
+  &_thirdMove-item {
+    margin-bottom: calc(108px * 4);
+
+    .bracket_roundMove-left {
+      height: calc(108px * 4);
+    }
+  }
+
+  // ラウンド４の動き
+  &_fourthMove-wrapper {
+    padding-top: calc(50px + (108px * 4) - 10px);
+  }
+
+  &_fourthMove-item {
+    margin-bottom: calc(108px * 8);
+
+    .bracket_roundMove-left {
+      height: calc(108px * 8);
+    }
+  }
+
+  // ラウンド５の動き
+  &_fifthMove-wrapper {
+    padding-top: calc(50px + (108px * 8) - 10px);
+  }
+
+  &_fifthMove-item {
+    margin-bottom: calc(108px * 16);
+
+    .bracket_roundMove-left {
+      height: calc(108px * 16);
+    }
+  }
+}
