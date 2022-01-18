@@ -73,7 +73,7 @@ class OfficialController extends Controller
             if ($seedNum >= 1) {
                 for ($i = 0; $i < $seedNum; $i++) {
                     $place = - ($i * 2); //挿入したい場所
-                    $seed = ['hold_id' => (int)$hold_id, 'user_id' => NULL, 'user_name' => 'シード', 'round1' => 'lose'];
+                    $seed = ['hold_id' => (int)$hold_id, 'user_id' => NULL, 'user_name' => 'シード', 'round1' => 'seed'];
 
                     if ($i === 0) {
                         array_push($round1, $seed);
@@ -159,7 +159,7 @@ class OfficialController extends Controller
     public function host_bracket_post(Request $request, $hold_id, $id){
         $posts = $request->all();
         $win = new Win;
-        $insert = $win->insertData($posts);
+        $insert = $win->insertData($posts, $hold_id);
         
         //　優勝者が決まった場合、その大会をソフトデリート
         if(isset($posts['end_competition'])){

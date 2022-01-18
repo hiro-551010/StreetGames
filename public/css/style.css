@@ -257,6 +257,29 @@ button {
   font-size: 12px;
 }
 
+.bracket_match-submit button:hover {
+  opacity: .8;
+}
+
+.bracket_match-submit a {
+  display: inline-block;
+  width: 100%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  background-color: #3695A2;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.bracket_match-submit a:hover {
+  color: #fff;
+  opacity: .8;
+}
+
+.bracket_match-submit span {
+  font-size: 14px;
+}
+
 .bracket_seccondRound-inner {
   padding-top: 54px;
 }

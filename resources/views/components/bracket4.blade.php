@@ -72,37 +72,46 @@
             @foreach ($matches as $match)
                 <!-- 対戦カード -->
                 <div class="bracket_match">
-                    <form action="" method="POST">
+                    <form action="{{ route('host_bracket_post', ['hold_id' => $tournament[0]['hold_id'], 'id' => \Auth::id()]) }}" method="POST">
                         @csrf
                         <div class="bracket_player">
                             <div class="bracket_player-item">
                                 <div class="bracket_player-name">{{ $match[0]['user_name'] }}</div>
                                 <div class="bracket_player-input">
-                                    @if (is_numeric($match[0]['round1']))
+                                    @if (is_null($match[0]['round1']))
+                                    <input type="radio" name="1_{{ $loop->index }}" id="" value="{{ $match[0]['user_id']}}_{{$match[1]['user_id'] }}">
+                                    @elseif (is_numeric($match[0]['round1']) && $match[0]['round1'] < 255)
                                     <span>●</span>
-                                    @elseif ($match[0]['round1'] == 'lose')
-                                    <span></span>
                                     @else
-                                    <input type="radio" name="r1_m{{ $loop->index }}" id="" value="{{ $match[0]['user_id'] }}">
+                                    <span></span>
                                     @endif
                                 </div>
                             </div>
                             <div class="bracket_player-item">
                                 <div class="bracket_player-name">{{ $match[1]['user_name'] }}</div>
                                 <div class="bracket_player-input">
-                                    @if (is_numeric($match[1]['round1']))
+                                    @if (is_null($match[1]['round1']))
+                                    <input type="radio" name="1_{{ $loop->index }}" id="" value="{{ $match[1]['user_id']}}_{{$match[0]['user_id'] }}">
+                                    @elseif (is_numeric($match[1]['round1']) && $match[1]['round1'] < 255)
                                     <span>●</span>
-                                    @elseif ($match[1]['round1'] == 'lose')
-                                    <span></span>
                                     @else
-                                    <input type="radio" name="r1_m{{ $loop->index }}" id="" value="{{ $match[1]['user_id'] }}">
+                                    <span><span>     
                                     @endif
                                 </div>
                             </div>
                         </div>
                         <div class="bracket_match-submit">
-                            @if (is_numeric($match[0]['round1']) || $match[0]['round1'] == 'lose')
-                            <a href="">訂正</a>
+                            @if (is_numeric($match[1]['round1']))
+                                @if ($tournament[0]['user_id'] == \Auth::id())
+                                <input type="hidden" name="round" value="round1">
+                                <input type="hidden" name="user1" value="{{ $match[0]['user_id']}}">
+                                <input type="hidden" name="user2" value="{{ $match[1]['user_id']}}">
+                                <button type="submit" name="correct" value="correct">訂正</button>
+                                @else
+                                <span>終了</span>
+                                @endif
+                            @elseif ($match[1]['round1'] == 'seed')
+                            <span>終了</span>
                             @else
                             <button type="submit">確定</button>
                             @endif
