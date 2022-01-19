@@ -62,7 +62,7 @@ class OfficialController extends Controller
             $seedNum = 0; // シード数
 
             // ブラケットのサイズ、シード数を決める
-            for ($i = 0; $i <= 6; $i++) { // 最大６４人
+            for ($i = 0; $i <= 7; $i++) { // 最大128人
                 if ((2 ** ($i + 1)) >= $playerNum && $playerNum > (2 ** $i)) {
                     $bracketSize = 2 ** ($i +1);
                     $seedNum = $bracketSize - $playerNum;

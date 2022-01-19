@@ -122,21 +122,6 @@
       }
     }
 
-    a {
-      display: inline-block;
-      width: 100%;
-      padding-top: 4px;
-      padding-bottom: 4px;
-      background-color: $color-blue;
-      border-radius: 4px;
-      font-size: 12px;
-
-      &:hover {
-        color: #fff;
-        opacity: .8;
-      }
-    }
-
     span {
       font-size: 14px;
     }
