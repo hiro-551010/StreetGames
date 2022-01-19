@@ -52,12 +52,13 @@ class OfficialController extends Controller
 
 
         // トーナメント表について
+        $bracketSize = 0; // ブラケットのサイズ
+        $matches = []; // 対戦相手とセットで入れる
         // 参加人数取得
         $playerNum = Win::where('hold_id', $hold_id)->count();
 
         if ($playerNum >= 2) { //２人以上で開催
             $round1 = $players->toArray(); //コレクションを配列へ
-            $bracketSize = 0; // ブラケットのサイズ
             $seedNum = 0; // シード数
 
             // ブラケットのサイズ、シード数を決める
@@ -84,7 +85,6 @@ class OfficialController extends Controller
             }
 
             // 二人ずつセット（対戦相手）にして多次元配列に入れる
-            $matches = [];
             foreach ($round1 as $key => $r) {
                 $matchNum = (int)floor($key / 2);
                 $position = $key % 2;
