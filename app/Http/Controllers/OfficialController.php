@@ -48,9 +48,6 @@ class OfficialController extends Controller
             $players = ['false' => '参加者をまだ抽選していません'];   
         }
 
-
-
-
         // トーナメント表について
         // 参加人数取得
         $playerNum = Win::where('hold_id', $hold_id)->count();
@@ -94,11 +91,6 @@ class OfficialController extends Controller
         } else {
             // 参加者が２人以上集まらなかった場合
         }
-
-
-
-
-
 
         // トーナメント表の変数
         $winner1_exists = Win::where([['round1', 1], ['hold_id', $hold_id]])->exists();
@@ -154,7 +146,6 @@ class OfficialController extends Controller
         return redirect(route('dashboard'));
     }
 
-
     // トーナメントのブラケット
     public function host_bracket_post(Request $request, $hold_id, $id){
         $posts = $request->all();
@@ -172,7 +163,6 @@ class OfficialController extends Controller
     public function competition_detail_players($id){
         return view('official.competition_player');
     }
-
 
     // 大会のチャットルームページ
     public function competition_chat($hold_id, $id, $player_id) {
@@ -225,8 +215,7 @@ class OfficialController extends Controller
                         ->value('read_status');
 
                     $chat_members[$key]['read_status'] = $read_status;
-                }
-                
+                }      
             } else {
                 // チャットルームの情報が取れなかったらダッシュボードへ返す（ホストじゃなかったら）
                 return redirect(route('dashboard'));
