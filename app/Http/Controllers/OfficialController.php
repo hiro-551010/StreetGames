@@ -54,6 +54,7 @@ class OfficialController extends Controller
         // トーナメント表について
         $bracketSize = 0; // ブラケットのサイズ
         $matches = []; // 対戦相手とセットで入れる
+        $brackets = []; // ２ラウンド以降のプレイヤー配置
         // 参加人数取得
         $playerNum = Win::where('hold_id', $hold_id)->count();
 
@@ -90,6 +91,17 @@ class OfficialController extends Controller
                 $position = $key % 2;
                 $matches[$matchNum][$position] = $r;
             }
+
+
+            // ラウンド２以降
+            for ($i = 1; $i <= 7; $i++) { // から７ラウンドの成績を取る
+                $round = 'round'. $i;
+                $result = DB::table('wins')->where('hold_id', $hold_id)->whereNotNull($round)->get();
+                $result = $result->toArray();
+dd($result);
+            }
+            $brackets;
+
             
         } else {
             // 参加者が２人以上集まらなかった場合
@@ -132,7 +144,7 @@ class OfficialController extends Controller
             ->where('closed_at', null)
             ->get();
         
-        return view('official.competition_host', compact('entries', 'tournament', 'players', 'chat_room', 'bracketSize', 'matches', 'winners1', 'winners2', 'winners3'));
+        return view('official.competition_host', compact('entries', 'tournament', 'players', 'chat_room', 'bracketSize', 'matches', 'brackets', 'winners1', 'winners2', 'winners3'));
 
     }
 

@@ -51,10 +51,12 @@ class Win extends Model
                     if (($playerNum - $key) <= $seedNum) {
                         ++$num;
                         $match = (int)floor(($key + $num) / 4);
+                        $posi = (int)floor($key / 2);
+                        $posi = $posi % 2;
                         Win::where([
                             ['hold_id', $bracket['hold_id']],
                             ['user_id', $bracket['user_id']],
-                        ])->update(['round1' => $match]);
+                        ])->update(['round1' => $match. '_'. $posi]);
                     }
                 }
             } else {
@@ -105,7 +107,9 @@ class Win extends Model
             // 更新するカラム（round?）
             $updateRound = 'round'. $roundMatch[0];
             // 勝ち選手に入れる値
-            $roundValue = (int)floor($roundMatch[1] / 2);
+            $matches = (int)floor($roundMatch[1] / 2);
+            $position = $roundMatch[1] % 2;
+            $roundValue = $matches. '_'. $position;
     
             // 勝ちをアップデート
             $winner->where([
@@ -116,7 +120,7 @@ class Win extends Model
             Win::select('wins.*')->where([
                 ['hold_id', $hold_id],
                 ['user_id', $winAndLose[1]],
-            ])->update([$updateRound => 255]);
+            ])->update([$updateRound => 'lose']);
         }
     }
 }

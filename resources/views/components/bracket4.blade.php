@@ -80,10 +80,10 @@
                                 <div class="bracket_player-input">
                                     @if (is_null($match[0]['round1']))
                                     <input type="radio" name="1_{{ $loop->index }}" id="" value="{{ $match[0]['user_id']}}_{{$match[1]['user_id'] }}">
-                                    @elseif (is_numeric($match[0]['round1']) && $match[0]['round1'] < 255)
-                                    <span>●</span>
-                                    @else
+                                    @elseif ($match[0]['round1'] == 'lose')
                                     <span></span>
+                                    @else
+                                    <span>●</span>
                                     @endif
                                 </div>
                             </div>
@@ -92,16 +92,16 @@
                                 <div class="bracket_player-input">
                                     @if (is_null($match[1]['round1']))
                                     <input type="radio" name="1_{{ $loop->index }}" id="" value="{{ $match[1]['user_id']}}_{{$match[0]['user_id'] }}">
-                                    @elseif (is_numeric($match[1]['round1']) && $match[1]['round1'] < 255)
-                                    <span>●</span>
+                                    @elseif ($match[1]['round1'] == 'lose' || $match[1]['round1'] == 'seed')
+                                    <span></span>
                                     @else
-                                    <span><span>     
+                                    <span>●<span>     
                                     @endif
                                 </div>
                             </div>
                         </div>
                         <div class="bracket_match-submit">
-                            @if (is_numeric($match[1]['round1']))
+                            @if ($match[1]['round1'] && $match[1]['round1'] != 'seed')
                                 @if ($tournament[0]['user_id'] == \Auth::id())
                                 <input type="hidden" name="round" value="round1">
                                 <input type="hidden" name="user1" value="{{ $match[0]['user_id']}}">
