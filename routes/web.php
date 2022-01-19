@@ -16,10 +16,6 @@ use App\Http\Controllers\OfficialController;
 |
 */
 
-
-
-
-
 Auth::routes();
 
 // ログイン前のルーティング
@@ -31,8 +27,6 @@ Route::get('/unauth_competition', [Controller::class, 'unauth_competition'])->na
 
 // ログイン後のルーティング
 Route::get('/home', [HomeController::class, 'home'])->name('home');
-// Route::get('/winner', [HomeController::class, 'winner'])->name('winner');
-// Route::post('/winner_post', [HomeController::class, 'winner_post'])->name('winner_post');
 // ダッシュボード
 Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
 // 大会開催

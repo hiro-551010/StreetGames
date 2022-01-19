@@ -38,63 +38,25 @@ class HomeController extends Controller
 
     // ログイン後
     public function home(){
-
         return view('home');
-    }
-    
-    public function winner(){
-        // $players = Player::where('hold_id', 2)->get();
-        // $winner = Win::where('round1', 1)->get();
-        
-        return view('users.win', compact('players', 'winner'));
-    }
-
-    public function winner_post(Request $request){
-        $posts = $request->all();
-        
-        $winner = new Win;
-        $insert = $winner->insertData($posts);
-        
-        return redirect(route('winner'));
     }
 
     // ダッシュボード
     public function dashboard(){
         $user_id = \Auth::id();
-        $user = User::select('users.*')
-            ->where('id', '=', $user_id)
-            ->get();
+        $user = User::select('users.*')->where('id', '=', $user_id)->get();
 
         // userがhostの場合
-        $host = Host::with('user')->where('user_id', $user_id)->exists();
-        if($host){
-            $host_tournaments= Host::with('user')
-                ->where('hosts.user_id', $user_id)
-                ->join('tournaments', 'tournaments.hold_id', 'hosts.hold_id')
-                ->join('tournament_contents', 'tournament_contents.hold_id', 'tournaments.hold_id')
-                ->get();
-        }else{
-            $host_tournaments = ['false' => '自分で開催している大会はありません'];
-        }
-
+        $host = new Host;
+        $host_tournaments = $host->host_tournaments($user_id);
+        
         // chat機能
         $readStatus = Chat::select('chats.read_status')->where('receive_id', '=', $user[0]['id'])->get();
 
         // userが大会に応募している場合
-        $entry_exists = Entry::select('entries.*')->where('user_id', $user_id)->exists();
-        // $entries = User::with('entries')->where('users.id', $user_id)->get();
-        // dd($entries[0]['entries'][0]['join']);
-        if($entry_exists){
-            $entries = Entry::with('tournaments')
-                ->join('users', 'users.id', 'entries.user_id')
-                ->where('id', $user_id)
-                ->get();
-            // 抽選落ちしている場合, ここにjoinが0の場合の処理を記入
-            
-        }else{
-            $entries = ['false' => '応募している大会はありません'];
-        }
-        
+        $entry = new Entry;
+        $entries = $entry->entries($user_id);
+
         return view('users.dashboard', compact('user', 'host_tournaments', 'readStatus', 'entries'));
     }
 
@@ -137,12 +99,7 @@ class HomeController extends Controller
                 $tournaments->onlyTrashed();
                 $status = 2;
             }
-        }
-        
-
-        //大会の状態での並び替え
-        
-        
+        }       
 
         // トーナメント情報取得
         $tournaments = $tournaments->get();
@@ -157,8 +114,6 @@ class HomeController extends Controller
             ->get();
         return view('users.competition_detail', compact('id', 'tournament_contents'));
     }
-
-    
 
     // 大会開催
     public function hold(){
@@ -211,8 +166,6 @@ class HomeController extends Controller
         });
         return redirect(route('competition'));
     }
-
-    
 
     // 大会に参加するuser
     public function players(){

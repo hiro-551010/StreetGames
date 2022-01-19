@@ -53,7 +53,7 @@
                         @foreach ($entries as $entry)
                             @if ($entry['join'] === 2)
                                 <li>
-                                    <p><span class="text-warning">参加中</span>{{ $entry['tournaments']['explanation'] }}</p>
+                                    <p><span class="text-warning">参加中</span>{{ $entry['explanation'] }}</p>
                                     <a href="/competition_detail/{{$entry['hold_id']}}/players/{{\Auth::id()}}">参加者専用ページ</a>
                                 </li>
                             @endif
@@ -63,7 +63,7 @@
                         @foreach ($entries as $entry)
                             @if ($entry['join'] === 1)
                                 <li>
-                                    <p><span class="text-info">応募中</span>{{ $entry['tournaments']['explanation'] }}</p>
+                                    <p><span class="text-info">応募中</span>{{ $entry['explanation'] }}</p>
                                     <a href="/competition_detail/{{$entry['hold_id']}}">大会詳細</a>
                                 </li>
                             @endif
@@ -74,26 +74,26 @@
                         @foreach ($entries as $entry)
                             @if ($entry['join'] != 1 && $entry['join'] != 2)
                                 <li>
-                                    <p><span class="text-white-50">抽選落ち</span>{{ $entry['tournaments']['explanation'] }}</p>
+                                    <p><span class="text-white-50">抽選落ち</span>{{ $entry['explanation'] }}</p>
                                 </li>
                             @endif
                         @endforeach
 
                         <!-- 元の形 -->
-                        <!-- @foreach ($entries as $entry)
+                        {{-- @foreach ($entries as $entry)
                             @if ($entry['join'] === 1)
                                 応募している大会
-                                {{ $entry['tournaments']['explanation'] }}
+                                {{ $entry['explanation'] }}
                                 <a href="/competition_detail/{{$entry['hold_id']}}">大会詳細</a>
                             @elseif($entry['join'] === 2)
                                 参加中の大会
-                                {{ $entry['tournaments']['explanation'] }}
+                                {{ $entry['explanation'] }}
                                 <a href="/competition_detail/{{$entry['hold_id']}}/players/{{\Auth::id()}}">参加者専用ページ</a>
                             @else
                                 抽選落ちの大会
-                                {{ $entry['tournaments']['explanation'] }}
+                                {{ $entry['explanation'] }}
                             @endif
-                        @endforeach -->
+                        @endforeach  --}}
 
                     </ul>
 

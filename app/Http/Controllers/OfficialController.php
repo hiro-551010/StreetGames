@@ -48,9 +48,6 @@ class OfficialController extends Controller
             $players = ['false' => '参加者をまだ抽選していません'];   
         }
 
-
-
-
         // トーナメント表について
         $bracketSize = 0; // ブラケットのサイズ
         $matches = []; // 対戦相手とセットで入れる
@@ -107,11 +104,6 @@ dd($result);
             // 参加者が２人以上集まらなかった場合
         }
 
-
-
-
-
-
         // トーナメント表の変数
         $winner1_exists = Win::where([['round1', 1], ['hold_id', $hold_id]])->exists();
         if($winner1_exists){
@@ -166,7 +158,6 @@ dd($result);
         return redirect(route('dashboard'));
     }
 
-
     // トーナメントのブラケット
     public function host_bracket_post(Request $request, $hold_id, $id){
         $posts = $request->all();
@@ -184,7 +175,6 @@ dd($result);
     public function competition_detail_players($id){
         return view('official.competition_player');
     }
-
 
     // 大会のチャットルームページ
     public function competition_chat($hold_id, $id, $player_id) {
@@ -237,8 +227,7 @@ dd($result);
                         ->value('read_status');
 
                     $chat_members[$key]['read_status'] = $read_status;
-                }
-                
+                }      
             } else {
                 // チャットルームの情報が取れなかったらダッシュボードへ返す（ホストじゃなかったら）
                 return redirect(route('dashboard'));
