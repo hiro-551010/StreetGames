@@ -183,7 +183,7 @@ button {
   height: 2px;
 }
 
-.bracket_firstRound-wrapper::after {
+.bracket_round1-wrapper::after {
   content: "";
   display: block;
   width: 100%;
@@ -234,12 +234,31 @@ button {
 .bracket_player-input {
   width: 20px;
   height: 40px;
-  background-color: #3695A2;
+  background-color: #312E2E;
 }
 
 .bracket_player-input input {
-  width: 20px;
+  width: 18px;
+  height: 18px;
+  margin-top: 11px;
+  cursor: pointer;
+}
+
+.bracket_player-input span {
+  display: block;
+  width: 100%;
   height: 100%;
+  text-align: center;
+  font-size: 18px;
+  line-height: 40px;
+}
+
+.bracket_player-win {
+  background-color: #3695A2;
+}
+
+.bracket_player-lose {
+  background-color: #191715;
 }
 
 .bracket_match-submit {
@@ -265,63 +284,75 @@ button {
   font-size: 14px;
 }
 
-.bracket_seccondRound-inner {
+.bracket_round2-inner {
   padding-top: 54px;
 }
 
-.bracket_seccondRound-inner .bracket_match {
+.bracket_round2-inner .bracket_match {
   margin-bottom: calc((108px * 1) + 20px);
 }
 
-.bracket_seccondRound-inner .bracket_match:nth-last-of-type(1) {
+.bracket_round2-inner .bracket_match:nth-last-of-type(1) {
   margin-bottom: 0;
 }
 
-.bracket_thirdRound-inner {
+.bracket_round3-inner {
   padding-top: calc((108px * 1) + 54px);
 }
 
-.bracket_thirdRound-inner .bracket_match {
+.bracket_round3-inner .bracket_match {
   margin-bottom: calc((108px * 3) + 20px);
 }
 
-.bracket_thirdRound-inner .bracket_match:nth-last-of-type(1) {
+.bracket_round3-inner .bracket_match:nth-last-of-type(1) {
   margin-bottom: 0;
 }
 
-.bracket_fourthRound-inner {
+.bracket_round4-inner {
   padding-top: calc((108px * 3) + 54px);
 }
 
-.bracket_fourthRound-inner .bracket_match {
+.bracket_round4-inner .bracket_match {
   margin-bottom: calc((108px * 7) + 20px);
 }
 
-.bracket_fourthRound-inner .bracket_match:nth-last-of-type(1) {
+.bracket_round4-inner .bracket_match:nth-last-of-type(1) {
   margin-bottom: 0;
 }
 
-.bracket_fifthRound-inner {
+.bracket_round5-inner {
   padding-top: calc((108px * 7) + 54px);
 }
 
-.bracket_fifthRound-inner .bracket_match {
+.bracket_round5-inner .bracket_match {
   margin-bottom: calc((108px * 15) + 20px);
 }
 
-.bracket_fifthRound-inner .bracket_match:nth-last-of-type(1) {
+.bracket_round5-inner .bracket_match:nth-last-of-type(1) {
   margin-bottom: 0;
 }
 
-.bracket_sixthRound-inner {
+.bracket_round6-inner {
   padding-top: calc((108px * 15) + 54px);
 }
 
-.bracket_sixthRound-inner .bracket_match {
+.bracket_round6-inner .bracket_match {
   margin-bottom: calc((108px * 31) + 20px);
 }
 
-.bracket_sixthRound-inner .bracket_match:nth-last-of-type(1) {
+.bracket_round6-inner .bracket_match:nth-last-of-type(1) {
+  margin-bottom: 0;
+}
+
+.bracket_round7-inner {
+  padding-top: calc((108px * 31) + 54px);
+}
+
+.bracket_round7-inner .bracket_match {
+  margin-bottom: calc((108px * 63) + 20px);
+}
+
+.bracket_round7-inner .bracket_match:nth-last-of-type(1) {
   margin-bottom: 0;
 }
 
@@ -347,64 +378,76 @@ button {
   background-color: #fff;
 }
 
-.bracket_firstMove-wrapper {
+.bracket_move1-wrapper {
   padding-top: calc(50px + 44px);
 }
 
-.bracket_firstMove-item {
+.bracket_move1-item {
   margin-bottom: 108px;
 }
 
-.bracket_firstMove-item .bracket_roundMove-left {
+.bracket_move1-item .bracket_roundMove-left {
   height: 108px;
 }
 
-.bracket_seccondMove-wrapper {
+.bracket_move2-wrapper {
   padding-top: calc(50px + 108px - 10px);
 }
 
-.bracket_seccondMove-item {
+.bracket_move2-item {
   margin-bottom: calc(108px * 2);
 }
 
-.bracket_seccondMove-item .bracket_roundMove-left {
+.bracket_move2-item .bracket_roundMove-left {
   height: calc(108px * 2);
 }
 
-.bracket_thirdMove-wrapper {
+.bracket_move3-wrapper {
   padding-top: calc(50px + (108px * 2) - 10px);
 }
 
-.bracket_thirdMove-item {
+.bracket_move3-item {
   margin-bottom: calc(108px * 4);
 }
 
-.bracket_thirdMove-item .bracket_roundMove-left {
+.bracket_move3-item .bracket_roundMove-left {
   height: calc(108px * 4);
 }
 
-.bracket_fourthMove-wrapper {
+.bracket_move4-wrapper {
   padding-top: calc(50px + (108px * 4) - 10px);
 }
 
-.bracket_fourthMove-item {
+.bracket_move4-item {
   margin-bottom: calc(108px * 8);
 }
 
-.bracket_fourthMove-item .bracket_roundMove-left {
+.bracket_move4-item .bracket_roundMove-left {
   height: calc(108px * 8);
 }
 
-.bracket_fifthMove-wrapper {
+.bracket_move5-wrapper {
   padding-top: calc(50px + (108px * 8) - 10px);
 }
 
-.bracket_fifthMove-item {
+.bracket_move5-item {
   margin-bottom: calc(108px * 16);
 }
 
-.bracket_fifthMove-item .bracket_roundMove-left {
+.bracket_move5-item .bracket_roundMove-left {
   height: calc(108px * 16);
+}
+
+.bracket_move6-wrapper {
+  padding-top: calc(50px + (108px * 16) - 10px);
+}
+
+.bracket_move6-item {
+  margin-bottom: calc(108px * 32);
+}
+
+.bracket_move6-item .bracket_roundMove-left {
+  height: calc(108px * 32);
 }
 
 .top_fv {

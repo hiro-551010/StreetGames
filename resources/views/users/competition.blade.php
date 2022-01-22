@@ -27,11 +27,7 @@ $round = $tournament_contents[0]['people'] / 2;
                     @csrf
                     <select name="tournaments_sort_date" id="tournaments_sort_date" onchange="submit(this.form)">
                         <option value="soon">開催日が近い順番</option>
-                        @if (!empty($order))
-                        <option value="late" selected>開催日が遅い順番</option>
-                        @else
-                        <option value="late">開催日が遅い順番</option>
-                        @endif
+                        <option value="late" {{ $order == 'late' ? 'selected' : '' }}>開催日が遅い順番</option>
                     </select>
                 </form>
                 <form action="{{ route('competition') }}" method="post">
