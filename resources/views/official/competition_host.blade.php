@@ -2,7 +2,7 @@
 
 @section('content')
 
-<!-- adminページ -->
+
 <!-- ここではentriesのテーブルのjoinを変更し、playersテーブルに反映させます -->
 <!-- entriesのjoinは0は抽選落ち、1は応募中、2は参加確定 -->
 

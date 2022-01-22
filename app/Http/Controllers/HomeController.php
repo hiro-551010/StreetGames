@@ -48,19 +48,18 @@ class HomeController extends Controller
 
         // userがhostの場合
         $host = new Host;
-        $host_tournaments = $host->host_tournaments($user_id);
+        $host_tournaments = $host->dashboard_host_tournaments($user_id);
         
         // chat機能
         $readStatus = Chat::select('chats.read_status')->where('receive_id', '=', $user[0]['id'])->get();
 
-        // userが大会に応募している場合
+        // userが大会に参加、応募している場合
         $entry = new Entry;
-        $entries = $entry->entries($user_id);
+        $entries = $entry->dashboard_entries($user_id);
 
         return view('users.dashboard', compact('user', 'host_tournaments', 'readStatus', 'entries'));
     }
 
-    
     // 大会一覧
     public function competition(Request $request){
         $posts = $request->all();
@@ -130,40 +129,26 @@ class HomeController extends Controller
     public function hold_post(Request $request){
         $posts = $request->all();
         $schedule = $posts['year']. '/'. $posts['month']. '/'. $posts['day'];
+        
+        // prizeのname属性に値が入っていなかった場合、「なし」を返す
         if (empty($posts['prize'])) {
             $posts['prize'] = "なし";
         }
-        DB::transaction(function () use($posts, $schedule) {
-            // $host = Host::insert(['user_id' => $posts['user_id']]);
-            // user_idをインサートしてhold_idをとってくる
-            $host = DB::table('hosts')->insertGetId(['user_id' => $posts['user_id']], 'hold_id');
-            $title_id = Tournament::insert([
-                'title_id' => $posts['title_id'],
-                'hold_id' => $host,
-                'host_name' => $posts['host_name'],
-                'explanation' => $posts['explanation'],
-                'prize' => $posts['prize']
-            ]);
-            $tournaments_content = Tournament_content::insert([
-                'hold_id' => $host,
-                'people' => $posts['people'],
-                'rule' => $posts['rule'],
-                'schedule' => $schedule
-            ]);
-        });
+        
+        // postされた内容をtournaments,tournament_contentsテーブルに挿入
+        $tournament = new Tournament;
+        $tournament->insertTournament($posts, $schedule);
+        
         return redirect(route('dashboard'));
     }
 
-    //大会応募
+    //大会一覧の応募
     public function entry(Request $request){
         $posts = $request->all();
-        DB::transaction(function () use($posts) {
-            $entries = Entry::insert([
-                'user_id' => $posts['user_id'],
-                'hold_id' => $posts['hold_id'],
-                'join' => "1",
-            ]);
-        });
+        // entryテーブルにデータを挿入
+        $entry = new Entry;
+        $entry->insertEntry($posts);
+        
         return redirect(route('competition'));
     }
 
@@ -227,32 +212,5 @@ class HomeController extends Controller
                 ]);
         });
         return redirect("chat/$name");
-    }
-
-    public function admin(){
-        // $entries = Entry::with('tournaments')
-        //     ->join('tournament_contents', 'tournament_contents.hold_id', 'entries.hold_id')
-        //     ->get();
-
-        // 応募者がいる大会を取得
-        $ids = Entry::groupBy('hold_id')->get(['hold_id']);
-        $entries = Entry::with('tournaments')
-            ->join('tournament_contents', 'tournament_contents.hold_id', 'entries.hold_id')
-            ->groupBy('entries.hold_id')
-            ->get(['entries.hold_id']);
-        return view('admin', compact('entries'));
-    }
-    
-    public function admin_post(Request $request){
-        $posts = $request->all();
-        // 大会のidを取得
-        $entry_id = $posts['hold_id'];
-        // 大会の人数を取得
-        $people = $posts['people'];
-
-        $player = new Player;
-        $insert = $player->insertPlayer($entry_id, $people);
-        
-        return redirect(route('admin'));
     }
 }

@@ -18,7 +18,7 @@ class Win extends Model
     ];
 
     public function bracket($hold_id){
-
+        
         DB::transaction(function() use($hold_id) {
             $players = Player::where('hold_id', $hold_id)->get();
             foreach($players as $p){

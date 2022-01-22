@@ -29,11 +29,9 @@ class OfficialController extends Controller
 
     // 大会詳細の開催者専用ページ
     public function competition_detail_host($hold_id, $id){      
-        $tournament = Host::where('user_id', $id)
-            ->where('hosts.hold_id', $hold_id)
-            ->join('tournaments', 'tournaments.hold_id', 'hosts.hold_id')
-            ->join('tournament_contents', 'tournament_contents.hold_id', 'tournaments.hold_id')
-            ->get();
+        // cdh competition_detail_host
+        $cdh = new Tournament;
+        $tournament = $cdh->cdhTounrament($hold_id, $id);
         
         $entries = Entry::where('hold_id', $hold_id)
             ->join('users', 'id', 'user_id')

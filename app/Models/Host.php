@@ -16,7 +16,7 @@ class Host extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function host_tournaments($user_id){
+    public function dashboard_host_tournaments($user_id){
         $host_exists = Host::with('user')->where('user_id', $user_id)->exists();
         if($host_exists){
             $host_tournaments = Host::with('user')
