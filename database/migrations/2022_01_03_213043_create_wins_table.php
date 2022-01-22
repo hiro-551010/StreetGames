@@ -16,13 +16,13 @@ class CreateWinsTable extends Migration
         Schema::create('wins', function (Blueprint $table) {
             $table->unsignedBigInteger('hold_id');
             $table->unsignedBigInteger('user_id');
-            $table->boolean('round1')->nullable();
-            $table->boolean('round2')->nullable();
-            $table->boolean('round3')->nullable();
-            $table->boolean('round4')->nullable();
-            $table->boolean('round5')->nullable();
-            $table->boolean('round6')->nullable();
-            $table->boolean('round7')->nullable();
+            $table->string('round1')->nullable();
+            $table->string('round2')->nullable();
+            $table->string('round3')->nullable();
+            $table->string('round4')->nullable();
+            $table->string('round5')->nullable();
+            $table->string('round6')->nullable();
+            $table->string('round7')->nullable();
 
             $table->foreign('hold_id')->references('hold_id')->on('players');
             $table->foreign('user_id')->references('user_id')->on('players');

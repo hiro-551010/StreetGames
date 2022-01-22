@@ -37,7 +37,7 @@ class Win extends Model
                 $seedNum = 0; // シード数
     
                 // ブラケットのサイズ、シード数を決める
-                for ($i = 0; $i <= 6; $i++) { // 最大６４人
+                for ($i = 0; $i <= 7; $i++) { // 最大128人
                     if ((2 ** ($i + 1)) >= $playerNum && $playerNum > (2 ** $i)) {
                         $bracketSize = 2 ** ($i +1);
                         $seedNum = $bracketSize - $playerNum;
@@ -51,10 +51,15 @@ class Win extends Model
                     if (($playerNum - $key) <= $seedNum) {
                         ++$num;
                         $match = (int)floor(($key + $num) / 4);
+                        if ($playerNum % 2 == 1) {
+                            $posi = ($key + 1) % 2;
+                        } else {
+                            $posi = $key % 2;
+                        }
                         Win::where([
                             ['hold_id', $bracket['hold_id']],
                             ['user_id', $bracket['user_id']],
-                        ])->update(['round1' => $match]);
+                        ])->update(['round1' => $match. '_'. $posi]);
                     }
                 }
             } else {
@@ -63,26 +68,41 @@ class Win extends Model
         });
     }
 
-    public function insertData($posts){
-        // round2等で分岐を作成
-        $winner = Win::select('wins.*');
+    public function insertData($posts, $hold_id){
 
-        // round1
-        if(isset($posts['round1'])){  
-            $winner1_id = $posts['round1'];
-            $winner->where('user_id', $winner1_id)->update(['round1'=>1]);
-        }
-        
-        // round2
-        if(isset($posts['round2'])){  
-            $winner1_id = $posts['round2'];
-            $winner->where('user_id', $winner1_id)->update(['round2'=>1]);
-        }
+        // トーナメントの訂正ボタンが押されたら
+        if (isset($posts['correct'])) {
+            Win::where('hold_id', $hold_id)
+                ->where('user_id', $posts['user1'])
+                ->orwhere('user_id', $posts['user2'])
+                ->update([$posts['round'] => NULL]);
+            
+        } else { // 確定ボタンが押されたら
 
-        //round3
-        if(isset($posts['round3'])){  
-            $winner1_id = $posts['round3'];
-            $winner->where('user_id', $winner1_id)->update(['round3'=>1]);
+            // ラウンドとマッチ数を調べる（ポストのキーで渡ってくる）
+            $postsKey = array_keys($posts);
+            // 配列の０番目にラウンド、１番目にマッチ数が入る
+            $roundMatch = explode('_', $postsKey[1]);
+            // 配列の０番目に勝ち選手、１番目に負け選手のidが入る
+            $winAndLose = explode('_', $posts[$postsKey[1]]);
+    
+            // 更新するカラム（round?）
+            $updateRound = 'round'. $roundMatch[0];
+            // 勝ち選手に入れる値
+            $matches = (int)floor($roundMatch[1] / 2);
+            $position = $roundMatch[1] % 2;
+            $roundValue = $matches. '_'. $position;
+    
+            // 勝ちをアップデート
+            Win::where([
+                ['hold_id', $hold_id],
+                ['user_id', $winAndLose[0]],
+            ])->update([$updateRound => $roundValue]);
+            // 負けをアップデート
+            Win::where([
+                ['hold_id', $hold_id],
+                ['user_id', $winAndLose[1]],
+            ])->update([$updateRound => 'lose']);
         }
     }
 }

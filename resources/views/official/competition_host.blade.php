@@ -78,36 +78,12 @@
 
 @else
 
-{{-- 4人大会 --}}
-@if ($tournament[0]['people']===4)
-    @component('components.bracket4',[
-        'entries'=>$entries,
-        'tournament'=>$tournament,
-        'players'=>$players,
-        'winners1'=>$winners1,
-        'winners2'=>$winners2,
-        'winners3'=>$winners3,
-        'bracketSize'=>$bracketSize,
-        'matches'=>$matches
-    ])
-    @endcomponent
-@elseif($tournament[0]['people']===8)
-    @component('components.bracket4',[
-        'entries'=>$entries,
-        'tournament'=>$tournament,
-        'players'=>$players,
-        'winners1'=>$winners1,
-        'winners2'=>$winners2,
-        'winners3'=>$winners3,
-        'bracketSize'=>$bracketSize,
-        'matches'=>$matches
-    ])
-    @endcomponent
-@elseif($tournament[0]['people']===16)
-@elseif($tournament[0]['people']===32)
-@elseif($tournament[0]['people']===64)
-    
-@endif
+@component('components.bracket4',[
+    'tournament'=>$tournament,
+    'bracketSize'=>$bracketSize,
+    'brackets'=>$brackets
+])
+@endcomponent
 
 @endisset
 

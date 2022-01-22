@@ -49,16 +49,18 @@ class OfficialController extends Controller
         }
 
         // トーナメント表について
+        $bracketSize = 0; // ブラケットのサイズ
+        $matches = []; // ラウンド１用,対戦相手とセットで入れる
+        $brackets = []; // 全てのプレイヤー配置
         // 参加人数取得
         $playerNum = Win::where('hold_id', $hold_id)->count();
 
         if ($playerNum >= 2) { //２人以上で開催
             $round1 = $players->toArray(); //コレクションを配列へ
-            $bracketSize = 0; // ブラケットのサイズ
             $seedNum = 0; // シード数
 
             // ブラケットのサイズ、シード数を決める
-            for ($i = 0; $i <= 6; $i++) { // 最大６４人
+            for ($i = 0; $i <= 7; $i++) { // 最大128人
                 if ((2 ** ($i + 1)) >= $playerNum && $playerNum > (2 ** $i)) {
                     $bracketSize = 2 ** ($i +1);
                     $seedNum = $bracketSize - $playerNum;
@@ -70,7 +72,7 @@ class OfficialController extends Controller
             if ($seedNum >= 1) {
                 for ($i = 0; $i < $seedNum; $i++) {
                     $place = - ($i * 2); //挿入したい場所
-                    $seed = ['hold_id' => (int)$hold_id, 'user_id' => NULL, 'user_name' => 'シード', 'round1' => 'lose'];
+                    $seed = ['hold_id' => (int)$hold_id, 'user_id' => NULL, 'user_name' => 'シード', 'round1' => 'seed'];
 
                     if ($i === 0) {
                         array_push($round1, $seed);
@@ -81,51 +83,52 @@ class OfficialController extends Controller
             }
 
             // 二人ずつセット（対戦相手）にして多次元配列に入れる
-            $matches = [];
             foreach ($round1 as $key => $r) {
                 $matchNum = (int)floor($key / 2);
                 $position = $key % 2;
                 $matches[$matchNum][$position] = $r;
             }
-            
+
+
+            $brackets['round0'] = $matches;
+
+
+            // ラウンド２以降
+            for ($i = 1; $i <= 7; $i++) { // 1から７ラウンドの成績を取る
+                $round = 'round'. $i;
+                $results = Win::select('wins.*', 'users.name as user_name')->where('wins.hold_id', $hold_id)->whereNotNull($round)->whereNotIn($round, ['lose'])->join('users', 'users.id', 'wins.user_id')->get()->toArray();
+
+                foreach ($results as $key => $result) {
+                    $resultNum = explode('_', $result[$round]);
+                    $matchNum = $resultNum[0];
+                    $position = $resultNum[1];
+                    $brackets[$round][$matchNum][$position] = $result;
+                }
+
+                // 勝ちが決まってないポジションにnullを入れる
+                // ブラケットサイズとラウンド数で必要な対戦数を取得
+                $matchesOfRound = (int)floor($bracketSize / (2 ** ($i + 1)));
+                // 必要数だけ確認し、データがなければnullを入れる
+                for ($j = 0; $j < $matchesOfRound; $j++) {
+                    if (empty($brackets[$round][$j][0])) {
+                        $brackets[$round][$j][0] = NULL;
+                    }
+                    if (empty($brackets[$round][$j][1])) {
+                        $brackets[$round][$j][1] = NULL;
+                    }
+                }
+
+            }
         } else {
             // 参加者が２人以上集まらなかった場合
         }
 
-        // トーナメント表の変数
-        $winner1_exists = Win::where([['round1', 1], ['hold_id', $hold_id]])->exists();
-        if($winner1_exists){
-            $winners1 = Win::where([['round1', 1], ['hold_id', $hold_id]])
-                ->join('users', 'users.id', 'wins.user_id')
-                ->get();
-        }else{
-            $winners1 = ['false' => 'aaa'];
-        }
-
-        $winner2_exists = Win::where([['round2', 1], ['hold_id', $hold_id]])->exists();
-        if($winner2_exists){
-            $winners2 = Win::where([['round2', 1], ['hold_id', $hold_id]])
-                ->join('users', 'users.id', 'wins.user_id')
-                ->get();
-        }else{
-            $winners2 = ['false' => 'aaa'];
-        }
-        
-        $winner3_exists = Win::where([['round3', 1], ['hold_id', $hold_id]])->exists();
-        if($winner3_exists){
-            $winners3 = Win::where([['round3', 1], ['hold_id', $hold_id]])
-                ->join('users', 'users.id', 'wins.user_id')
-                ->get();
-        }else{
-            $winners3 = ['false' => 'aaa'];
-        }
 
         $chat_room = ChatRoom::where('hold_id', $hold_id)
             ->where('closed_at', null)
             ->get();
         
-        return view('official.competition_host', compact('entries', 'tournament', 'players', 'chat_room', 'bracketSize', 'matches', 'winners1', 'winners2', 'winners3'));
-
+        return view('official.competition_host', compact('entries', 'tournament', 'players', 'chat_room', 'bracketSize', 'brackets'));
     }
 
     // 抽選決定
@@ -150,7 +153,7 @@ class OfficialController extends Controller
     public function host_bracket_post(Request $request, $hold_id, $id){
         $posts = $request->all();
         $win = new Win;
-        $insert = $win->insertData($posts);
+        $insert = $win->insertData($posts, $hold_id);
         
         //　優勝者が決まった場合、その大会をソフトデリート
         if(isset($posts['end_competition'])){
