@@ -108,10 +108,18 @@ class HomeController extends Controller
 
     // 大会詳細
     public function competition_detail($id){
-        $tournament_contents = Tournament_content::select('tournament_contents.*')
-            ->where('hold_id', $id)
+        $tournament = Tournament::where('tournaments.hold_id', $id)
+            ->join('tournament_contents', 'tournament_contents.hold_id', 'tournaments.hold_id')
+            ->join('titles', 'titles.title_id', 'tournaments.title_id')
+            ->first();
+        $entries = Entry::where([
+                ['hold_id', $id],
+                ['join', 1]
+            ])
+            ->join('users', 'users.id', 'entries.user_id')
+            ->select('entries.*', 'users.name as user_name')
             ->get();
-        return view('users.competition_detail', compact('id', 'tournament_contents'));
+        return view('users.competition_detail', compact('tournament', 'entries'));
     }
 
     // 大会開催
