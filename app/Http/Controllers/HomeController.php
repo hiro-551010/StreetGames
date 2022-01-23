@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\HoldPostRequest;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Host;
@@ -134,18 +135,8 @@ class HomeController extends Controller
     }
     
     // holdからpostで送られてきたrequestを処理
-    public function hold_post(Request $request){
-        $posts = $request->all();
-        $schedule = $posts['year']. '/'. $posts['month']. '/'. $posts['day'];
-        
-        // prizeのname属性に値が入っていなかった場合、「なし」を返す
-        if (empty($posts['prize'])) {
-            $posts['prize'] = "なし";
-        }
-        
-        // postされた内容をtournaments,tournament_contentsテーブルに挿入
-        $tournament = new Tournament;
-        $tournament->insertTournament($posts, $schedule);
+    public function hold_post(HoldPostRequest $request){
+        $request->creates();
         
         return redirect(route('dashboard'));
     }
@@ -173,8 +164,7 @@ class HomeController extends Controller
         $posts = $request->all();
 
         $db_names = [];
-        $db_name = User::select('users.*')
-            ->get();   
+        $db_name = User::select('users.*')->get();   
         foreach($db_name as $d){
             array_push($db_names, $d['name']);
         }
