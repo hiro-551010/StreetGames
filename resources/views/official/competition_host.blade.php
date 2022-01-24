@@ -31,8 +31,8 @@
                             @csrf
                             <input type="hidden" name="hold_id" value="{{ $t['hold_id'] }}">
                             <input type="hidden" name="people" value="{{ $t['people'] }}">
-                            <p><span>抽選ボタンを押すと参加者が決定します。</span><span>応募者数が募集人数を上回っている場合、ランダムでの抽選が行われ決定いたします。</span></p>
-                            <button type="submit" class="join">抽選</button>
+                            <p><span>抽選ボタンを押すと参加者が決定します。</span><span>応募者が２名以上いない場合、大会を開催できません。</span><span>応募者数が募集人数を上回っている場合、ランダムでの抽選が行われ決定いたします。</span></p>
+                            <button type="submit" class="join" {{ count($entries) < 2 ? 'disabled' : '' }}>抽選</button>
                         </form>
                     </div>
 

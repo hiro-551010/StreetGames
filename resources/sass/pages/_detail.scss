@@ -25,5 +25,11 @@
         filter: brightness(30%);
       }
     }
+
+    &::after {
+      aspect-ratio: 62 / 1;
+      background: linear-gradient(177.77deg, #462AB5 1.88%, #9A6DC8 172.08%);
+      clip-path: polygon(0 100%, 100% 0, 100% 100%, 0 100%);
+    }
   }
 }

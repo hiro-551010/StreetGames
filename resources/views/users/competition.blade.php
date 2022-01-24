@@ -44,7 +44,7 @@ $round = $tournament_contents[0]['people'] / 2;
                 @foreach($tournaments as $t)
                 <li class="tournaments_card">
                     <div class="tournaments_img">
-                        <img src="{{ asset('img/smashBros01.jpg') }}" alt="">
+                        <img src="{{ asset('img/title_id-'. $t['title_id']. '.jpg') }}" alt="">
                     </div>
                     <div class="card-body">
                         <h5 class="tournaments_title">タイトル： {{ $t['explanation'] }}</h5>

@@ -1187,6 +1187,12 @@ button {
   filter: brightness(30%);
 }
 
+.detail_header::after {
+  aspect-ratio: 62 / 1;
+  background: linear-gradient(177.77deg, #462AB5 1.88%, #9A6DC8 172.08%);
+  clip-path: polygon(0 100%, 100% 0, 100% 100%, 0 100%);
+}
+
 .main_wrapper {
   width: 100%;
   padding-bottom: 80px;
@@ -2007,6 +2013,11 @@ button {
 .hostOnly_lottery button:hover {
   box-shadow: 1px 1px 8px -2px #fff, -1px -1px 8px -2px #fff;
   text-shadow: 1px 1px 6px #aaa;
+}
+
+.hostOnly_lottery button:disabled:hover {
+  box-shadow: none;
+  text-shadow: none;
 }
 
 .hostOnly_selected {
