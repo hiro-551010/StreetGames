@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CompetitionRequest;
 use App\Http\Requests\HoldPostRequest;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -15,8 +16,8 @@ use App\Models\Player;
 use App\Models\Win;
 use DB;
 use Carbon\Carbon;
-
-
+use Exception;
+use Mockery\Generator\StringManipulation\Pass\Pass;
 
 class HomeController extends Controller
 {
@@ -62,44 +63,25 @@ class HomeController extends Controller
     }
 
     // 大会一覧
-    public function competition(Request $request){
+    public function competition(CompetitionRequest $request){
         $posts = $request->all();
         $order = '';
         $status = '';
-        // 今日の日付を取得
-        $today = Carbon::today();
-        
+
         // ベースのメソッド
         $tournaments = Tournament::join('tournament_contents', 'tournaments.hold_id', 'tournament_contents.hold_id')
             ->join('titles', 'tournaments.title_id', 'titles.title_id');
 
-        // sort
+        // sortの処理
+        $tournaments = $request->sorts($tournaments);
         if (isset($posts['tournaments_sort_date'])){
-            //大会開催日での並び替え
-            if (empty($posts) || $posts['tournaments_sort_date'] == 'soon') {
-                // 開催日が早い順
-                $tournaments = $tournaments->orderBy('schedule', 'asc');
-            } else {
-                // 開催日が遅い順
-                $tournaments = $tournaments->orderBy('schedule', 'desc');
-                $order = 'late';
-            }
-        // 大会開催の状態での並び替え
-        } elseif (isset($posts['tournaments_sort_status'])){
-            // 開催中
-            if ($posts['tournaments_sort_status'] == 'held'){
-                $tournaments->whereDate('schedule', $today);
-                $status = 1;
-            // 開催前
-            } elseif ($posts['tournaments_sort_status'] == 'before'){
-                $tournaments->whereDate('schedule', '>=', $today);
-                $status = 0;
-            // 大会終了
-            } else {
-                $tournaments->onlyTrashed();
-                $status = 2;
-            }
-        }       
+            $order = $posts['tournaments_sort_date'] == 'late' ? 'late' : '';
+        }
+        if (isset($posts['tournaments_sort_status'])){
+            $status = ($posts['tournaments_sort_status'] == 'before' ? '0' : 
+                ($posts['tournaments_sort_status'] == 'held' ? '1' :
+                    ($posts['tournaments_sort_status'] == 'end' ? '2' : '')));
+        }  
 
         // トーナメント情報取得
         $tournaments = $tournaments->get();
