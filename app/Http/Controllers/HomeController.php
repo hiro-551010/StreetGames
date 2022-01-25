@@ -67,26 +67,30 @@ class HomeController extends Controller
         $posts = $request->all();
         $order = '';
         $status = '';
+        $t_id = '';
+        
+        // タイトル情報取得
+        $titles = Title::get();
 
         // ベースのメソッド
         $tournaments = Tournament::join('tournament_contents', 'tournaments.hold_id', 'tournament_contents.hold_id')
             ->join('titles', 'tournaments.title_id', 'titles.title_id');
 
         // sortの処理
-        $tournaments = $request->sorts($tournaments);
         if (isset($posts['tournaments_sort_date'])){
-            $order = $posts['tournaments_sort_date'] == 'late' ? 'late' : '';
+            $tournaments = $request->sorts($tournaments);
+            $order = $request->order;
+        } elseif (isset($posts['tournaments_sort_status'])) {
+            $tournaments = $request->sorts($tournaments);
+            $status = $request->status;
+        } elseif (isset($posts['tournaments_sort_titles'])) {
+            $tournaments = $request->sorts($tournaments);
+            $t_id = $posts['tournaments_sort_titles'];
         }
-        if (isset($posts['tournaments_sort_status'])){
-            $status = ($posts['tournaments_sort_status'] == 'before' ? '0' : 
-                ($posts['tournaments_sort_status'] == 'held' ? '1' :
-                    ($posts['tournaments_sort_status'] == 'end' ? '2' : '')));
-        }  
-
         // トーナメント情報取得
         $tournaments = $tournaments->get();
         
-        return view('users.competition', compact('tournaments', 'order', 'status'));
+        return view('users.competition', compact('tournaments', 'order', 'status', 'titles', 't_id'));
     }
 
     // 大会詳細

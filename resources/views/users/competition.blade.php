@@ -38,6 +38,15 @@ $round = $tournament_contents[0]['people'] / 2;
                         <option value="end" {{ $status == 2 ? 'selected' : ''}}>大会終了</option>   
                     </select>
                 </form>
+                <form action="{{ route('competition') }}" method="post">
+                    @csrf
+                    <select name="tournaments_sort_titles" id="tournaments_sort_titles" onchange="submit(this.form)">
+                        <option value="">ゲームタイトル</option>
+                        @foreach ($titles as $title)
+                            <option value="{{ $title['title_id'] }}" {{ $t_id == $title['title_id'] ? 'selected' : ''}}>{{ $title['title_name'] }}</option>
+                        @endforeach
+                    </select>              
+                </form>
             </div>
             
             <ol class="tournaments_lists">
