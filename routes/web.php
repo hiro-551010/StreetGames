@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Controller;
@@ -37,8 +38,6 @@ Route::match(['get', 'post'], '/competition', [HomeController::class, 'competiti
 Route::get('competition_detail/{id}', [HomeController::class, 'competition_detail'])->name('competition_detail');
 // 応募、参加関係
 Route::post('/entry', [HomeController::class, 'entry'])->name('entry');
-Route::get('/players', [HomeController::class, 'players'])->name('players');
-Route::post('/players_post', [HomeController::class, 'players_post'])->name('players_post');
 Route::get('/competition_detail/{hold_id}/players/{id}', [OfficialController::class, 'competition_detail_players']);
 Route::get('/competition_detail/{hold_id}/host/{id}', [OfficialController::class, 'competition_detail_host'])->name('competition_detail_host');
 Route::post('/host_bracket_post/{hold_id}/{id}', [OfficialController::class, 'host_bracket_post'])->name('host_bracket_post');
@@ -48,9 +47,9 @@ Route::post('/chat_post/{name}', [HomeController::class, 'chat_post'])->name('ch
 // お問い合わせ
 Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
 // admin
-Route::get('/admin', [HomeController::class, 'admin'])->name('admin');
-Route::post('/host_admin_post/{hold_id}/{id}', [OfficialController::class, 'host_admin_post'])->name('host_admin_post');
-
+Route::get('/admin', [AdminController::class, 'admin'])->name('admin');
+Route::post('/admin_post_topics', [AdminController::class, 'admin_post_topics'])->name('admin_post_topics');
+Route::post('/admin_post_events', [AdminController::class, 'admin_post_events'])->name('admin_post_events');
 // チャットページ表示
 Route::get('/competition_chat/{hold_id}/{id}/{player_id}', [OfficialController::class, 'competition_chat'])->name('competition_chat');
 // チャット送信

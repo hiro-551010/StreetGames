@@ -137,34 +137,6 @@ class HomeController extends Controller
         return redirect(route('competition'));
     }
 
-    // 大会に参加するuser
-    public function players(){
-        $players = User::select('users.*')
-            ->get();
-
-        return view('users.players', compact('players'));
-    }
-
-    // player一覧の検索機能
-    public function players_post(Request $request){
-        $posts = $request->all();
-
-        $db_names = [];
-        $db_name = User::select('users.*')->get();   
-        foreach($db_name as $d){
-            array_push($db_names, $d['name']);
-        }
-        $name = $posts['name'];
-        $valid_name = null;
-        foreach($db_names as $d){
-            if($name === $d){
-                $valid_name = $d;
-            }
-        }
-
-        return view('users.players', compact('valid_name'));
-    }
-
     // 質問
     public function contact(){
         return view('users.contact');
