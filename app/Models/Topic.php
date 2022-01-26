@@ -9,4 +9,7 @@ class Topic extends Model
 {
     use HasFactory;
 
+    // create, saveメソッドを使う場合はfillableを使用する
+    protected $fillable = ['heading', 'content'];
+
 }

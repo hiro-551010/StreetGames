@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Controller;
@@ -46,9 +47,9 @@ Route::post('/chat_post/{name}', [HomeController::class, 'chat_post'])->name('ch
 // お問い合わせ
 Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
 // admin
-Route::get('/admin', [HomeController::class, 'admin'])->name('admin');
-Route::post('/host_admin_post/{hold_id}/{id}', [OfficialController::class, 'host_admin_post'])->name('host_admin_post');
-
+Route::get('/admin', [AdminController::class, 'admin'])->name('admin');
+Route::post('/admin_post_topics', [AdminController::class, 'admin_post_topics'])->name('admin_post_topics');
+Route::post('/admin_post_events', [AdminController::class, 'admin_post_events'])->name('admin_post_events');
 // チャットページ表示
 Route::get('/competition_chat/{hold_id}/{id}/{player_id}', [OfficialController::class, 'competition_chat'])->name('competition_chat');
 // チャット送信
