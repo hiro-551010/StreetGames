@@ -37,8 +37,6 @@ Route::match(['get', 'post'], '/competition', [HomeController::class, 'competiti
 Route::get('competition_detail/{id}', [HomeController::class, 'competition_detail'])->name('competition_detail');
 // 応募、参加関係
 Route::post('/entry', [HomeController::class, 'entry'])->name('entry');
-Route::get('/players', [HomeController::class, 'players'])->name('players');
-Route::post('/players_post', [HomeController::class, 'players_post'])->name('players_post');
 Route::get('/competition_detail/{hold_id}/players/{id}', [OfficialController::class, 'competition_detail_players']);
 Route::get('/competition_detail/{hold_id}/host/{id}', [OfficialController::class, 'competition_detail_host'])->name('competition_detail_host');
 Route::post('/host_bracket_post/{hold_id}/{id}', [OfficialController::class, 'host_bracket_post'])->name('host_bracket_post');
