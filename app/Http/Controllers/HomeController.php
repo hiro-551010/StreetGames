@@ -73,15 +73,17 @@ class HomeController extends Controller
             ->join('titles', 'tournaments.title_id', 'titles.title_id');
 
         // sortの処理
-        $tournaments = $request->sorts($tournaments);
-        if (isset($posts['tournaments_sort_date'])){
-            $order = $posts['tournaments_sort_date'] == 'late' ? 'late' : '';
+        if ($posts) {
+            $tournaments = $request->sorts($tournaments);
+            if (isset($posts['tournaments_sort_date'])){
+                $order = $posts['tournaments_sort_date'] == 'late' ? 'late' : '';
+            }
+            if (isset($posts['tournaments_sort_status'])){
+                $status = ($posts['tournaments_sort_status'] == 'before' ? '0' : 
+                    ($posts['tournaments_sort_status'] == 'held' ? '1' :
+                        ($posts['tournaments_sort_status'] == 'end' ? '2' : '')));
+            }  
         }
-        if (isset($posts['tournaments_sort_status'])){
-            $status = ($posts['tournaments_sort_status'] == 'before' ? '0' : 
-                ($posts['tournaments_sort_status'] == 'held' ? '1' :
-                    ($posts['tournaments_sort_status'] == 'end' ? '2' : '')));
-        }  
 
         // トーナメント情報取得
         $tournaments = $tournaments->get();

@@ -8,20 +8,26 @@
   height: 48vw;
   min-height: 360px;
   max-height: 700px;
-  padding-top: 8vw;
+  padding-top: 9vw;
   background-color: $color-bg;
   
   // タイトル
   &-title {
-    @include innerWidth();
+    @include innerWidth(80%);
 
     p {
       font-weight: bold;
     }
 
     h1 {
-      margin-bottom: 8%;
       font-weight: bold;
+
+      @include pcTab {
+        margin-bottom: 8%;
+      }
+      @include sp {
+        margin-bottom: 44px;
+      }
 
       span {
         font-size: 1.1em;
@@ -33,7 +39,12 @@
   &-link {
 
     li {
-      margin-bottom: 35px;
+      @include pc {
+        margin-bottom: 35px;
+      }
+      @include tab {
+        margin-bottom: 20px;
+      }
 
       &:nth-last-of-type(1) {
         margin-bottom: 0;
@@ -91,9 +102,9 @@
 .top_about {
   position: relative;
   width: 100%;
-  padding: 10% 0;
+  padding: 16% 0;
   background-image: url(../img/top-about.jpg);
-  background-size: 104%;
+  background-size: 140%;
   background-position: center;
 
   &-inner {
@@ -105,8 +116,14 @@
   }
 
   p {
+    line-height: 1.4;
+    text-align: center;
+
     @include pcTab {
-      font-size: 1.5rem;
+      font-size: 16px;
+    }
+    @include sp {
+      font-size: 12px;
     }
   }
 
@@ -124,22 +141,72 @@
 }
 
 // =============================================
-// トップページ 参加手順
+// トップページ 開催・参加手順
 // =============================================
-.top_player {
+.top_flow {
   position: relative;
   width: 100%;
-  padding: 10% 0;
-  background-image: url(../img/top-player.jpg);
-  // background-size: 104%;
-  background-position: center;
+  padding: 12% 0;
+  background: linear-gradient(180deg, rgba(19, 16, 16, 0.84) 15.52%, rgba(19, 16, 16, 0.5292) 55.55%, rgba(19, 16, 16, 0.84) 100%), url(../img/top-flow.jpg);
+  background-size: cover;
+  
+  @include pcTab {
+    background-position: left;
+  }
+  @include sp {
+    background-position: center;
+  }
 
   &-inner {
-    @include innerWidth();
+    @include innerWidth(640px);
+
+    &  > div:first-of-type {
+      @include pcTab {
+        margin-bottom: 134px;
+      }
+      @include sp {
+        margin-bottom: 80px;
+      }
+    }
   }
 
   h2 {
     @include sectionTitle();
+  }
+
+  &-lists {
+    padding-left: 3em;
+
+    li {
+      position: relative;
+      
+      @include pcTab {
+        margin-bottom: 1.8em;
+        font-size: 16px;
+      }
+      @include sp {
+        margin-bottom: 1.4em;
+        font-size: 12px;
+      }
+
+      &:last-of-type {
+        margin-bottom: 0;
+      }
+
+      span {
+        position: absolute;
+        left: -2em;
+        
+        @include pcTab {
+          top: -0.3em;
+          font-size: 24px;
+        }
+        @include sp {
+          top: -0.1em;
+          font-size: 16px;
+        }
+      }
+    }
   }
 
   &::after {
@@ -158,14 +225,13 @@
 // =============================================
 // トップページ 開催手順
 // =============================================
-.top_organizer {
+.top_vision {
   position: relative;
   width: 100%;
   padding: 10% 0;
-  // background-color: url(../img/top-player.jpg);
-  // background-size: 104%;
-  // background-position: center;
-  background-color: $color-black;
+  background-image: url(../img/top-vision.jpg);
+  background-size: 104%;
+  background-position: center;
 
   &-inner {
     @include innerWidth();

@@ -60,7 +60,7 @@
         <div class="top_about-inner">
             <h2 class="fs-1">STREET GAMESとは</h2>
             <p>
-                アマチュアからプロまで全てのゲームプレーヤーが開催できるトーナメントプラットフォーム<br><br>
+                アマチュアからプロまで全てのゲームプレーヤーが開催できる<br>トーナメントプラットフォーム<br><br>
                 ゲーム大会の開催をできるだけ簡単にし、最小４人のトーナメントから大規模な大会まで気軽に参加できる<br><br>
                 開催・参加内容や成績はプレーヤーデータとして蓄積され、新たなプレーヤーとの交流にも繋がる<br><br>
                 ゲーマーのためのホットなトーナメントで成績を残し、次のチャンスへ繋げよう
@@ -68,49 +68,53 @@
         </div>
     </section>
 
-    <!-- 参加手順 -->
-    <section class="top_player">
-        <div class="top_player-inner">
-            <h2 class="fs-1">大会へ参加する手順</h2>
-            <div>
-                <ol>
+    <!-- 開催・参加手順 -->
+    <section class="top_flow">
+        <div class="top_flow-inner">
+            <div class="top_flow-player">
+                <h2 class="fs-1">大会へ参加する手順</h2>
+                <ol class="top_flow-lists">
                     <li>
-                        1
+                        <span>1</span>大会内容を確認し、エントリー（募集人数を上回った場合は抽選を行います）
                     </li>
                     <li>
-                        2
+                        <span>2</span>トーナメント表に沿ってゲームプレイ、勝敗の入力
                     </li>
                     <li>
-                        3
+                        <span>3</span>大会終了後、自動で成績に反映
+                    </li>
+                </ol>
+            </div>
+            <div class="top_flow-organizer">
+                <h2 class="fs-1">大会を主催する手順</h2>
+                <ol class="top_flow-lists">
+                    <li>
+                        <span>1</span>開催フォームを入力し、大会を作成する
                     </li>
                     <li>
-                        4
+                        <span>2</span>募集締め切り後、トーナメント表を確認
+                    </li>
+                    <li>
+                        <span>3</span>大会の進行状況、勝敗確認
+                    </li>
+                    <li>
+                        <span>4</span>終了後、トーナメント結果の確認・公開
                     </li>
                 </ol>
             </div>
         </div>
     </section>
 
-    <!-- 開催手順 -->
-    <section class="top_organizer">
-        <div class="top_organizer-inner">
-            <h2 class="fs-1">大会を主催する手順</h2>
-            <div>
-                <ol>
-                    <li>
-                        1
-                    </li>
-                    <li>
-                        2
-                    </li>
-                    <li>
-                        3
-                    </li>
-                    <li>
-                        4
-                    </li>
-                </ol>
-            </div>
+    <!-- 理念 -->
+    <section class="top_vision">
+        <div class="top_vision-inner">
+            <h2 class="fs-1">STREET GAMESの理念</h2>
+            <p>
+                アマチュアからプロまで全てのゲームプレーヤーが開催できる<br>トーナメントプラットフォーム<br><br>
+                ゲーム大会の開催をできるだけ簡単にし、最小４人のトーナメントから大規模な大会まで気軽に参加できる<br><br>
+                開催・参加内容や成績はプレーヤーデータとして蓄積され、新たなプレーヤーとの交流にも繋がる<br><br>
+                ゲーマーのためのホットなトーナメントで成績を残し、次のチャンスへ繋げよう
+            </p>
         </div>
     </section>
 
