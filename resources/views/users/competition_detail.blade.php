@@ -6,7 +6,7 @@
     <div class="detail_header">
         <h1 class="">{{ $tournament['explanation'] }}</h1>
         <div class="detail_header-img">
-          <img src="{{ asset('img/smashBros01.jpg') }}" alt="">
+          <img src="{{ asset('img/title_id-'. $tournament['title_id']. '.jpg') }}" alt="">
         </div>
     </div>
 

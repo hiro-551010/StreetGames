@@ -1,3 +1,12 @@
+.top_wrapper {
+  @include pc {
+    padding: 0 5%;
+    background-color: $color-black;
+  }
+  @include tab {
+    padding: 0;
+  }
+}
 // =============================================
 // トップページ ファーストビュー
 // =============================================
@@ -8,23 +17,88 @@
   height: 48vw;
   min-height: 360px;
   max-height: 700px;
-  padding-top: 8vw;
+  padding-top: 9vw;
   background-color: $color-bg;
+  overflow: hidden;
   
   // タイトル
   &-title {
-    @include innerWidth();
+    @include innerWidth(80%);
 
     p {
+      position: relative;
       font-weight: bold;
+
+      // 装飾
+      &::before {
+        content: "";
+        display: block;
+        position: absolute;
+        top: 0;
+        left: -56%;
+        z-index: -1;
+        width: 80%;
+        aspect-ratio: 5 / 1;
+        background-color: rgba(45, 44, 80, 0.4);
+        clip-path: polygon(0 0, 100% 100%, 100% 100%, 0 100%);
+        transform: rotate(-76deg);
+      }
+      &::after {
+        content: "";
+        display: block;
+        position: absolute;
+        top: 0;
+        left: -50%;
+        z-index: -1;
+        width: 70%;
+        aspect-ratio: 4 / 1;
+        background-color: rgba(44, 63, 80, 0.4);
+        clip-path: polygon(0 0, 100% 100%, 100% 100%, 0 100%);
+        transform: rotate(-60deg);
+      }
     }
 
     h1 {
-      margin-bottom: 8%;
+      position: relative;
       font-weight: bold;
+
+      @include pcTab {
+        margin-bottom: 8%;
+      }
+      @include sp {
+        margin-bottom: 44px;
+      }
 
       span {
         font-size: 1.1em;
+      }
+
+      // 装飾
+      &::before {
+        content: "";
+        display: block;
+        position: absolute;
+        top: 300%;
+        right: 50%;
+        z-index: -1;
+        width: 70%;
+        aspect-ratio: 5 / 1;
+        background-color: rgba(45, 44, 80, 0.33);
+        clip-path: polygon(0 0, 100% 100%, 100% 100%, 0 100%);
+        transform: rotate(-60deg);
+      }
+      &::after {
+        content: "";
+        display: block;
+        position: absolute;
+        top: 400%;
+        right: 52%;
+        z-index: -1;
+        width: 70%;
+        aspect-ratio: 3.5 / 1;
+        background-color: rgba(44, 63, 80, 0.4);
+        clip-path: polygon(0 0, 100% 100%, 100% 100%, 0 100%);
+        transform: rotate(-60deg);
       }
     }
   }
@@ -33,7 +107,12 @@
   &-link {
 
     li {
-      margin-bottom: 35px;
+      @include pc {
+        margin-bottom: 35px;
+      }
+      @include tab {
+        margin-bottom: 20px;
+      }
 
       &:nth-last-of-type(1) {
         margin-bottom: 0;
@@ -91,9 +170,9 @@
 .top_about {
   position: relative;
   width: 100%;
-  padding: 10% 0;
+  padding: 16% 0;
   background-image: url(../img/top-about.jpg);
-  background-size: 104%;
+  background-size: 140%;
   background-position: center;
 
   &-inner {
@@ -105,8 +184,14 @@
   }
 
   p {
+    line-height: 1.4;
+    text-align: center;
+
     @include pcTab {
-      font-size: 1.5rem;
+      font-size: 16px;
+    }
+    @include sp {
+      font-size: 12px;
     }
   }
 
@@ -124,22 +209,93 @@
 }
 
 // =============================================
-// トップページ 参加手順
+// トップページ 開催・参加手順
 // =============================================
-.top_player {
+.top_flow {
   position: relative;
   width: 100%;
-  padding: 10% 0;
-  background-image: url(../img/top-player.jpg);
-  // background-size: 104%;
-  background-position: center;
+  padding: 12% 0;
+  background: linear-gradient(180deg, rgba(19, 16, 16, 0.84) 15.52%, rgba(19, 16, 16, 0.5292) 55.55%, rgba(19, 16, 16, 0.84) 100%), url(../img/top-flow.jpg);
+  background-size: cover;
+  
+  @include pcTab {
+    background-position: left;
+  }
+  @include sp {
+    background-position: center;
+  }
 
   &-inner {
-    @include innerWidth();
+    @include innerWidth(640px);
+
+    &  > div:first-of-type {
+      @include pcTab {
+        margin-bottom: 134px;
+      }
+      @include sp {
+        margin-bottom: 80px;
+      }
+    }
   }
 
   h2 {
     @include sectionTitle();
+  }
+
+  &-lists {
+    padding-left: 3em;
+
+    li {
+      position: relative;
+      
+      @include pcTab {
+        margin-bottom: 1.8em;
+        font-size: 16px;
+      }
+      @include sp {
+        margin-bottom: 1.4em;
+        font-size: 12px;
+      }
+
+      &:last-of-type {
+        margin-bottom: 0;
+      }
+
+      span {
+        position: absolute;
+        display: inline-block;
+        background-image: url(../img/paint-bg.png);
+        background-repeat: no-repeat;
+        color: $color-black;
+        font-weight: bold;
+        text-align: center;
+        
+        @include pcTab {
+          top: -0.3em;
+          left: -2.6em;
+          width: 50px;
+          height: 50px;
+          background-size: 140%;
+          background-position: left;
+          font-size: 24px;
+        }
+        @include sp {
+          top: -0.3em;
+          left: -3.2em;
+          width: 40px;
+          height: 38px;
+          background-size: 136%;
+          background-position: left bottom;
+          font-size: 14px;
+        }
+      }
+
+      &::before {
+        content: "";
+        display: block;
+        
+      }
+    }
   }
 
   &::after {
@@ -156,16 +312,15 @@
 }
 
 // =============================================
-// トップページ 開催手順
+// トップページ 理念
 // =============================================
-.top_organizer {
+.top_vision {
   position: relative;
   width: 100%;
-  padding: 10% 0;
-  // background-color: url(../img/top-player.jpg);
-  // background-size: 104%;
-  // background-position: center;
-  background-color: $color-black;
+  padding: 10% 0 30%;
+  background: linear-gradient(180deg, #272420 0%, rgba(39, 36, 32, 0.42) 100%), url(../img/top-vision.jpg);
+  background-size: cover;
+  background-position: 0 80%;
 
   &-inner {
     @include innerWidth();
@@ -173,5 +328,17 @@
 
   h2 {
     @include sectionTitle();
+  }
+
+  p {
+    line-height: 1.4;
+    text-align: center;
+
+    @include pcTab {
+      font-size: 16px;
+    }
+    @include sp {
+      font-size: 12px;
+    }
   }
 }
