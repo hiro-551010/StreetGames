@@ -8,6 +8,11 @@ use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
+    public function __construct()
+    {
+        // \App\Http\Middleware\AdminValidate を参照
+        $this->middleware('admin');
+    }
 
     public function admin(){
         return view('admin.operation');

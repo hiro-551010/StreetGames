@@ -17,7 +17,7 @@ use App\Models\Win;
 use App\Models\ChatRoom;
 
 use DB;
-use Mockery\Generator\StringManipulation\Pass\Pass;
+
 
 class OfficialController extends Controller
 {
