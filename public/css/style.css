@@ -40,6 +40,10 @@ button {
   appearance: none;
 }
 
+.top_header {
+  background-color: #191715;
+}
+
 .footer {
   width: 100%;
   padding: 60px 0;
@@ -451,6 +455,19 @@ button {
   height: calc(108px * 32);
 }
 
+@media (min-width: 1024px) {
+  .top_wrapper {
+    padding: 0 5%;
+    background-color: #191715;
+  }
+}
+
+@media (max-width: 1023px) {
+  .top_wrapper {
+    padding: 0;
+  }
+}
+
 .top_fv {
   position: relative;
   z-index: 0;
@@ -460,6 +477,7 @@ button {
   max-height: 700px;
   padding-top: 9vw;
   background-color: #1D212C;
+  overflow: hidden;
 }
 
 .top_fv-title {
@@ -470,10 +488,40 @@ button {
 }
 
 .top_fv-title p {
+  position: relative;
   font-weight: bold;
 }
 
+.top_fv-title p::before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: -56%;
+  z-index: -1;
+  width: 80%;
+  aspect-ratio: 5 / 1;
+  background-color: rgba(45, 44, 80, 0.4);
+  clip-path: polygon(0 0, 100% 100%, 100% 100%, 0 100%);
+  transform: rotate(-76deg);
+}
+
+.top_fv-title p::after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: -50%;
+  z-index: -1;
+  width: 70%;
+  aspect-ratio: 4 / 1;
+  background-color: rgba(44, 63, 80, 0.4);
+  clip-path: polygon(0 0, 100% 100%, 100% 100%, 0 100%);
+  transform: rotate(-60deg);
+}
+
 .top_fv-title h1 {
+  position: relative;
   font-weight: bold;
 }
 
@@ -491,6 +539,34 @@ button {
 
 .top_fv-title h1 span {
   font-size: 1.1em;
+}
+
+.top_fv-title h1::before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 300%;
+  right: 50%;
+  z-index: -1;
+  width: 70%;
+  aspect-ratio: 5 / 1;
+  background-color: rgba(45, 44, 80, 0.33);
+  clip-path: polygon(0 0, 100% 100%, 100% 100%, 0 100%);
+  transform: rotate(-60deg);
+}
+
+.top_fv-title h1::after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 400%;
+  right: 52%;
+  z-index: -1;
+  width: 70%;
+  aspect-ratio: 3.5 / 1;
+  background-color: rgba(44, 63, 80, 0.4);
+  clip-path: polygon(0 0, 100% 100%, 100% 100%, 0 100%);
+  transform: rotate(-60deg);
 }
 
 @media (min-width: 1024px) {
@@ -723,21 +799,41 @@ button {
 
 .top_flow-lists li span {
   position: absolute;
-  left: -2em;
+  display: inline-block;
+  background-image: url(../img/paint-bg.png);
+  background-repeat: no-repeat;
+  color: #191715;
+  font-weight: bold;
+  text-align: center;
 }
 
 @media (min-width: 768px) {
   .top_flow-lists li span {
     top: -0.3em;
+    left: -2.6em;
+    width: 50px;
+    height: 50px;
+    background-size: 140%;
+    background-position: left;
     font-size: 24px;
   }
 }
 
 @media (max-width: 767px) {
   .top_flow-lists li span {
-    top: -0.1em;
-    font-size: 16px;
+    top: -0.3em;
+    left: -3.2em;
+    width: 40px;
+    height: 38px;
+    background-size: 136%;
+    background-position: left bottom;
+    font-size: 14px;
   }
+}
+
+.top_flow-lists li::before {
+  content: "";
+  display: block;
 }
 
 .top_flow::after {
@@ -755,10 +851,10 @@ button {
 .top_vision {
   position: relative;
   width: 100%;
-  padding: 10% 0;
-  background-image: url(../img/top-vision.jpg);
-  background-size: 104%;
-  background-position: center;
+  padding: 10% 0 30%;
+  background: linear-gradient(180deg, #272420 0%, rgba(39, 36, 32, 0.42) 100%), url(../img/top-vision.jpg);
+  background-size: cover;
+  background-position: 0 80%;
 }
 
 .top_vision-inner {
@@ -776,6 +872,23 @@ button {
   text-align: center;
   color: transparent;
   font-weight: bold;
+}
+
+.top_vision p {
+  line-height: 1.4;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .top_vision p {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 767px) {
+  .top_vision p {
+    font-size: 12px;
+  }
 }
 
 .auth_wrapper {

@@ -21,8 +21,8 @@
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
 </head>
 <body>
-<header>
-    <div class="navbar navbar-dark bg-dark shadow-sm p-3">
+<header class="top_header">
+    <div class="navbar navbar-dark shadow-sm p-3">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center" href="{{ route('index') }}">ホーム</a>
             <a class="navbar-brand d-flex align-items-center" href="{{ route('login') }}">ログイン</a>
@@ -34,7 +34,7 @@
     </div>
 </header>
 
-<div class="container-fluid m-0 p-0">
+<div class="container-fluid top_wrapper">
 
     <!-- ファーストビュー -->
     <section class="top_fv">
