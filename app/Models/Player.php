@@ -16,7 +16,7 @@ class Player extends Model
 
     public function insertPlayer($entry_id, $people){
         DB::transaction(function () use($entry_id, $people) {
-            // postされた大会のidの人をpeople分取得し、joinを2にupdat
+            // postされた大会のidの人をpeople分取得し、joinを2にupdate
             $lottery = Entry::inRandomOrder()
                 ->where('hold_id', $entry_id)
                 ->take($people)

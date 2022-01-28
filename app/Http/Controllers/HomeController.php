@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CompetitionRequest;
+use App\Http\Requests\EntryRequest;
 use App\Http\Requests\HoldPostRequest;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -128,11 +129,11 @@ class HomeController extends Controller
     }
 
     //大会一覧の応募
-    public function entry(Request $request){
-        $posts = $request->all();
+    public function entry(EntryRequest $request){
+        $request->creates();
         // entryテーブルにデータを挿入
-        $entry = new Entry;
-        $entry->insertEntry($posts);
+        // $entry = new Entry;
+        // $entry->insertEntry($posts);
         
         return redirect(route('competition'));
     }
