@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CompetitionRequest;
 use App\Http\Requests\EntryRequest;
 use App\Http\Requests\HoldPostRequest;
+use App\Http\Requests\TeamCreateRequest;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Host;
@@ -170,5 +171,15 @@ class HomeController extends Controller
                 ]);
         });
         return redirect("chat/$name");
+    }
+
+    public function team(){
+        $titles = Title::get();
+        return view('users.team', compact('titles'));
+    }
+
+    public function team_create_post(TeamCreateRequest $request){
+        $request->creates();
+        return redirect('team');
     }
 }
