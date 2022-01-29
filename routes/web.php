@@ -44,6 +44,7 @@ Route::post('/host_bracket_post/{hold_id}/{id}', [OfficialController::class, 'ho
 // チーム関係
 Route::get('/team', [HomeController::class, 'team'])->name('team');
 Route::post('/team_create_post', [HomeController::class, 'team_create_post'])->name('team_create_post');
+Route::post('/team_join_post', [HomeController::class, 'team_join_post'])->name('team_join_post');
 
 // チャット
 Route::get('/chat/{name}', [HomeController::class, 'chat'])->name('chat');

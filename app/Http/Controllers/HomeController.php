@@ -6,6 +6,7 @@ use App\Http\Requests\CompetitionRequest;
 use App\Http\Requests\EntryRequest;
 use App\Http\Requests\HoldPostRequest;
 use App\Http\Requests\TeamCreateRequest;
+use App\Http\Requests\TeamJoinRequest;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Host;
@@ -16,6 +17,7 @@ use App\Models\Entry;
 use App\Models\Chat;
 use App\Models\Event;
 use App\Models\Player;
+use App\Models\Team;
 use App\Models\Topic;
 use App\Models\Win;
 use DB;
@@ -175,11 +177,19 @@ class HomeController extends Controller
 
     public function team(){
         $titles = Title::get();
-        return view('users.team', compact('titles'));
+        $team = new Team;
+        $teams = $team->getteam();
+
+        return view('users.team', compact('titles', 'teams'));
     }
 
     public function team_create_post(TeamCreateRequest $request){
         $request->creates();
+        return redirect('team');
+    }
+
+    public function team_join_post(TeamJoinRequest $request){
+        $request->team_join();
         return redirect('team');
     }
 }

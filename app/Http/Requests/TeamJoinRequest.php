@@ -3,9 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use App\Models\Team;
+use App\Models\Team_content;
 
-class TeamCreateRequest extends FormRequest
+class TeamJoinRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -29,13 +29,9 @@ class TeamCreateRequest extends FormRequest
         ];
     }
 
-    public function creates(){
+    public function team_join(){
         $posts = $this->all();
-        $team = new Team;
-        $team->create([
-            'title_id'=>$posts['title_id'],
-            'team_name'=>$posts['team_name'],
-            'reader_id'=>$posts['user_id']
-        ]);
+        $team = new Team_content;
+        $team->create(['team_id'=>$posts['team_id'], 'user_id'=>$posts['user_id']]);
     }
 }

@@ -15,5 +15,17 @@
     <input type="hidden" name="user_id" value="{{\Auth::id()}}">
     <button type="submit" class="btn btn-primary">チームを作成</button>
 </form>
+<hr>
+<h3>チームに参加</h3>
+@foreach ($teams as $team)
+<form action="team_join_post" method="POST">
+    @csrf
+    <p>{{ $team['team_name'] }}</p>
+    <input type="hidden" name="team_id" value="{{ $team['id'] }}">
+    <input type="hidden" name="user_id" value="{{ \Auth::id() }}">
+    <button type="submit" class="btn btn-primary">参加</button>
+</form>
+@endforeach
+
 
 @endsection
