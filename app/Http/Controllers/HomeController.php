@@ -175,6 +175,7 @@ class HomeController extends Controller
         return redirect("chat/$name");
     }
 
+    // チーム参加
     public function team(){
         $titles = Title::get();
         $team = new Team;
@@ -183,13 +184,25 @@ class HomeController extends Controller
         return view('users.team', compact('titles', 'teams'));
     }
 
+    // チームの作成
     public function team_create_post(TeamCreateRequest $request){
         $request->creates();
         return redirect('team');
     }
 
+    // チームへの参加
     public function team_join_post(TeamJoinRequest $request){
         $request->team_join();
         return redirect('team');
+    }
+
+    // チームのページ チームリーダーからの編集等
+    public function team_edit(Request $request){
+        $user_id = \Auth::id();
+        $team = Team::join('team_contents', 'team_id', 'id')
+            ->where('user_id', $user_id)
+            ->get();
+         
+        return view('users.team_edit', compact('team'));
     }
 }
