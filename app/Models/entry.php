@@ -9,6 +9,9 @@ use DB;
 class Entry extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['user_id', 'hold_id', 'join'];
+
     // controllerでupdateをするときにupdated_atを無視するため
     public $timestamps = false;
 
@@ -30,14 +33,14 @@ class Entry extends Model
         return $entries;
     }
 
-    public function insertEntry($posts){
-        DB::transaction(function () use($posts) {
-            $entries = Entry::insert([
-                'user_id' => $posts['user_id'],
-                'hold_id' => $posts['hold_id'],
-                'join' => "1",
-            ]);
-        });
-    }
+    // public function insertEntry($posts){
+    //     DB::transaction(function () use($posts) {
+    //         $entries = Entry::insert([
+    //             'user_id' => $posts['user_id'],
+    //             'hold_id' => $posts['hold_id'],
+    //             'join' => "1",
+    //         ]);
+    //     });
+    // }
 }
 

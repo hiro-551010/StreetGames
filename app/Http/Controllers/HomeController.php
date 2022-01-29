@@ -13,7 +13,9 @@ use App\Models\Tournament;
 use App\Models\Tournament_content;
 use App\Models\Entry;
 use App\Models\Chat;
+use App\Models\Event;
 use App\Models\Player;
+use App\Models\Topic;
 use App\Models\Win;
 use DB;
 use Carbon\Carbon;
@@ -41,7 +43,9 @@ class HomeController extends Controller
 
     // ログイン後
     public function home(){
-        return view('home');
+        $topics = Topic::get();
+        $events = Event::get();
+        return view('users.home', compact('topics', 'events'));
     }
 
     // ダッシュボード
@@ -128,13 +132,10 @@ class HomeController extends Controller
         return redirect(route('dashboard'));
     }
 
-    //大会一覧の応募
+    //大会一覧の応募 App\Http\Requests\EntryRequest 参照
     public function entry(EntryRequest $request){
+        // entryテーブルにデータを挿入 
         $request->creates();
-        // entryテーブルにデータを挿入
-        // $entry = new Entry;
-        // $entry->insertEntry($posts);
-        
         return redirect(route('competition'));
     }
 
