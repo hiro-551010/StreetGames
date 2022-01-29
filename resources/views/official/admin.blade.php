@@ -32,7 +32,6 @@
         </div>
         <a class="navbar-brand d-flex align-items-center" href="{{ route('home') }}">ホーム</a>
         <a class="navbar-brand d-flex align-items-center" href="{{ route('competition') }}">大会参加</a>
-        <a class="navbar-brand d-flex align-items-center" href="{{ route('players') }}">プレイヤー一覧</a>
             <div class="dropdown">
                 <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                     {{ Auth::user()->name }}

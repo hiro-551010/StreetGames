@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTitlesTable extends Migration
+class CreateTeamsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateTitlesTable extends Migration
      */
     public function up()
     {
-        Schema::create('titles', function (Blueprint $table) {
-            $table->unsignedBigInteger('title_id', True);
-            $table->string('title_name');
-            $table->integer('team_number')->nullable();
+        Schema::create('teams', function (Blueprint $table) {
+            $table->id();
+            $table->string('team_name');
+            $table->timestamps();
         });
     }
 
@@ -27,6 +27,6 @@ class CreateTitlesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('titles');
+        Schema::dropIfExists('teams');
     }
 }
