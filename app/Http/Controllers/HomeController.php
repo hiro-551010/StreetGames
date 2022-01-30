@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CompetitionRequest;
 use App\Http\Requests\EntryRequest;
 use App\Http\Requests\HoldPostRequest;
+use App\Http\Requests\TeamCreateRequest;
+use App\Http\Requests\TeamJoinRequest;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Host;
@@ -15,6 +17,7 @@ use App\Models\Entry;
 use App\Models\Chat;
 use App\Models\Event;
 use App\Models\Player;
+use App\Models\Team;
 use App\Models\Topic;
 use App\Models\Win;
 use DB;
@@ -170,5 +173,36 @@ class HomeController extends Controller
                 ]);
         });
         return redirect("chat/$name");
+    }
+
+    // チーム参加
+    public function team(){
+        $titles = Title::get();
+        $team = new Team;
+        $teams = $team->getteam();
+
+        return view('users.team', compact('titles', 'teams'));
+    }
+
+    // チームの作成
+    public function team_create_post(TeamCreateRequest $request){
+        $request->creates();
+        return redirect('team');
+    }
+
+    // チームへの参加
+    public function team_join_post(TeamJoinRequest $request){
+        $request->team_join();
+        return redirect('team');
+    }
+
+    // チームのページ チームリーダーからの編集等
+    public function team_edit(Request $request){
+        $user_id = \Auth::id();
+        $team = Team::join('team_contents', 'team_id', 'id')
+            ->where('user_id', $user_id)
+            ->get();
+         
+        return view('users.team_edit', compact('team'));
     }
 }
