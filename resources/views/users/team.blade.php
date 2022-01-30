@@ -18,7 +18,7 @@
 <hr>
 <h3>チームに参加</h3>
 
-{{-- @foreach ($teams as $team)
+@foreach ($teams as $team)
 <form action="team_join_post" method="POST">
     @csrf
     <p>{{ $team['team_name'] }}</p>
@@ -26,7 +26,7 @@
     <input type="hidden" name="user_id" value="{{ \Auth::id() }}">
     <button type="submit" class="btn btn-primary">参加</button>
 </form>
-@endforeach --}}
+@endforeach
 
 
 @endsection

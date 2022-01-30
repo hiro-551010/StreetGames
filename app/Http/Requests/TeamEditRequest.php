@@ -2,10 +2,10 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
 use App\Models\Team_content;
+use Illuminate\Foundation\Http\FormRequest;
 
-class TeamJoinRequest extends FormRequest
+class TeamEditRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -29,13 +29,9 @@ class TeamJoinRequest extends FormRequest
         ];
     }
 
-    public function team_join(){
-        $posts = $this->all();
-        $team = new Team_content;
-        $team->create([
-            'team_id'=>$posts['team_id'], 
-            'user_id'=>$posts['user_id'],
-            'regular'=>0
-        ]);
+    public function join(){
+        $user_id = $this->user_id;
+        $team = Team_content::where('user_id', $user_id)
+            ->update(['regular'=>1]);
     }
 }

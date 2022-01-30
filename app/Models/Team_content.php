@@ -11,5 +11,5 @@ class Team_content extends Model
     
     public $timestamps = false;
 
-    protected $fillable = ['team_id', 'user_id'];
+    protected $fillable = ['team_id', 'user_id', 'regular'];
 }

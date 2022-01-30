@@ -6,6 +6,7 @@ use App\Http\Requests\CompetitionRequest;
 use App\Http\Requests\EntryRequest;
 use App\Http\Requests\HoldPostRequest;
 use App\Http\Requests\TeamCreateRequest;
+use App\Http\Requests\TeamEditRequest;
 use App\Http\Requests\TeamJoinRequest;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -18,6 +19,7 @@ use App\Models\Chat;
 use App\Models\Event;
 use App\Models\Player;
 use App\Models\Team;
+use App\Models\Team_content;
 use App\Models\Topic;
 use App\Models\Win;
 use DB;
@@ -197,12 +199,25 @@ class HomeController extends Controller
     }
 
     // チームのページ チームリーダーからの編集等
-    public function team_edit(Request $request){
+    public function team_edit(){
         $user_id = \Auth::id();
-        $team = Team::join('team_contents', 'team_id', 'id')
-            ->where('user_id', $user_id)
+
+        // チームリーダーの場合、それを取得
+        $team = Team::where('reader_id', $user_id)
+            ->join('team_contents', 'team_id', 'id')
+            ->join('users', 'users.id', 'user_id')
             ->get();
-         
-        return view('users.team_edit', compact('team'));
+
+
+        $member = Team_content::where('user_id', $user_id)
+            ->join('teams', 'id', 'team_id')
+            ->get();
+
+        return view('users.team_edit', compact('team', 'member'));
+    }
+
+    public function team_edit_post(TeamEditRequest $request){
+        $request->join();
+        return redirect('team_edit');
     }
 }
