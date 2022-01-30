@@ -47,7 +47,8 @@ class TeamCreateRequest extends FormRequest
             $team_content = new Team_content;
             $team_content->create([
                 'team_id'=>$teams->id,
-                'user_id'=>$posts['user_id']
+                'user_id'=>$posts['user_id'],
+                'regular'=>1
             ]);
         });
         

@@ -41,6 +41,7 @@
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                     <li><a class="dropdown-item" href="{{ route('dashboard') }}">ダッシュボード</a></li>
+                    <li><a class="dropdown-item" href="{{ route('team_edit') }}">チーム</a></li>
                     <li><a class="dropdown-item" href="{{ route('hold') }}">大会開催</a></li>
                     <li><a class="dropdown-item" href="{{ route('logout') }}"
                             onclick="event.preventDefault();
