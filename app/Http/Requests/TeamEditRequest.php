@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Team_content;
 use Illuminate\Foundation\Http\FormRequest;
 
 class TeamEditRequest extends FormRequest
@@ -26,5 +27,11 @@ class TeamEditRequest extends FormRequest
         return [
             //
         ];
+    }
+
+    public function join(){
+        $user_id = $this->user_id;
+        $team = Team_content::where('user_id', $user_id)
+            ->update(['regular'=>1]);
     }
 }

@@ -199,7 +199,7 @@ class HomeController extends Controller
     }
 
     // チームのページ チームリーダーからの編集等
-    public function team_edit(TeamEditRequest $request){
+    public function team_edit(){
         $user_id = \Auth::id();
 
         // チームリーダーの場合、それを取得
@@ -214,5 +214,10 @@ class HomeController extends Controller
             ->get();
 
         return view('users.team_edit', compact('team', 'member'));
+    }
+
+    public function team_edit_post(TeamEditRequest $request){
+        $request->join();
+        return redirect('team_edit');
     }
 }

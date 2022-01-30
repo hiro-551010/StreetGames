@@ -45,7 +45,8 @@ Route::post('/host_bracket_post/{hold_id}/{id}', [OfficialController::class, 'ho
 Route::get('/team', [HomeController::class, 'team'])->name('team');
 Route::post('/team_create_post', [HomeController::class, 'team_create_post'])->name('team_create_post');
 Route::post('/team_join_post', [HomeController::class, 'team_join_post'])->name('team_join_post');
-Route::match(['get', 'post'], '/team_edit', [HomeController::class, 'team_edit'])->name('team_edit');
+Route::get('/team_edit', [HomeController::class, 'team_edit'])->name('team_edit');
+Route::post('/team_edit_post', [HomeController::class, 'team_edit_post'])->name('team_edit_post');
 // チャット
 Route::get('/chat/{name}', [HomeController::class, 'chat'])->name('chat');
 Route::post('/chat_post/{name}', [HomeController::class, 'chat_post'])->name('chat_post');

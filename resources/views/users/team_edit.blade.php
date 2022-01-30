@@ -7,11 +7,15 @@
     @foreach ($team as $t)
         @if ($t['reader_id'] && $t['user_id'] == \Auth::id())
             リーダーです
+            {{$t['name']}}
         @else
             <br>
+            {{-- メンバーのregularをtrueにする --}}
             メンバー候補
-            <form action="{{ route('team_edit') }}" method="POST">
-                {{$t['name']}}
+            <form action="{{ route('team_edit_post') }}" method="POST">
+                @csrf
+                <input type="hidden" name="user_id" value="{{$t['user_id']}}">{{$t['name']}}
+                <button class="btn btn-primary" type="submit">メンバーにする</button>
             </form>
         @endif
         
