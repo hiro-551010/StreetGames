@@ -85,6 +85,8 @@ class HomeController extends Controller
         // ベースのメソッド
         $tournaments = Tournament::join('tournament_contents', 'tournaments.hold_id', 'tournament_contents.hold_id')
             ->join('titles', 'tournaments.title_id', 'titles.title_id');
+            // チーム戦のタイトルがとれる
+            // ->join('teams', 'teams.title_id', 'titles.title_id');
 
         // sortの処理
         if (isset($posts['tournaments_sort_date'])){
@@ -141,6 +143,9 @@ class HomeController extends Controller
     public function entry(EntryRequest $request){
         // entryテーブルにデータを挿入 
         $request->creates();
+
+        $posts = $request->all();
+
         return redirect(route('competition'));
     }
 

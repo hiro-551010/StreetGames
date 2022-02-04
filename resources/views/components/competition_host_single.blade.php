@@ -1,12 +1,9 @@
-@extends('official.admin')
-
 @section('content')
 
 
 <!-- ここではentriesのテーブルのjoinを変更し、playersテーブルに反映させます -->
 <!-- entriesのjoinは0は抽選落ち、1は応募中、2は参加確定 -->
-
-{{-- <main class="hostOnly">
+<main class="hostOnly">
     <div class="hostOnly_header">
         <h1>大会管理ページ（開催者）</h1>
     </div>
@@ -69,12 +66,12 @@
                 </ul>
             </div>
         </div>
-    @endisset -- }}
+    @endisset
 
 
 {{-- トーナメント表 --}}
 
-{{-- @isset($players['false'])
+@isset($players['false'])
 
 @else
 
@@ -87,28 +84,4 @@
 
 @endisset
 
-</main>  --}}
-
-@isset ($team_battle)
-@component('components.competition_host_team', [
-    'entry_teams'=>$entry_teams,
-    'tournament'=>$tournament,
-    'players'=>$players,
-    'chat_room'=>$chat_room,
-    'bracketSize'=>$bracketSize,
-    'brackets'=>$brackets
-])
-    
-@endcomponent
-@else
-@component('components.competition_host_single',[
-    'entries'=>$entries,
-    'tournament'=>$tournament,
-    'players'=>$players,
-    'chat_room'=>$chat_room,
-    'bracketSize'=>$bracketSize,
-    'brackets'=>$brackets
-])
-@endcomponent
-@endisset
-@endsection
+</main>

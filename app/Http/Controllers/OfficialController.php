@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\HostAdminRequest;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Host;
@@ -11,7 +12,8 @@ use App\Models\Tournament_content;
 use App\Models\Entry;
 use App\Models\Chat;
 use App\Models\Player;
-
+use App\Models\Team;
+use App\Models\Entry_team;
 use App\Models\Win;
 
 use App\Models\ChatRoom;
@@ -125,25 +127,40 @@ class OfficialController extends Controller
         $chat_room = ChatRoom::where('hold_id', $hold_id)
             ->where('closed_at', null)
             ->get();
+
+        // team戦用の変数
+        $team_battle = Tournament::where('hold_id', $hold_id)
+            ->join('titles', 'titles.title_id', 'tournaments.title_id')
+            ->first();
+        $team_battle = $team_battle->team_number;
+
+        $entry_teams = Entry_team::where('hold_id', $hold_id)->get();
+
         
-        return view('official.competition_host', compact('entries', 'tournament', 'players', 'chat_room', 'bracketSize', 'brackets'));
+        return view('official.competition_host',
+            compact('entries', 'tournament', 'players',
+                'chat_room', 'bracketSize', 'brackets', 
+                'team_battle', 'entry_teams'
+            )
+        );
     }
 
     // 抽選決定
-    public function host_admin_post(Request $request, $hold_id, $id){
-        $posts = $request->all();
-        // 大会のidを取得
-        $entry_id = $posts['hold_id'];
-        // 大会の人数を取得
-        $people = $posts['people'];
+    public function host_admin_post(HostAdminRequest $request, $hold_id, $id){
+        $request->creates($hold_id, $id);
+        // $posts = $request->all();
+        // // 大会のidを取得
+        // $entry_id = $posts['hold_id'];
+        // // 大会の人数を取得
+        // $people = $posts['people'];
         
-        // App/Models/Player.php
-        $player = new Player;
-        $insert = $player->insertPlayer($entry_id, $people);
+        // // App/Models/Player.php
+        // $player = new Player;
+        // $insert = $player->insertPlayer($entry_id, $people);
 
-        // winsテーブルにdataを追加
-        $win = new Win;
-        $bracket = $win->bracket($hold_id);
+        // // winsテーブルにdataを追加
+        // $win = new Win;
+        // $bracket = $win->bracket($hold_id);
         return redirect(route('dashboard'));
     }
 
