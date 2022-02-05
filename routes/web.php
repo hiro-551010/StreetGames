@@ -27,6 +27,7 @@ Route::get('/unauth_competition', [Controller::class, 'unauth_competition'])->na
 
 
 // ログイン後のルーティング
+
 Route::get('/home', [HomeController::class, 'home'])->name('home');
 // ダッシュボード
 Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
@@ -40,6 +41,7 @@ Route::get('competition_detail/{id}', [HomeController::class, 'competition_detai
 Route::post('/entry', [HomeController::class, 'entry'])->name('entry');
 Route::get('/competition_detail/{hold_id}/players/{id}', [OfficialController::class, 'competition_detail_players']);
 Route::get('/competition_detail/{hold_id}/host/{id}', [OfficialController::class, 'competition_detail_host'])->name('competition_detail_host');
+Route::post('/host_admin_post/{hold_id}/{id}', [OfficialController::class, 'host_admin_post'])->name('host_admin_post');
 Route::post('/host_bracket_post/{hold_id}/{id}', [OfficialController::class, 'host_bracket_post'])->name('host_bracket_post');
 // チーム関係
 Route::get('/team', [HomeController::class, 'team'])->name('team');

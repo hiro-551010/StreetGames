@@ -135,6 +135,7 @@ class OfficialController extends Controller
         $team_battle = $team_battle->team_number;
 
         $entry_teams = Entry_team::where('hold_id', $hold_id)->get();
+        
 
         
         return view('official.competition_host',
@@ -147,7 +148,8 @@ class OfficialController extends Controller
 
     // 抽選決定
     public function host_admin_post(HostAdminRequest $request, $hold_id, $id){
-        $request->creates($hold_id, $id);
+        $request->insertPlayer($hold_id, $id);
+        $request->bracket($hold_id);
         // $posts = $request->all();
         // // 大会のidを取得
         // $entry_id = $posts['hold_id'];

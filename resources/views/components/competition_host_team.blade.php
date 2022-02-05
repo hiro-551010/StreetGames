@@ -23,6 +23,7 @@
                             @csrf
                             <input type="hidden" name="hold_id" value="{{ $t['hold_id'] }}">
                             <input type="hidden" name="people" value="{{ $t['people'] }}">
+                            <input type="hidden" name="team_battle" value="1">
                             <p><span>抽選ボタンを押すと参加チームが決定します。</span><span>応募チーム数が募集チーム数を上回っている場合、ランダムでの抽選が行われ決定いたします。</span></p>
                             <button type="submit" class="join">抽選</button>
                         </form>

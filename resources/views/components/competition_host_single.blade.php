@@ -24,6 +24,7 @@
                     </p>
 
                     <div class="hostOnly_lottery">
+                        {{-- <form action="{{ route('host_admin_post', ['hold_id'=>$t['hold_id'], 'id'=>$t['user_id']]) }}" method="POST"> --}}
                         <form action="/host_admin_post/{{$t['hold_id']}}/{{$t['user_id']}}" method="POST">
                             @csrf
                             <input type="hidden" name="hold_id" value="{{ $t['hold_id'] }}">
