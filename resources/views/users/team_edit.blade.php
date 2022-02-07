@@ -7,7 +7,14 @@
     @foreach ($team as $t)
         @if ($t['reader_id'] && $t['user_id'] == \Auth::id())
             リーダーです
-            {{$t['name']}}
+            <h4>{{$t['name']}}</h4>
+            
+        @elseif ($t['regular'] == 1)
+            @if ($loop->index == 1)
+            メンバーです
+            @endif
+            
+            <h3>{{$t['name']}}</h3>
         @else
             <br>
             {{-- メンバーのregularをtrueにする --}}

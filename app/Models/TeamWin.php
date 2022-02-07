@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Entry_team extends Model
+class TeamWin extends Model
 {
     use HasFactory;
 
-    public $timestamps = false; 
+    public $timestamps = false;
 
-    protected $fillable = ['team_id', 'hold_id', 'join'];
+    protected $fillable = ['hold_id', 'team_id'];
 }
