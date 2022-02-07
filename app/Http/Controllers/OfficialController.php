@@ -15,6 +15,7 @@ use App\Models\Player;
 use App\Models\Team;
 use App\Models\Entry_team;
 use App\Models\Win;
+use App\Models\Play_team;
 
 use App\Models\ChatRoom;
 
@@ -39,14 +40,8 @@ class OfficialController extends Controller
             ->join('users', 'id', 'user_id')
             ->get();
 
-        $player_exists = Win::where('hold_id', $hold_id)->exists();
-        if($player_exists){
-            $players = Win::select('wins.*', 'users.name as user_name')->where('hold_id', $hold_id)
-            ->join('users', 'wins.user_id', 'users.id')
-            ->get();
-        }else{
-            $players = ['false' => '参加者をまだ抽選していません'];   
-        }
+        $player = new Player;
+        $players = $player->player_exists($hold_id);
 
         // トーナメント表について
         $bracketSize = 0; // ブラケットのサイズ
@@ -117,7 +112,6 @@ class OfficialController extends Controller
                         $brackets[$round][$j][1] = NULL;
                     }
                 }
-
             }
         } else {
             // 参加者が２人以上集まらなかった場合
@@ -129,14 +123,23 @@ class OfficialController extends Controller
             ->get();
 
         // team戦用の変数
+        // これでチーム戦かどうかの判別
         $team_battle = Tournament::where('hold_id', $hold_id)
             ->join('titles', 'titles.title_id', 'tournaments.title_id')
-            ->first();
+            ->first();            
         $team_battle = $team_battle->team_number;
-
-        $entry_teams = Entry_team::where('hold_id', $hold_id)->get();
         
+        if (isset($team_battle)) {
+            // その大会に応募しているチーム
+            $entry_teams = Entry_team::where('hold_id', $hold_id)->get();
 
+            // 抽選に当たったチームの変数
+            $play_team = new Play_team;
+            $play_teams = $play_team->play_teams_exists($hold_id);
+        } else {
+            $entry_teams = ['false'=>'チーム戦ではない'];
+            $play_teams = ['false'=>'チーム戦ではない'];
+        }
         
         return view('official.competition_host',
             compact('entries', 'tournament', 'players',
@@ -149,7 +152,6 @@ class OfficialController extends Controller
     // 抽選決定
     public function host_admin_post(HostAdminRequest $request, $hold_id, $id){
         $request->insertPlayer($hold_id, $id);
-        $request->bracket($hold_id);
         // $posts = $request->all();
         // // 大会のidを取得
         // $entry_id = $posts['hold_id'];
